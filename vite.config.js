@@ -10,9 +10,13 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       input: { main: resolve(__dirname, 'index.html') },
       output: {
-        manualChunks: {
-          vendor: ['jquery'],
-          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore']
+        manualChunks(id) {
+          if (id.includes('node_modules/jquery')) {
+            return 'vendor';
+          }
+          if (id.includes('node_modules/firebase')) {
+            return 'firebase';
+          }
         }
       },
       plugins: [{
