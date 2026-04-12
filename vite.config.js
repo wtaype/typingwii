@@ -5,12 +5,11 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    cssCodeSplit: false,
     rollupOptions: {
       input: 'index.html',
       output: {
-        manualChunks: id => {
-          if (id.includes('node_modules')) return id.includes('firebase') ? 'firebase' : 'vendor';
-        }
+        codeSplitting: false
       },
       plugins: [{
         name: 'minify-html',
