@@ -1,0 +1,1 @@
+var e=`typingwii`,t=`TypingWii`,n=2026,r=`@wilder.taype`,i=`https://wtaype.github.io/`;export{i as a,n as i,r as n,e as r,t};
