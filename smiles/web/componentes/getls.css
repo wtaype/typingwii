@@ -1,5 +1,0 @@
-@import './docs.css';
-.doc_wrap{--cc:#06B6D4}
-.gls_chip{display:inline-flex;align-items:center;gap:.5vh;padding:.5vh 1.2vh;background:color-mix(in srgb,#06B6D4 12%,var(--bg));border:1px solid color-mix(in srgb,#06B6D4 30%,var(--brd));border-radius:5vh;font-size:var(--fz_s4);color:#0891b2;font-weight:500}
-.gls_demo{display:flex;flex-direction:column;gap:.6vh;width:100%}
-.gls_row{padding:.7vh 1.2vh;background:var(--bg4);border-radius:.6vh;font-size:var(--fz_s4);color:var(--tx);display:flex;align-items:center;gap:.8vh}

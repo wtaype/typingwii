@@ -1,8 +1,0 @@
-@import './docs.css';
-.doc_wrap{--cc:#EF4444}
-.wau_badge{display:inline-flex;align-items:center;gap:.6vh;padding:.8vh 1.5vh;background:var(--bg4);border:1px solid var(--brd);border-radius:5vh;font-size:var(--fz_m1);color:var(--tx2)}
-.wau_badge i{color:#bbb}
-.wau_badge.wau_on{background:color-mix(in srgb,#10B981 12%,var(--bg));border-color:#10B981;color:#10B981}
-.wau_badge.wau_on i{color:#10B981}
-.wau_demo{display:flex;flex-direction:column;gap:.8vh;width:100%}
-.wau_row{padding:.8vh 1.2vh;background:var(--bg4);border-radius:.6vh;font-size:var(--fz_s4);color:var(--tx);display:flex;align-items:center;gap:.8vh}

@@ -1,25 +1,39 @@
-import $  from 'jquery'; 
+// === Jesus es mi Padre, amoo a el===
+import $ from 'jquery';
+
+// === 🧠 LOADER SECUENCIAL v14 ===
+export const wiLoad = (() => {
+  const carga = new Set(), opt = { rootMargin: '0px 0px -40% 0px', threshold: 0.15 };
+  return (id, fn) => {
+    const sel = id[0] === '#' ? id : `#${id}`; if (!$(sel).length) $('#wimain').append(`<div id="${id.replace('#','')}" style="min-height:86vh"></div>`);
+    const el = $(sel)[0];
+    el && new IntersectionObserver(([x]) => x.isIntersecting && (history.replaceState(null,'',sel), 
+    import('./wii.js').then(({ app }) => document.title = `${sel.slice(1).charAt(0).toUpperCase() + sel.slice(2)} - ${app}`), carga.has(sel) 
+    || (carga.add(sel), fn())), opt).observe(el);
+  };
+})(); 
 
 // wiCode v1.0 - Bloque de código con copy + highlight __________________________
 export const wiCode = (sel) => {
   $(sel).each(function() {
     $(this).wrap('<div class="wiCode-box"/>');
   });
-};wiCode.v = '10.1';
+};
 
 // OBSERVER v12_________________________________
-export const wiVista = (sel, fn, opts = {}) => {
-  const { stagger = 0, anim = '', threshold = 0.1, once = true } = opts;
+export const wiVista = (sel, fn, { stagger=0, anim='', threshold=0.1, once=true, root=null, onExit=null, delay=0 } = {}) => {
   const els = [...document.querySelectorAll(sel)];
-  if (!els.length) return;
-  anim && els.forEach(el => el.classList.add(anim));
-  const obs = new IntersectionObserver(es => es.filter(e => e.isIntersecting).forEach(e => {
+  if (!els.length) return null;
+  const obs = new IntersectionObserver(es => es.forEach(e => {
     const i = els.indexOf(e.target);
-    setTimeout(() => { anim && e.target.classList.add('wi_visible'); fn?.(e.target, i); }, stagger * i);
-    once && obs.unobserve(e.target);
-  }), { rootMargin: '20px', threshold });
-  els.forEach(el => obs.observe(el));
-};wiVista.v = '10.1';
+    if (e.isIntersecting) {
+      setTimeout(() => { anim && e.target.classList.add('wi_visible'); fn?.(e.target, i); }, delay + stagger * i);
+      once && obs.unobserve(e.target);
+    } else onExit?.(e.target, i);
+  }), { rootMargin: '20px', threshold, root });
+  els.forEach(el => { anim && el.classList.add(anim); obs.observe(el); });
+  return obs;
+};
 
 // CARGANDO V10.2_________________________________
 export const wiSpin = (btn, act = true, txt = '') => {
@@ -30,7 +44,7 @@ export const wiSpin = (btn, act = true, txt = '') => {
   } else {
     $btn.prop('disabled', false).text($btn.data('txt') || txt || 'Continuar');
   }
-};wiSpin.v = '10.1';
+};
 
 // SCROLL SPY V10.0_________________________________
 export const wiScroll = (ids, navSel, opts = {}) => {
@@ -44,7 +58,7 @@ export const wiScroll = (ids, navSel, opts = {}) => {
   );
   ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
   return obs;
-};wiScroll.v = '10.1';
+};
 
 // AUTH SIGNAL v2.0_________________________________
 const bus = new Set();
@@ -55,28 +69,27 @@ export const wiAuth = Object.assign((load, render) => bus.add(async () => { awai
   logout(keep = []) { removels.except(keep); this.emit(null); },
   get user() { return getls('wiSmile'); },
   get logged() { return !!this.user?.usuario; }
-});wiAuth.v = '10.1';
+});
 
-// CARGA INTELIGENTE v14_________________________________
+// CARGA INTELIGENTE v15_________________________________
 export const wiSmart = (() => {
-  const ok = new Set(), c = getls('wiSmart');
-  const run = (o) => {
-    Object.entries(o).forEach(([t, v]) => [].concat(v).forEach(it => {
-      const k = `${t}:${it}`;
-      if (ok.has(k)) return; ok.add(k);
+  const ok = new Set(), c = getls('wiSmart'), im = {};
+  const obs = new MutationObserver(() => { for (const s in im) { const e = document.querySelector(s); if (e) e.outerHTML = im[s]; } });
+  const run = o => { Object.entries(o).forEach(([t, v]) => {
+    if (t === 'img') { Object.assign(im, v); obs.observe(document.body, { childList: true, subtree: true }); return; }
+    [].concat(v).forEach(it => { const k = `${t}:${it}`; if (ok.has(k)) return; ok.add(k);
       t === 'css' ? !$(`link[href="${it}"]`).length && $('<link>', { rel: 'stylesheet', href: it }).appendTo('head')
         : typeof it === 'function' && it().catch?.(e => console.error('wiSmart:', e));
-    }));
-    savels('wiSmart', 1);
-  };
-  return (o) => c ? run(o) : $(document).one('touchstart scroll click mousemove', () => run(o));
-})();wiSmart.v = '10.1';
+    });
+  }); savels('wiSmart', 1); };
+  return o => c ? run(o) : $(document).one('touchstart scroll click mousemove', () => run(o));
+})();
 
 // SALUDO V10.1_________________________________
 export const Saludar = () => {
   const hrs = new Date().getHours();
   return hrs >= 5 && hrs < 12 ? 'Buenos días, ' : hrs >= 12 && hrs < 18 ? 'Buenas tardes, ' : 'Buenas noches, ';
-};Saludar.v = '10.1';
+};
 
 // NOTIFICACIONES V10.1_________________________________
 export function Notificacion(msg, tipo = 'error', tiempo = 3000) {
@@ -87,7 +100,7 @@ export function Notificacion(msg, tipo = 'error', tiempo = 3000) {
   const cerrar = () => {$not.css({opacity:0,transform:'translateX(20px)'});setTimeout(() => $not.remove(), 300);};
   $not.find('button').on('click', cerrar);
   setTimeout(cerrar, tiempo);
-}Notificacion.v = '10.1';
+}
 
 // MENSAJE V10.1_________________________________
 export function Mensaje(msg, tipo = 'success') {
@@ -95,7 +108,7 @@ export function Mensaje(msg, tipo = 'success') {
   const ico = {success:'fa-circle-check',error:'fa-circle-exclamation',warning:'fa-exclamation-triangle',info:'fa-info-circle'}[tipo];
   const $alerta = $(`<div class="alert-box" style="position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:15px 20px;border-radius:8px;background:var(--${tipo}-bg,var(--F));color:var(--${tipo});border-left:4px solid var(--${tipo});box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:1000;display:flex;align-items:center;gap:10px;min-width:300px;max-width:90%;"><i class="fas ${ico}" style="color:var(--${tipo});"></i><span>${msg}</span></div>`).appendTo('body').hide().fadeIn(300);
   setTimeout(() => $alerta.fadeOut(300, () => $alerta.remove()), 3000);
-}Mensaje.v = '10.1';
+}
 
 // SAVE LOCAL v11_________________________________
 export function savels(clave, valor, horas = 24) {
@@ -104,7 +117,7 @@ export function savels(clave, valor, horas = 24) {
     localStorage.setItem(clave, JSON.stringify({ value: valor, expiry: Date.now() + horas * 3600000 }));
     return true;
   } catch(e) { console.error('esv:', e); return false; }
-}savels.v = '10.1';
+}
 
 // GET LOCAL v10.1_________________________________
 export function getls(clave) {
@@ -116,7 +129,7 @@ export function getls(clave) {
     if (!parsed || Date.now() > parsed.expiry) return localStorage.removeItem(clave), null;
     return parsed.value;
   } catch(e) { console.error('egt:', e); localStorage.removeItem(clave); return null; }
-}getls.v = '10.1';
+}
 
 // REMOVE LOCAL v10.3_________________________________
 export function removels(...claves) {
@@ -127,7 +140,8 @@ removels.except = (keep = []) => {
   const saved = keep.map(k => [k, localStorage.getItem(k)]);
   localStorage.clear();
   saved.forEach(([k, v]) => v !== null && localStorage.setItem(k, v));
-}; removels.v = '10.3';
+}; 
+
 // TOOLTIP V11.0_________________________________
 export function wiTip(elmOrTxt, txt, tipo = 'top', tiempo = 1800) {
   if (!wiTip.CSS) {
@@ -147,24 +161,26 @@ wiTip.ver = (elm, txt, tipo, tiempo) => {
   const {left, top, width} = $(elm)[0].getBoundingClientRect(), tipW = $tip.outerWidth(), tipH = $tip.outerHeight();
   $tip.css({left: Math.max(8, Math.min(left + width/2 - tipW/2, innerWidth - tipW - 8)), top: top - tipH - 8});
   requestAnimationFrame(() => {$tip.addClass('show'); if (tiempo > 0) setTimeout(() => {$tip.removeClass('show'); setTimeout(() => $tip.remove(), 200)}, tiempo)});
-};wiTip.v = '10.1';
+};
 
 // SISTEMA IP V10.1_________________________________
 export const wiIp = (geo) => {
-  return $.getJSON('https://ipinfo.io/json?token=3868948e170a74', data => {
-    const ua = navigator.userAgent;
-    const [lat, lng] = (data.loc || '0,0').split(',').map(Number);
-    const ipData = {
-      ip: data.ip, city: data.city, region: data.region, country: data.country, postal: data.postal, lat, lng,
-      browser: /Edg/i.test(ua) ? 'Edge' : /Chrome/i.test(ua) ? 'Chrome' : /Firefox/i.test(ua) ? 'Firefox' : /Safari/i.test(ua) && !/Chrome/i.test(ua) ? 'Safari' : 'Otro',
-      os: /Windows/i.test(ua) ? 'Windows' : /Android/i.test(ua) ? 'Android' : /iPhone|iPad/i.test(ua) ? 'iOS' : /Mac/i.test(ua) ? 'macOS' : 'Linux',
-      device: /Mobile|Android|iPhone|iPad/i.test(ua) ? 'Móvil' : /Tablet|iPad/i.test(ua) ? 'Tablet' : 'Escritorio',
-      screen: `${screen.width}×${screen.height}`, language: navigator.language,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, utcOffset: new Date().getTimezoneOffset() / -60, online: navigator.onLine
-    };
-    return typeof geo === 'function' ? geo(ipData) : geo === 'ciudad' ? `${ipData.city}, ${ipData.country}` : ipData[geo];
-  }).fail(() => null);
-};wiIp.v = '10.1';
+  return fetch('https://ipinfo.io/json?token=' + import.meta.env.VITE_IP_TOKEN)
+    .then(r => r.json())
+    .then(data => {
+      const ua = navigator.userAgent;
+      const [lat, lng] = (data.loc || '0,0').split(',').map(Number);
+      const ipData = {
+        ip: data.ip, city: data.city, region: data.region, country: data.country, postal: data.postal, lat, lng,
+        browser: /Edg/i.test(ua) ? 'Edge' : /Chrome/i.test(ua) ? 'Chrome' : /Firefox/i.test(ua) ? 'Firefox' : /Safari/i.test(ua) && !/Chrome/i.test(ua) ? 'Safari' : 'Otro',
+        os: /Windows/i.test(ua) ? 'Windows' : /Android/i.test(ua) ? 'Android' : /iPhone|iPad/i.test(ua) ? 'iOS' : /Mac/i.test(ua) ? 'macOS' : 'Linux',
+        device: /Mobile|Android|iPhone|iPad/i.test(ua) ? 'Móvil' : /Tablet|iPad/i.test(ua) ? 'Tablet' : 'Escritorio',
+        screen: `${screen.width}×${screen.height}`, language: navigator.language,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, utcOffset: new Date().getTimezoneOffset() / -60, online: navigator.onLine
+      };
+      return typeof geo === 'function' ? geo(ipData) : geo === 'ciudad' ? `${ipData.city}, ${ipData.country}` : ipData[geo];
+    }).catch(() => null);
+};
 
 // MODALES V10.4_________________________________
 export const abrirModal = id => {
@@ -184,7 +200,7 @@ export const cerrarTodos = () => {
     .on('click', '.wiModal.active', function(e) { if (e.target === this) cerrarTodos(); })
     .on('keydown', e => { if (e.key === 'Escape' && $('.wiModal.active').length) cerrarTodos(); });
 })();
-abrirModal.v = cerrarModal.v = cerrarTodos.v = '10.1';
+
 
 // FECHA FIREBASE + CACHE V12_________________________________
 export const wiDate = (tm) => ({
@@ -202,7 +218,7 @@ export const wiDate = (tm) => ({
     if (fmt === 'local') return fec.toLocaleDateString();
     return ajustada.toISOString().split('T')[0];
   }
-});wiDate.v = '10.1';
+});
 
 // COPIAR TEXTOS V10.2_________________________________
 export const wicopy = (txt, elm = null, msg = '¡Copiado!') => {
@@ -218,18 +234,18 @@ export const wicopy = (txt, elm = null, msg = '¡Copiado!') => {
     const $t = $('<textarea>').val(cnt).css({position:'absolute',left:'-9999px'}).appendTo('body');
     $t[0].select(); document.execCommand('copy'); $t.remove(); fin();
   }
-};wicopy.v = '10.1';
+};
 
 // CLICK SUMA V10.1_________________________________
 export const wiSuma = (sel, fn, num = 5) => {
   let cont = 0; $(document).on('click', sel, () => ++cont === num && (fn(), cont = 0));
-};wiSuma.v = '10.1';
+};
 
 // FUNCIONES GENIALES V10.1_________________________________
-export const year = () => new Date().getFullYear();year.v = '10.1';
-export const Mayu = (ltr) => ltr.toUpperCase();Mayu.v = '10.1';
-export const Capi = (ltr) => ltr[0].toUpperCase() + ltr.slice(1);Capi.v = '10.1';
-export const adrm = (a, b) => $(a).addClass(b).siblings().removeClass(b);adrm.v = '10.1';
-export const mis10 = (txt) => txt.length <= 10 ? txt : txt.substring(0, 10) + '...';mis10.v = '10.1';
-export const adtm = (se, cl, ti, tf) => $(se).text(ti).addClass(cl).delay(1800).queue(q => $(se).text(tf).removeClass(cl).dequeue());adtm.v = '10.1';
-export const adup = (x, y) => ($(x).addClass('updating').text(y), setTimeout(() => $(x).removeClass('updating'), 500));adup.v = '10.1';
+export const year = () => new Date().getFullYear();
+export const Mayu = (ltr) => ltr.toUpperCase();
+export const Capi = (ltr) => ltr[0].toUpperCase() + ltr.slice(1);
+export const adrm = (a, b) => $(a).addClass(b).siblings().removeClass(b);
+export const mis10 = (txt) => txt.length <= 10 ? txt : txt.substring(0, 10) + '...';
+export const adtm = (se, cl, ti, tf) => $(se).text(ti).addClass(cl).delay(1800).queue(q => $(se).text(tf).removeClass(cl).dequeue());
+export const adup = (x, y) => ($(x).addClass('updating').text(y), setTimeout(() => $(x).removeClass('updating'), 500));

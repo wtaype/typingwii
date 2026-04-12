@@ -1,6 +1,6 @@
 import './login.css';
 import $ from 'jquery';
-import { auth, db } from './firebase.js';
+import { auth, db } from '../smile/firebase.js';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile,
          sendEmailVerification, sendPasswordResetEmail, onAuthStateChanged, signOut } from 'firebase/auth';
 import { setDoc, getDoc, getDocs, doc, collection, query, where, serverTimestamp } from 'firebase/firestore';
@@ -11,7 +11,8 @@ export { auth, onAuthStateChanged, signOut };
 
 // ==================== CONFIG ====================
 const cfg = { db: 'smiles', rol: 'smile' };
-let modal = 'no', link = 'si', registrar = 'no', restablecer = 'no', login = 'si';
+let modal = 'si', link = 'no', restablecer = 'no', login = 'si', registrar = 'si';
+let pagina = '/smile'; // 'actual' = quedarse, '/proyectos', '/smile', '/'
 let registrando = false;
 
 const err = {
@@ -130,10 +131,12 @@ const tema = t => {
   $('meta[name="theme-color"]').attr('content', c);
   $('.tema').removeClass('mtha').filter(`[data-ths="${t}"]`).addClass('mtha');
 };
+const redir = () => pagina === 'actual' ? null : rutas.navigate(pagina);
 const entrar = wi => {
   wiAuth.login(wi, 7);
   if (wi?.tema) { localStorage.wiTema = wi.tema; tema(wi.tema); }
   if (esModal()) cerrarTodos();
+  redir();
 };
 
 // ==================== EVENTOS ====================
@@ -174,7 +177,7 @@ $(document)
     await accion(this, 'Iniciando', async () => {
       await signInWithEmailAndPassword(auth, await correo(val('email')), val('password'));
       const wi = (await getDoc(doc(db, cfg.db, auth.currentUser.displayName || val('email')))).data();
-      entrar(wi); rutas.navigate('/smile');
+      entrar(wi);
     });
   })
   .on('click.wi', '#Registrar', async function () {
@@ -193,7 +196,7 @@ $(document)
       await Promise.all([updateProfile(user, { displayName: d.usuario }), sendEmailVerification(user)]);
       const wi = { usuario: d.usuario, email: d.email, nombre: d.nombre, apellidos: d.apellidos, rol: cfg.rol, uid: user.uid, terminos: true, tema: localStorage.wiTema };
       await setDoc(doc(db, cfg.db, d.usuario), { ...wi, creado: serverTimestamp() });
-      entrar(wi); Mensaje('<i class="fa-solid fa-check-circle"></i> Cuenta creada. Verifica tu email', 'success'); rutas.navigate('/smile');
+      entrar(wi); Mensaje('<i class="fa-solid fa-check-circle"></i> Cuenta creada. Verifica tu email', 'success');
     });
     registrando = false;
   })
@@ -217,7 +220,7 @@ $(document)
   });
 
 // ==================== AUTH MODAL ====================
-const abrirLogin = (tipo = 'login') => {
+export const abrirLogin = (tipo = 'login') => {
   if (modal === 'si') {
     const vista = tipo === 'registrar' && registrar === 'si' ? 'registrar' : 'login';
     inyectarModal(vista);
@@ -230,9 +233,5 @@ export const salir = async (keep = []) => {
   try { await signOut(auth); } catch(e) { console.error('signOut:', e); }
   wiAuth.logout(keep);
 };
-
-$(document).on('click.hdr', '.login,.registrar', function (e) {
-  e.preventDefault(); abrirLogin($(this).hasClass('registrar') ? 'registrar' : 'login');
-});
 
 export const cleanup = () => { $(document).off('.wi'); };

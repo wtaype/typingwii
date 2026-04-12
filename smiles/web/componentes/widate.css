@@ -1,6 +1,0 @@
-@import './docs.css';
-.doc_wrap{--cc:#D97706}
-.wdt_chip{display:inline-flex;align-items:center;gap:.5vh;padding:.5vh 1.2vh;background:color-mix(in srgb,#D97706 12%,var(--bg));border:1px solid color-mix(in srgb,#D97706 30%,var(--brd));border-radius:5vh;font-size:var(--fz_m1);color:#b45309;font-weight:600}
-.wdt_demo{display:flex;flex-direction:column;gap:.6vh;width:100%}
-.wdt_row{padding:.7vh 1.2vh;background:var(--bg4);border-radius:.6vh;font-size:var(--fz_s4);color:var(--tx);display:flex;align-items:center;gap:.8vh}
-.wdt_fmt{padding:.5vh 1vh;background:color-mix(in srgb,#D97706 10%,var(--bg));border:1px solid color-mix(in srgb,#D97706 25%,var(--brd));border-radius:.5vh;font-size:var(--fz_s3);color:#b45309;font-family:'Fira Code',monospace}

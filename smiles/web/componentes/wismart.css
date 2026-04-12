@@ -1,6 +1,0 @@
-@import './docs.css';
-.doc_wrap{--cc:#6366F1}
-.wsm_chip{display:inline-flex;align-items:center;gap:.5vh;padding:.6vh 1.2vh;background:color-mix(in srgb,#6366F1 10%,var(--bg));border:1px solid color-mix(in srgb,#6366F1 25%,var(--brd));border-radius:5vh;font-size:var(--fz_s4);color:#6366F1;font-weight:500}
-.wsm_demo{display:flex;flex-direction:column;gap:.8vh;width:100%}
-.wsm_row{padding:.8vh 1.2vh;background:var(--bg4);border-radius:.6vh;font-size:var(--fz_s4);color:var(--tx);display:flex;align-items:center;gap:.8vh}
-.wsm_event{padding:.6vh 1.2vh;background:var(--bg4);border:1px solid var(--brd);border-radius:.6vh;font-size:var(--fz_s4);color:var(--tx2);display:inline-flex;align-items:center;gap:.5vh}
