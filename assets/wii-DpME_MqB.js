@@ -1,0 +1,1 @@
+var e=`widevv`,t=`Widev`,n=2026,r=`192.168.18.62`,i=`@wilder.taype`,a=`https://wtaype.github.io/`;export{n as a,r as i,i as n,a as o,e as r,t};
