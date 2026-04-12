@@ -1,0 +1,4 @@
+@import './docs.css';
+.doc_wrap{--cc:#8B5CF6}
+.wtp_btn{padding:.6vh 1.4vh;background:color-mix(in srgb,#8B5CF6 10%,var(--bg));border:1px solid color-mix(in srgb,#8B5CF6 30%,var(--brd));border-radius:.6vh;color:#8B5CF6;font-size:var(--fz_s4);font-weight:600;cursor:pointer;transition:all var(--tr_f)}
+.wtp_btn:hover{background:color-mix(in srgb,#8B5CF6 20%,var(--bg));transform:translateY(-.2vh)}

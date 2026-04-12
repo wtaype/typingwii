@@ -1,0 +1,4 @@
+@import './docs.css';
+.doc_wrap{--cc:#22C55E}
+.wcp_btn{padding:.6vh 1.4vh;background:color-mix(in srgb,#22C55E 12%,var(--bg));border:1px solid color-mix(in srgb,#22C55E 30%,var(--brd));border-radius:.6vh;color:#16a34a;font-size:var(--fz_s4);font-weight:600;cursor:pointer;transition:all var(--tr_f);display:inline-flex;align-items:center;gap:.5vh}
+.wcp_btn:hover{background:color-mix(in srgb,#22C55E 20%,var(--bg));transform:translateY(-.2vh)}

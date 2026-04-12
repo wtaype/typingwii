@@ -1,0 +1,972 @@
+/* =====================================================
+   MODALES.CSS — Widev Sistema de Modales
+   1.  Base & Wrap
+   2.  Header
+   3.  Features bar
+   4.  Layout (25% / 1% / 74%)
+   5.  Sidebar
+   6.  Sections
+   7.  Demo area & buttons
+   8.  Confirm icons
+   9.  Wizard steps
+   10. Menu links (sidebar demo)
+   11. Code blocks
+   12. API functions
+   13. Info grid
+   14. Modal animations
+   15. CTA final
+   16. Responsive
+===================================================== */
+
+
+/* ── 1. BASE ──────────────────────────────────────── */
+.mod_wrap {
+  padding: 0 2vw;
+}
+
+
+/* ── 2. HEADER ────────────────────────────────────── */
+.mod_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4vh;
+  padding: 6vh 0 4vh;
+}
+
+.mod_tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .6vh;
+  padding: .6vh 1.5vh;
+  background: var(--bg4);
+  border: 1px solid var(--brd);
+  border-radius: 5vh;
+  font-size: var(--fz_s4);
+  font-weight: 600;
+  color: var(--mco);
+  margin-bottom: 1.5vh;
+}
+
+.mod_title {
+  font-size: var(--fz_x2);
+  font-weight: 800;
+  color: var(--tx);
+  line-height: 1.1;
+  margin-bottom: 1vh;
+}
+
+.mod_grad {
+  background: linear-gradient(135deg, var(--mco), var(--bg2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mod_sub {
+  font-size: var(--fz_m3);
+  color: var(--tx2);
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.mod_header_stats {
+  display: flex;
+  gap: 2vh;
+}
+
+.mod_hstat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3vh;
+  padding: 1.5vh 2vh;
+  background: var(--bg4);
+  border: 1px solid var(--brd);
+  border-radius: 1vh;
+  transition: all var(--tr_f);
+}
+
+.mod_hstat:hover {
+  border-color: var(--mco);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+
+.mod_hstat_n {
+  font-size: var(--fz_l1);
+  font-weight: 800;
+  color: var(--mco);
+  line-height: 1;
+}
+
+.mod_hstat span:last-child {
+  font-size: var(--fz_s3);
+  color: var(--tx2);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+
+/* ── 3. FEATURES BAR ──────────────────────────────── */
+.mod_features {
+  display: flex;
+  gap: 1.5vh;
+  padding: 2.5vh 0 4vh;
+  flex-wrap: wrap;
+}
+
+.mod_feat {
+  display: flex;
+  align-items: center;
+  gap: .8vh;
+  padding: 1vh 2vh;
+  background: var(--bg4);
+  border: 1px solid var(--brd);
+  border-radius: .8vh;
+  font-size: var(--fz_s4);
+  color: var(--tx2);
+  font-weight: 500;
+  transition: all var(--tr_f);
+}
+
+.mod_feat i {
+  color: var(--mco);
+  font-size: var(--fz_m1);
+}
+
+.mod_feat strong {
+  color: var(--tx);
+}
+
+.mod_feat:hover {
+  border-color: var(--mco);
+  background: var(--bg5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+
+
+/* ── 5. LAYOUT (25% / 1% / 74%) ──────────────────── */
+.mod_layout {
+  display: flex;
+  gap: 1%;
+  align-items: flex-start;
+  padding-bottom: 6vh;
+}
+
+
+/* ── 6. SIDEBAR ───────────────────────────────────── */
+.mod_sidebar {
+  width: 25%;
+  position: sticky;
+  top: 6vh;
+  flex-shrink: 0;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 1vh;
+  padding: 1.5vh;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.mod_side_title {
+  font-size: var(--fz_m2);
+  font-weight: 700;
+  color: var(--tx);
+  padding: .8vh 1vh;
+  margin-bottom: .5vh;
+  display: flex;
+  align-items: center;
+  gap: .6vh;
+}
+
+.mod_side_title i { color: var(--mco); }
+
+.mod_side_item {
+  display: flex;
+  align-items: center;
+  gap: .8vh;
+  padding: 1vh 1.2vh;
+  border-radius: .7vh;
+  font-size: var(--fz_m1);
+  font-weight: 500;
+  color: var(--tx2);
+  text-decoration: none;
+  transition: all var(--tr_f);
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.mod_side_item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--cc);
+  border-radius: 0 2px 2px 0;
+  transform: scaleY(0);
+  transition: transform var(--tr_f);
+}
+
+.mod_side_item i {
+  color: var(--cc);
+  font-size: var(--fz_m2);
+  width: 2.2vh;
+  text-align: center;
+  flex-shrink: 0;
+  transition: transform var(--tr_f);
+}
+
+.mod_side_item span { flex: 1; }
+
+.mod_side_item:hover {
+  background: var(--bg4);
+  color: var(--tx);
+  border-color: var(--brd);
+  transform: translateX(2px);
+}
+
+.mod_side_item:hover i { transform: scale(1.15); }
+
+.mod_side_item.active {
+  background: color-mix(in srgb, var(--cc) 12%, var(--bg));
+  color: var(--tx);
+  border-color: color-mix(in srgb, var(--cc) 30%, transparent);
+  font-weight: 600;
+}
+
+.mod_side_item.active::before { transform: scaleY(1); }
+
+.mod_side_item.active i { transform: scale(1.1); }
+
+.mod_content {
+  flex: 1;
+  min-width: 0;
+}
+
+
+/* ── 7. SECTIONS ──────────────────────────────────── */
+.mod_section {
+  padding: 4vh 0;
+  border-bottom: 1px solid var(--brd);
+}
+
+.mod_section:last-of-type { border-bottom: none; }
+
+.mod_sec_head {
+  display: flex;
+  align-items: center;
+  gap: 2vh;
+  margin-bottom: 3vh;
+  padding-bottom: 2vh;
+  border-bottom: 2px solid var(--brd);
+  position: relative;
+}
+
+.mod_sec_head::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: var(--cc);
+  border-radius: 2px;
+}
+
+.mod_sec_ico {
+  width: 5vh;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--cc) 15%, transparent), color-mix(in srgb, var(--cc) 5%, transparent));
+  border: 1px solid color-mix(in srgb, var(--cc) 25%, transparent);
+  border-radius: 1vh;
+  color: var(--cc);
+  font-size: var(--fz_l1);
+  transition: all var(--tr_m);
+  flex-shrink: 0;
+}
+
+.mod_section:hover .mod_sec_ico {
+  transform: scale(1.08) rotate(-3deg);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--cc) 20%, transparent);
+}
+
+.mod_sec_tit {
+  font-size: var(--fz_l2);
+  font-weight: 700;
+  color: var(--tx);
+  line-height: 1.2;
+}
+
+.mod_sec_meta {
+  font-size: var(--fz_s4);
+  color: var(--tx2);
+  margin-top: .3vh;
+  display: block;
+}
+
+
+/* ── 6. DEMO AREA & BUTTONS ──────────────────────── */
+.mod_demo_area {
+  margin-bottom: 3vh;
+}
+
+.mod_demo_btns {
+  display: flex;
+  gap: 1vh;
+  flex-wrap: wrap;
+  margin-bottom: 2vh;
+}
+
+.mod_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .6vh;
+  padding: 1vh 2vh;
+  background: var(--mco);
+  color: var(--txa);
+  border: 1px solid transparent;
+  border-radius: .6vh;
+  font-size: var(--fz_m1);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--tr_f);
+}
+
+.mod_btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--mco) 30%, transparent);
+  filter: brightness(1.1);
+}
+
+.mod_btn i {
+  font-size: var(--fz_m);
+  transition: transform var(--tr_f);
+}
+
+.mod_btn:hover i { transform: scale(1.15); }
+
+.mod_btn_alt {
+  background: var(--bg4);
+  color: var(--tx);
+  border: 1px solid var(--brd);
+}
+
+.mod_btn_alt:hover {
+  background: var(--bg5);
+  border-color: var(--mco);
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+.mod_btn_danger {
+  background: var(--Dulce);
+  color: var(--F);
+}
+
+.mod_btn_danger:hover {
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--Dulce) 35%, transparent);
+}
+
+.mod_btn_warning {
+  background: var(--warning);
+  color: var(--0);
+}
+
+.mod_btn_warning:hover {
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--warning) 35%, transparent);
+}
+
+
+/* ── 7. CONFIRM ICONS ─────────────────────────────── */
+.mod_confirm_icon {
+  width: 8vh;
+  height: 8vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1vh;
+  font-size: 3vh;
+}
+
+.mod_confirm_danger {
+  background: color-mix(in srgb, var(--Dulce) 12%, transparent);
+  border: 2px solid color-mix(in srgb, var(--Dulce) 30%, transparent);
+  color: var(--Dulce);
+}
+
+.mod_confirm_warn {
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+  border: 2px solid color-mix(in srgb, var(--warning) 30%, transparent);
+  color: var(--warning);
+}
+
+.mod_confirm_ok {
+  background: color-mix(in srgb, var(--Paz) 12%, transparent);
+  border: 2px solid color-mix(in srgb, var(--Paz) 30%, transparent);
+  color: var(--Paz);
+  animation: mod_pop .4s ease;
+}
+
+@keyframes mod_pop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+/* ── 8. WIZARD STEPS ──────────────────────────────── */
+.mod_steps_bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 3vh;
+  padding: 2vh 0;
+}
+
+.mod_step_dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5vh;
+  position: relative;
+  z-index: 1;
+}
+
+.mod_step_dot span {
+  width: 4vh;
+  height: 4vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg4);
+  border: 2px solid var(--brd);
+  color: var(--tx2);
+  font-weight: 700;
+  font-size: var(--fz_m2);
+  transition: all var(--tr_m);
+}
+
+.mod_step_dot small {
+  font-size: var(--fz_s2);
+  color: var(--tx3);
+  font-weight: 500;
+  transition: color var(--tr_f);
+}
+
+.mod_step_dot.active span {
+  background: var(--mco);
+  border-color: var(--mco);
+  color: var(--txa);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--mco) 20%, transparent);
+}
+
+.mod_step_dot.active small { color: var(--mco); }
+
+.mod_step_dot.done span {
+  background: var(--Paz);
+  border-color: var(--Paz);
+  color: var(--F);
+}
+
+.mod_step_dot.done small { color: var(--Paz); }
+
+.mod_step_line {
+  width: 8vh;
+  height: 2px;
+  background: var(--brd);
+  margin: 0 1vh;
+  margin-bottom: 2vh;
+  transition: background var(--tr_m);
+}
+
+.mod_step_panel {
+  display: none;
+  animation: mod_stepIn .3s ease;
+}
+
+.mod_step_panel.active { display: block; }
+
+@keyframes mod_stepIn {
+  from { opacity: 0; transform: translateX(15px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+
+/* ── 9. MENU LINKS ────────────────────────────────── */
+.mod_menu_link {
+  display: flex;
+  align-items: center;
+  gap: 1.2vh;
+  padding: 1.2vh 1.5vh;
+  border-radius: .6vh;
+  font-size: var(--fz_m2);
+  font-weight: 500;
+  color: var(--tx2);
+  transition: all var(--tr_f);
+}
+
+.mod_menu_link i {
+  width: 2.5vh;
+  text-align: center;
+  color: var(--tx3);
+  transition: color var(--tr_f);
+}
+
+.mod_menu_link:hover {
+  background: var(--bg4);
+  color: var(--tx);
+}
+
+.mod_menu_link:hover i { color: var(--mco); }
+
+.mod_menu_link.active {
+  background: color-mix(in srgb, var(--mco) 10%, transparent);
+  color: var(--mco);
+  font-weight: 600;
+}
+
+.mod_menu_link.active i { color: var(--mco); }
+
+
+/* ── 10. CODE BLOCKS ──────────────────────────────── */
+.mod_code_wrap {
+  border-radius: 1vh;
+  overflow: hidden;
+  border: 1px solid var(--brd);
+}
+
+.mod_code_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1vh 1.5vh;
+  background: var(--bg4);
+  border-bottom: 1px solid var(--brd);
+  font-size: var(--fz_s4);
+  font-weight: 600;
+  color: var(--tx2);
+}
+
+.mod_code_head i {
+  color: var(--mco);
+  margin-right: .5vh;
+}
+
+.mod_lang {
+  padding: .3vh 1vh;
+  background: color-mix(in srgb, var(--mco) 12%, transparent);
+  color: var(--mco);
+  border-radius: .4vh;
+  font-size: var(--fz_s2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.mod_code_wrap pre {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+.mod_code_wrap pre code {
+  font-size: var(--fz_s4) !important;
+  line-height: 1.7 !important;
+  font-family: 'Fira Code', 'Cascadia Code', monospace !important;
+  tab-size: 2;
+}
+
+.mod_code_wrap pre[class*="language-"],
+.mod_code_wrap code[class*="language-"] {
+  background: var(--bg1) !important;
+  color: var(--tx) !important;
+  text-shadow: none !important;
+}
+
+.mod_code_wrap .token.comment     { color: var(--tx3) !important; font-style: italic; }
+.mod_code_wrap .token.string      { color: var(--Paz) !important; }
+.mod_code_wrap .token.keyword     { color: var(--Mora) !important; font-weight: 600; }
+.mod_code_wrap .token.function    { color: var(--Cielo) !important; }
+.mod_code_wrap .token.number      { color: var(--Dulce) !important; }
+.mod_code_wrap .token.operator    { color: var(--mco) !important; }
+.mod_code_wrap .token.punctuation { color: var(--tx2) !important; }
+.mod_code_wrap .token.tag         { color: var(--Dulce) !important; }
+.mod_code_wrap .token.attr-name   { color: var(--Cielo) !important; }
+.mod_code_wrap .token.attr-value  { color: var(--Paz) !important; }
+.mod_code_wrap .token.selector    { color: var(--Mora) !important; }
+.mod_code_wrap .token.property    { color: var(--Cielo) !important; }
+
+/* wiCode copy button */
+.wiCode-box { position: relative; }
+
+.wiCode-copy {
+  position: absolute;
+  top: .8vh;
+  right: .8vh;
+  padding: .5vh 1vh;
+  background: var(--bg4);
+  border: 1px solid var(--brd);
+  border-radius: .4vh;
+  color: var(--tx2);
+  font-size: var(--fz_s3);
+  cursor: pointer;
+  opacity: 0;
+  transition: all var(--tr_f);
+}
+
+.wiCode-box:hover .wiCode-copy { opacity: 1; }
+
+.wiCode-copy:hover {
+  background: var(--mco);
+  color: var(--txa);
+  border-color: var(--mco);
+  transform: scale(1.05);
+}
+
+
+/* ── 11. API FUNCTIONS ────────────────────────────── */
+.mod_fns {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5vh;
+  margin-bottom: 3vh;
+}
+
+.mod_fn {
+  padding: 2.5vh;
+  background: var(--bg4);
+  border: 1px solid var(--brd);
+  border-radius: 1vh;
+  transition: all var(--tr_f);
+}
+
+.mod_fn:hover {
+  border-color: var(--mco);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,.08);
+}
+
+.mod_fn_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2vh;
+  margin-bottom: 1vh;
+  flex-wrap: wrap;
+}
+
+.mod_fn_name {
+  font-size: var(--fz_m3);
+  font-weight: 700;
+  color: var(--mco);
+  background: color-mix(in srgb, var(--mco) 8%, transparent);
+  padding: .4vh 1.2vh;
+  border-radius: .5vh;
+  font-family: 'Fira Code', monospace;
+}
+
+.mod_fn_ret {
+  font-size: var(--fz_s3);
+  color: var(--Paz);
+  display: flex;
+  align-items: center;
+  gap: .5vh;
+  font-weight: 600;
+}
+
+.mod_fn_ret i { font-size: var(--fz_s2); color: var(--tx3); }
+
+.mod_fn_desc {
+  font-size: var(--fz_m1);
+  color: var(--tx2);
+  line-height: 1.6;
+  margin-bottom: 1.5vh;
+}
+
+.mod_params { margin-bottom: 1.5vh; }
+
+.mod_params_tit {
+  font-size: var(--fz_s4);
+  font-weight: 700;
+  color: var(--tx1);
+  margin-bottom: .8vh;
+  display: flex;
+  align-items: center;
+  gap: .5vh;
+}
+
+.mod_params_tit i { color: var(--mco); font-size: var(--fz_s3); }
+
+.mod_param {
+  display: flex;
+  align-items: baseline;
+  gap: 1vh;
+  padding: .6vh 0;
+  font-size: var(--fz_s4);
+  color: var(--tx2);
+  border-bottom: 1px solid color-mix(in srgb, var(--brd) 50%, transparent);
+}
+
+.mod_param:last-child { border-bottom: none; }
+
+.mod_param code {
+  font-weight: 700;
+  color: var(--Cielo);
+  background: color-mix(in srgb, var(--Cielo) 8%, transparent);
+  padding: .2vh .6vh;
+  border-radius: .3vh;
+  font-size: var(--fz_s3);
+  font-family: 'Fira Code', monospace;
+  flex-shrink: 0;
+}
+
+.mod_param em {
+  font-style: normal;
+  color: var(--Mora);
+  background: color-mix(in srgb, var(--Mora) 8%, transparent);
+  padding: .2vh .6vh;
+  border-radius: .3vh;
+  font-size: var(--fz_s3);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+
+/* ── 12. INFO GRID ────────────────────────────────── */
+.mod_extra_info {
+  margin: 3vh 0;
+  padding: 3vh;
+  background: var(--bg4);
+  border: 1px solid var(--brd);
+  border-radius: 1vh;
+}
+
+.mod_info_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2vh;
+}
+
+.mod_info_card {
+  padding: 2vh;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: .8vh;
+  transition: all var(--tr_f);
+}
+
+.mod_info_card:hover {
+  border-color: var(--mco);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+}
+
+.mod_info_card i {
+  font-size: var(--fz_l1);
+  color: var(--mco);
+  margin-bottom: 1vh;
+  display: block;
+}
+
+.mod_info_card strong {
+  display: block;
+  color: var(--tx);
+  font-size: var(--fz_m2);
+  margin-bottom: .5vh;
+}
+
+.mod_info_card p {
+  font-size: var(--fz_s4);
+  color: var(--tx2);
+  line-height: 1.5;
+  margin: 0;
+}
+
+
+/* ── 13. MODAL ANIMATIONS ─────────────────────────── */
+.mod_anim_fade  { animation: mf .3s ease !important; }
+
+.mod_anim_slide { animation: mod_slideUp .35s ease !important; }
+@keyframes mod_slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.mod_anim_bounce { animation: mod_bounce .4s ease !important; }
+@keyframes mod_bounce {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.08); }
+  80%  { transform: scale(0.97); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.mod_anim_flip { animation: mod_flip .45s ease !important; }
+@keyframes mod_flip {
+  from { transform: perspective(600px) rotateX(90deg); opacity: 0; }
+  to   { transform: perspective(600px) rotateX(0); opacity: 1; }
+}
+
+.mod_anim_zoom { animation: mod_zoom .35s cubic-bezier(.25,.8,.25,1) !important; }
+@keyframes mod_zoom {
+  from { transform: scale(0.3); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+
+/* ── 14. CTA FINAL ────────────────────────────────── */
+.mod_cta {
+  text-align: center;
+  padding: 8vh 0 4vh;
+}
+
+.mod_cta_ico {
+  font-size: var(--fz_x2);
+  color: var(--mco);
+  animation: mod_float 3s ease-in-out infinite;
+  display: block;
+  margin-bottom: 2vh;
+}
+
+@keyframes mod_float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.mod_cta h2 {
+  font-size: var(--fz_l2);
+  font-weight: 800;
+  color: var(--tx);
+  margin-bottom: 1vh;
+}
+
+.mod_cta p {
+  font-size: var(--fz_m3);
+  color: var(--tx2);
+  margin-bottom: 3vh;
+}
+
+.mod_cta_code {
+  display: inline-block;
+  max-width: 600px;
+}
+
+
+/* ── 17. RESPONSIVE ───────────────────────────────── */
+@media (max-width: 768px) {
+  .mod_wrap { padding: 0 3vw; }
+
+  .mod_header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2vh;
+    padding: 4vh 0 3vh;
+  }
+
+  .mod_title { font-size: var(--fz_l2); }
+  .mod_sub { max-width: 100%; }
+
+  .mod_header_stats {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mod_features {
+    gap: 1vh;
+    padding: 1.5vh 0 3vh;
+  }
+
+  .mod_feat {
+    padding: .8vh 1.2vh;
+    font-size: var(--fz_s3);
+  }
+
+  /* Layout: sidebar becomes horizontal scroll */
+  .mod_layout {
+    flex-direction: column;
+    gap: 2vh;
+  }
+
+  .mod_sidebar {
+    width: 100%;
+    position: relative;
+    top: 0;
+    max-height: none;
+    display: flex;
+    gap: .5vh;
+    overflow-x: auto;
+    padding: 1vh;
+    flex-wrap: nowrap;
+  }
+
+  .mod_side_title { display: none; }
+
+  .mod_side_item {
+    white-space: nowrap;
+    padding: .8vh 1.2vh;
+    font-size: var(--fz_s4);
+    flex-shrink: 0;
+  }
+
+  .mod_side_item::before { display: none; }
+
+  .mod_side_item.active {
+    border-color: var(--cc);
+  }
+
+  .mod_section { padding: 3vh 0; }
+
+  .mod_sec_head { gap: 1.5vh; }
+
+  .mod_sec_ico {
+    width: 4vh;
+    height: 4vh;
+    font-size: var(--fz_m5);
+  }
+
+  .mod_sec_tit { font-size: var(--fz_m5); }
+
+  .mod_demo_btns {
+    gap: .8vh;
+  }
+
+  .mod_btn {
+    padding: .8vh 1.5vh;
+    font-size: var(--fz_s4);
+  }
+
+  .mod_info_grid {
+    grid-template-columns: 1fr;
+    gap: 1.5vh;
+  }
+
+  .mod_steps_bar { gap: 0; }
+
+  .mod_step_line {
+    width: 4vh;
+    margin: 0 .5vh;
+  }
+
+  .mod_step_dot small { font-size: var(--fz_s1); }
+
+  .mod_fn_head { flex-direction: column; align-items: flex-start; gap: .5vh; }
+
+  .mod_param {
+    flex-direction: column;
+    gap: .3vh;
+  }
+
+  .mod_cta { padding: 5vh 0 3vh; }
+  .mod_cta h2 { font-size: var(--fz_m5); }
+  .mod_cta_code { max-width: 100%; }
+}

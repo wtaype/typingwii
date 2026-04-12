@@ -1,0 +1,7 @@
+@import './docs.css';
+.doc_wrap{--cc:#A855F7}
+.wsu_btn{padding:.6vh 1.4vh;background:color-mix(in srgb,#A855F7 12%,var(--bg));border:1px solid color-mix(in srgb,#A855F7 30%,var(--brd));border-radius:.6vh;color:#9333ea;font-size:var(--fz_s4);font-weight:600;cursor:pointer;transition:all var(--tr_f);display:inline-flex;align-items:center;gap:.5vh}
+.wsu_btn:hover{background:color-mix(in srgb,#A855F7 20%,var(--bg));transform:translateY(-.2vh)}
+.wsu_btn.wsu_secret{border-style:dashed}
+.wsu_badge{display:inline-flex;align-items:center;justify-content:center;min-width:3.5vh;height:2vh;background:var(--bg4);border-radius:5vh;font-size:var(--fz_s2);font-weight:700;color:var(--mco);margin-left:.4vh;padding:0 .5vh}
+.wsu_count{font-size:var(--fz_m3);font-weight:700;color:#A855F7}

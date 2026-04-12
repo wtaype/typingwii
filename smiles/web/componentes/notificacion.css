@@ -1,0 +1,8 @@
+@import './docs.css';
+.doc_wrap{--cc:#EC4899}
+.not_btn{padding:.5vh 1.2vh;border:none;border-radius:.6vh;font-size:var(--fz_s4);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:.5vh;transition:all var(--tr_f)}
+.not_success{background:color-mix(in srgb,#10B981 15%,var(--bg));color:#10B981;border:1px solid #10B981}
+.not_error{background:color-mix(in srgb,#EF4444 15%,var(--bg));color:#EF4444;border:1px solid #EF4444}
+.not_warning{background:color-mix(in srgb,#F59E0B 15%,var(--bg));color:#F59E0B;border:1px solid #F59E0B}
+.not_info{background:color-mix(in srgb,#3B82F6 15%,var(--bg));color:#3B82F6;border:1px solid #3B82F6}
+.not_btn:hover{filter:brightness(1.1);transform:translateY(-.2vh)}

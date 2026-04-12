@@ -1,0 +1,8 @@
+@import './docs.css';
+.doc_wrap{--cc:#7C3AED}
+.wvs_box{padding:1.5vh 2vh;background:color-mix(in srgb,#7C3AED 12%,var(--bg));border:1px solid color-mix(in srgb,#7C3AED 30%,var(--brd));border-radius:.8vh;color:var(--tx);font-weight:600;font-size:var(--fz_m2);animation:wvs_in .5s ease both}
+@keyframes wvs_in{from{opacity:0;transform:translateY(1.5vh)}to{opacity:1;transform:translateY(0)}}
+.wvs_card{flex:1;padding:2vh;background:var(--bg4);border:1px solid var(--brd);border-radius:.8vh;color:var(--tx);font-size:var(--fz_m1);text-align:center;transition:all .3s ease}
+.wvs_card.wvs_on,.wvs_card.wvs_click:hover{border-color:#7C3AED;background:color-mix(in srgb,#7C3AED 12%,var(--bg));cursor:pointer}
+.wvs_item{padding:1vh 1.5vh;background:var(--wb);border:1px solid var(--brd);border-radius:.6vh;color:var(--tx);font-size:var(--fz_m1);animation:wvs_in .5s ease both}
+.wvs_opt{padding:.8vh 1.5vh;background:var(--bg4);border:1px solid var(--brd);border-radius:.6vh;font-size:var(--fz_s4);color:var(--tx2)}

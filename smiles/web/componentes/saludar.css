@@ -1,0 +1,8 @@
+@import './docs.css';
+.doc_wrap{--cc:#F97316}
+.sal_badge{display:inline-flex;align-items:center;gap:.6vh;padding:1vh 2vh;background:color-mix(in srgb,#F97316 10%,var(--bg));border:1px solid color-mix(in srgb,#F97316 25%,var(--brd));border-radius:5vh;font-size:var(--fz_m3);color:var(--tx)}
+.sal_demo{padding:2vh;background:var(--bg4);border-radius:.8vh;text-align:center}
+.sal_text{font-size:var(--fz_l1);margin:0;display:flex;align-items:center;gap:.5vh;justify-content:center}
+.sal_hora{color:#F97316;font-weight:700}
+.sal_nombre{color:var(--tx);font-weight:600}
+.sal_rng{padding:.8vh 1.5vh;background:var(--bg4);border:1px solid var(--brd);border-radius:.6vh;font-size:var(--fz_s4);color:var(--tx2)}

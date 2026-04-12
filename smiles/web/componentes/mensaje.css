@@ -1,0 +1,8 @@
+@import './docs.css';
+.doc_wrap{--cc:#14B8A6}
+.nmsj_btn{padding:.5vh 1.2vh;border-radius:.6vh;font-size:var(--fz_s4);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:.5vh;transition:all var(--tr_f)}
+.nmsj_s{background:color-mix(in srgb,#10B981 15%,var(--bg));color:#10B981;border:1px solid #10B981}
+.nmsj_e{background:color-mix(in srgb,#EF4444 15%,var(--bg));color:#EF4444;border:1px solid #EF4444}
+.nmsj_w{background:color-mix(in srgb,#F59E0B 15%,var(--bg));color:#F59E0B;border:1px solid #F59E0B}
+.nmsj_i{background:color-mix(in srgb,#3B82F6 15%,var(--bg));color:#3B82F6;border:1px solid #3B82F6}
+.nmsj_btn:hover{filter:brightness(1.1);transform:translateY(-.2vh)}
