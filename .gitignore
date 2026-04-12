@@ -7,17 +7,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Dependencies
 node_modules
 dist
 dist-ssr
-build/
-out/
-
-# Environment files
-.env
-.env.local
-.env.*.local
+*.local
 
 # Editor directories and files
 .vscode/*
@@ -30,19 +23,14 @@ out/
 *.sln
 *.sw?
 
-# Test and coverage
-coverage/
-.nyc_output
-reports/
+.env
+.env.local
+.env.development
 
-# System files
-Thumbs.db
-ehthumbs.db
-.Spotlight-V100
-.Trashes
+# Local Netlify folder
+.netlify
 
-# Temporary files
-*.tmp
-*.bak
-*.swp
-*.lock
+# Firebase AI / Agent Skills
+.agents/
+.claude/
+skills-lock.json
