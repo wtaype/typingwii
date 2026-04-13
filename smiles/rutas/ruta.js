@@ -26,9 +26,10 @@ export const NAV = {
   smile: {
     winav: [
       { href: '/smile',     page: 'smile',     ico: 'fa-dashboard',  txt: 'Dashboard'          },
-      { href: '/milab',     page: 'milab',     ico: 'fa-graduation-cap', txt: 'Mi Lab'          },
-      { href: '/mensajes',  page: 'mensajes',  ico: 'fa-comments',   txt: 'Mensajes'            },
-      { href: '/solicitar', page: 'solicitar', ico: 'fa-paper-plane',txt: 'Solicitar días libres'},
+      { href: '/lecciones', page: 'lecciones', ico: 'fa-graduation-cap', txt: 'Lecciones'          },
+      { href: '/progreso',  page: 'progreso',  ico: 'fa-chart-line', txt: 'Progreso'           },
+      { href: '/certificado',  page: 'certificado',  ico: 'fa-certificate', txt: 'Certificado'        },
+      { href: '/contacto',  page: 'contacto',  ico: 'fa-envelope',   txt: 'Contacto'           },
     ],
     nvrig: [
       { href: '/mensajes', page: 'mensajes', ico: 'fa-comments', txt: 'Mensajes' },
@@ -38,20 +39,20 @@ export const NAV = {
   gestor: {
     winav: [
       { href: '/gestor',     page: 'gestor',     ico: 'fa-home',        txt: 'Bienvenido'          },
-      { href: '/aprobar',    page: 'aprobar',    ico: 'fa-check-circle',txt: 'Aprobar Solicitudes' },
-      { href: '/beneficios', page: 'beneficios', ico: 'fa-gift',        txt: 'Gestionar Beneficios'},
-      { href: '/buscar',     page: 'buscar',     ico: 'fa-search',      txt: 'Buscador'            },
-      { href: '/equipo',     page: 'equipo',     ico: 'fa-users',       txt: 'Equipo People'       },
-      { href: '/solicitar',  page: 'solicitar',  ico: 'fa-paper-plane', txt: 'Solicitar Beneficio' },
+      { href: '/estudiantes',    page: 'estudiantes',    ico: 'fa-user-graduate',txt: 'Estudiantes' },
+      { href: '/clases',     page: 'clases',     ico: 'fa-book',        txt: 'Clases'},
+      { href: '/calificaciones',     page: 'calificaciones',     ico: 'fa-search',      txt: 'Calificaciones'            },
+      { href: '/tareas',     page: 'tareas',     ico: 'fa-chart-line',      txt: 'Tareas'            },
+      { href: '/contacto',  page: 'contacto',  ico: 'fa-envelope', txt: 'Contacto' },
     ],
     nvrig: [{ isPerfil: true }, { isSalir: true }]
   },
   admin: {
     winav: [
       { href: '/admin',    page: 'admin',    ico: 'fa-home',       txt: 'Bienvenido'        },
-      { href: '/personas', page: 'personas', ico: 'fa-id-badge',   txt: 'Gestionar Personas'},
-      { href: '/roles',    page: 'roles',    ico: 'fa-shield-alt', txt: 'Gestionar Roles'   },
-      { href: '/subir',    page: 'subir',    ico: 'fa-upload',     txt: 'Subir Excel'       },
+      { href: '/estudiantes', page: 'estudiantes', ico: 'fa-user-graduate',   txt: 'Estudiantes'},
+      { href: '/profesores',    page: 'profesores',    ico: 'fa-chalkboard-teacher', txt: 'Profesores'   },
+      { href: '/administrar',    page: 'administrar',    ico: 'fa-upload',     txt: 'Administrar'       },
     ],
     nvrig: [{ isPerfil: true }, { isSalir: true }]
   }
@@ -77,23 +78,24 @@ export const RUTAS = [
 
   // SMILE — web/smile/     roles: ['smile','gestor','admin']
   { path: '/smile',     area: 'smile/', roles: ['smile','gestor','admin'] },
+  { path: '/lecciones',  area: 'smile/', roles: ['smile','gestor','admin'] },
+  { path: '/progreso',    area: 'smile/', roles: ['smile','gestor','admin'] },
+  { path: '/certificado',   area: 'smile/', roles: ['smile','gestor','admin'] },
+  { path: '/perfil',  area: 'smile/', roles: ['smile','gestor','admin'] },
   { path: '/mensajes',  area: 'smile/', roles: ['smile','gestor','admin'] },
-  { path: '/perfil',    area: 'smile/', roles: ['smile','gestor','admin'] },
-  { path: '/solicitar', area: 'smile/', roles: ['smile','gestor','admin'] },
-  { path: '/agregar',   area: 'smile/', roles: ['smile','gestor','admin'] },
 
   // GESTOR — web/gestor/   roles: ['gestor','admin']
-  { path: '/people',     area: 'gestor/', roles: ['gestor','admin'], mod: 'gestor' },
-  { path: '/aprobar',    area: 'gestor/', roles: ['gestor','admin'] },
-  { path: '/beneficios', area: 'gestor/', roles: ['gestor','admin'] },
-  { path: '/buscar',     area: 'gestor/', roles: ['gestor','admin'] },
-  { path: '/equipo',     area: 'gestor/', roles: ['gestor','admin'] },
+  { path: '/gestor',     area: 'gestor/', roles: ['gestor','admin'], mod: 'gestor' },
+  { path: '/estudiantes',    area: 'gestor/', roles: ['gestor','admin'] },
+  { path: '/clases', area: 'gestor/', roles: ['gestor','admin'] },
+  { path: '/calificaciones',     area: 'gestor/', roles: ['gestor','admin'] },
+  { path: '/tareas',     area: 'gestor/', roles: ['gestor','admin'] },
 
   // ADMIN — web/admin/     roles: ['admin']
   { path: '/admin',    area: 'admin/', roles: ['admin'] },
-  { path: '/personas', area: 'admin/', roles: ['admin'] },
-  { path: '/roles',    area: 'admin/', roles: ['admin'] },
-  { path: '/subir',    area: 'admin/', roles: ['admin'] },
+  { path: '/estudiantes', area: 'admin/', roles: ['admin'] },
+  { path: '/profesores',    area: 'admin/', roles: ['admin'] },
+  { path: '/administrar',    area: 'admin/', roles: ['admin'] },
 ];
 
 // ── GLOB — Vite mapea todos los módulos en build time ─────────────────────────

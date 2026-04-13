@@ -1,118 +1,147 @@
 import './acerca.css';
 import $ from 'jquery';
+import { wiVista } from '../../widev.js';
+import { app } from '../../wii.js';
 
-var features = [
-  { i: 'fa-heart', t: 'Hecho con amor', d: 'Cada detalle esta pensado para que tu mensaje sea especial e inolvidable' },
-  { i: 'fa-palette', t: '6 plantillas unicas', d: 'Amor, amistad, aniversario, carta, declaracion y saludo con disenos exclusivos' },
-  { i: 'fa-music', t: 'Musica incluida', d: 'Agrega musica de fondo para hacer tu mensaje aun mas emotivo' },
-  { i: 'fa-bolt', t: 'Rapido y facil', d: 'Crea y envia tu mensaje en menos de 1 minuto sin registrarte' },
-  { i: 'fa-cloud', t: 'En la nube', d: 'Con cuenta Smile tus mensajes se guardan para siempre en la nube' },
-  { i: 'fa-share-nodes', t: 'Comparte donde quieras', d: 'WhatsApp, Telegram o cualquier red social con un solo click' },
-  { i: 'fa-lock', t: 'Links privados', d: 'Solo quien tenga el enlace puede ver tu mensaje. Seguro y personal' },
-  { i: 'fa-mobile-screen', t: '100% responsive', d: 'Se ve perfecto en celular, tablet y computadora' }
+// ── DATOS ──────────────────────────────────────────────────────────
+const VALORES = [
+  { ico: 'fa-bullseye',  c: '#0EBEFF', t: 'Aprendizaje enfocado', d: 'Creemos que la mecanografía debe aprenderse de forma estructurada, eliminando distracciones para centrarse en la memoria muscular.' },
+  { ico: 'fa-universal-access', c: '#28a745', t: 'Accesibilidad', d: 'Diseñamos herramientas que cualquiera, desde un niño hasta un profesional, pueda usar sin barreras técnicas ni costos.' },
+  { ico: 'fa-microchip', c: '#fd7e14', t: 'Innovación constante', d: 'Usamos tecnología de punta para medir cada pulsación y ofrecer métricas precisas que ayuden al usuario a mejorar.' },
+  { ico: 'fa-heart',     c: '#FF5C69', t: 'Pasión por la educación', d: 'TypingWii nació de la necesidad de mejorar las habilidades digitales en un mundo cada vez más conectado.' },
 ];
 
-var team = [
-  { n: 'Lovewi Team', r: 'Desarrollo', i: 'fa-code', d: 'Creado con pasion para conectar corazones a traves de la tecnologia' }
+const STATS = [
+  { n: '+50K', l: 'Palabras escritas', ico: 'fa-keyboard' },
+  { n: '100%', l: 'Gratuito', ico: 'fa-gift' },
+  { n: '+12',  l: 'Lecciones guiadas', ico: 'fa-book' },
+  { n: '24/7', l: 'Disponibilidad', ico: 'fa-cloud' },
 ];
 
-export var render = function() {
-  var featHTML = '';
-  for (var i = 0; i < features.length; i++) {
-    var f = features[i];
-    featHTML += '<div class="ac_feat" style="--delay:' + (i * 0.08) + 's">' +
-      '<div class="ac_feat_icono"><i class="fas ' + f.i + '"></i></div>' +
-      '<h3>' + f.t + '</h3>' +
-      '<p>' + f.d + '</p>' +
-    '</div>';
-  }
+// ── RENDER ─────────────────────────────────────────────────────────
+export const render = () => `
+<div class="ac_page">
 
-  var teamHTML = '';
-  for (var j = 0; j < team.length; j++) {
-    var t = team[j];
-    teamHTML += '<div class="ac_team_card">' +
-      '<div class="ac_team_avatar"><i class="fas ' + t.i + '"></i></div>' +
-      '<h3>' + t.n + '</h3>' +
-      '<span class="ac_team_rol">' + t.r + '</span>' +
-      '<p>' + t.d + '</p>' +
-    '</div>';
-  }
+  <!-- ══ HERO ══ -->
+  <section class="ac_hero">
+    <div class="ac_hero_bg">
+      <div class="ac_orb ac_orb1"></div>
+      <div class="ac_orb ac_orb2"></div>
+    </div>
+    <div class="ac_hero_inner">
+      <div class="ac_badge"><i class="fas fa-info-circle"></i> Acerca de nosotros</div>
+      <h1 class="ac_h1">Transformando la forma en que el mundo <span class="ac_grad">escribe</span></h1>
+      <p class="ac_sub">En ${app}, nuestra misión es empoderar a estudiantes y profesionales con la habilidad digital más fundamental: la mecanografía rápida y precisa.</p>
+    </div>
+  </section>
 
-  return '<div class="acerca">' +
+  <!-- ══ HISTORIA / MISION ══ -->
+  <section class="ac_sec">
+    <div class="ac_mision_grid">
+      <div class="ac_mision_img wi_fadeUp">
+        <div class="ac_img_card">
+          <i class="fas fa-quote-left"></i>
+          <p>La mecanografía no es solo escribir rápido, es liberar tu mente para que tus dedos sigan el ritmo de tus pensamientos.</p>
+          <div class="ac_img_author">
+            <div class="ac_author_av">WT</div>
+            <div>
+              <strong>Wilder Taype</strong>
+              <span>Fundador de ${app}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ac_mision_txt wi_fadeUp" style="--d:.15s">
+        <div class="ac_sec_badge"><i class="fas fa-rocket"></i> Nuestra historia</div>
+        <h2 class="ac_sec_h2">¿Qué es <span class="ac_grad">${app}</span>?</h2>
+        <p class="ac_sec_p">
+          ${app} nació como un proyecto personal para resolver una necesidad común: la falta de plataformas profesionales, gratuitas y divertidas para aprender mecanografía en español. 
+          <br><br>
+          Lo que comenzó como una herramienta simple para amigos, se ha convertido en una plataforma robusta utilizada por estudiantes, profesores y empresas que buscan mejorar su productividad diaria.
+        </p>
+        <div class="ac_mision_stats">
+          ${STATS.map(s => `
+            <div class="ac_ms">
+              <span class="ac_ms_n">${s.n}</span>
+              <span class="ac_ms_l">${s.l}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+  </section>
 
-    '<div class="ac_hero">' +
-      '<div class="ac_hero_contenido">' +
-        '<div class="ac_logo_grande">&#128140;</div>' +
-        '<h1 class="ac_titulo">Lovewi</h1>' +
-        '<p class="ac_tagline">Mensajes que tocan el corazon</p>' +
-        '<p class="ac_desc">Lovewi es una plataforma gratuita para crear y enviar mensajes personalizados con plantillas hermosas, musica y animaciones.</p>' +
-        '<div class="ac_hero_stats">' +
-          '<div class="stat"><i class="fas fa-palette"></i> 6 plantillas</div>' +
-          '<div class="stat"><i class="fas fa-heart"></i> 100% gratis</div>' +
-          '<div class="stat"><i class="fas fa-bolt"></i> Sin registro</div>' +
-        '</div>' +
-      '</div>' +
-    '</div>' +
+  <!-- ══ VALORES ══ -->
+  <section class="ac_sec ac_sec_alt">
+    <div class="ac_sec_head wi_fadeUp">
+      <div class="ac_sec_badge"><i class="fas fa-star"></i> Nuestros valores</div>
+      <h2 class="ac_sec_h2">Lo que nos <span class="ac_grad">impulsa cada día</span></h2>
+      <p class="ac_sec_sub">Principios que guían cada línea de código y cada lección que diseñamos.</p>
+    </div>
+    <div class="ac_grid_2">
+      ${VALORES.map((v, i) => `
+        <div class="ac_valor_card wi_fadeUp" style="--vc:${v.c};--d:${i * .1}s">
+          <div class="ac_v_ico"><i class="fas ${v.ico}"></i></div>
+          <div class="ac_v_txt">
+            <h3>${v.t}</h3>
+            <p>${v.d}</p>
+          </div>
+        </div>`).join('')}
+    </div>
+  </section>
 
-    '<div class="ac_seccion">' +
-      '<div class="ac_sec_header">' +
-        '<span class="ac_sec_icono"><i class="fas fa-star"></i></span>' +
-        '<h2>Que hace especial a <span class="gradiente">Lovewi</span>?</h2>' +
-        '<p>Todo lo que necesitas para expresar lo que sientes</p>' +
-      '</div>' +
-      '<div class="ac_feat_grid">' + featHTML + '</div>' +
-    '</div>' +
+  <!-- ══ VISION ══ -->
+  <section class="ac_sec">
+    <div class="ac_vision_card wi_fadeUp">
+      <div class="ac_vision_txt">
+        <div class="ac_sec_badge" style="color:#fff;border-color:rgba(255,255,255,.3)"><i class="fas fa-eye"></i> Nuestra Visión</div>
+        <h2 class="ac_vision_h2">Ser la plataforma líder en <span class="ac_vision_grad">capacitación digital</span> del Perú para el 2026.</h2>
+        <p class="ac_vision_p">Queremos que cada aula y cada empresa tenga acceso a herramientas de primer nivel para cerrar la brecha digital.</p>
+        <div class="ac_vision_item">
+          <i class="fas fa-check-circle"></i>
+          <span>Impactar a más de 100,000 estudiantes.</span>
+        </div>
+        <div class="ac_vision_item">
+          <i class="fas fa-check-circle"></i>
+          <span>Expandir nuestro catálogo a mecanografía técnica y de código.</span>
+        </div>
+      </div>
+      <div class="ac_vision_icon">
+        <i class="fas fa-earth-americas"></i>
+      </div>
+    </div>
+  </section>
 
-    '<div class="ac_seccion ac_como">' +
-      '<div class="ac_sec_header">' +
-        '<span class="ac_sec_icono"><i class="fas fa-route"></i></span>' +
-        '<h2>Como <span class="gradiente">funciona</span>?</h2>' +
-        '<p>3 pasos simples para emocionar a alguien</p>' +
-      '</div>' +
-      '<div class="ac_pasos">' +
-        '<div class="ac_paso"><div class="ac_paso_num">1</div><div class="ac_paso_icono"><i class="fas fa-pen-fancy"></i></div><h3>Escribe</h3><p>Elige plantilla, escribe tu mensaje y personaliza como quieras</p></div>' +
-        '<div class="ac_paso_linea"><i class="fas fa-chevron-right"></i></div>' +
-        '<div class="ac_paso"><div class="ac_paso_num">2</div><div class="ac_paso_icono"><i class="fas fa-cloud-arrow-up"></i></div><h3>Genera</h3><p>Guarda en la nube y obtiene un enlace unico para compartir</p></div>' +
-        '<div class="ac_paso_linea"><i class="fas fa-chevron-right"></i></div>' +
-        '<div class="ac_paso"><div class="ac_paso_num">3</div><div class="ac_paso_icono"><i class="fas fa-paper-plane"></i></div><h3>Envia</h3><p>Comparte por WhatsApp, Telegram o donde prefieras</p></div>' +
-      '</div>' +
-    '</div>' +
+  <!-- ══ CTA FINAL ══ -->
+  <section class="ac_cta_sec wi_fadeUp">
+    <div class="ac_cta_card">
+      <div class="ac_cta_orb"></div>
+      <div class="ac_cta_inner">
+        <div class="ac_cta_ico"><i class="fas fa-keyboard"></i></div>
+        <div class="ac_cta_txt">
+          <h2>¿Listo para mejorar tu velocidad?</h2>
+          <p>Únete a miles de personas que ya están escribiendo como expertos en ${app}.</p>
+        </div>
+        <div class="ac_cta_btns">
+          <a href="/comenzar" class="ac_btn_pri nv_item" data-page="comenzar">
+            <i class="fas fa-play"></i> Probar gratis
+          </a>
+          <a href="/registrar" class="ac_btn_gho nv_item" data-page="registrar">
+            <i class="fas fa-user-plus"></i> Crear cuenta
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    '<div class="ac_seccion">' +
-      '<div class="ac_sec_header">' +
-        '<span class="ac_sec_icono"><i class="fas fa-users"></i></span>' +
-        '<h2>Nuestro <span class="gradiente">equipo</span></h2>' +
-      '</div>' +
-      '<div class="ac_team">' + teamHTML + '</div>' +
-    '</div>' +
+</div>`;
 
-    '<div class="ac_cta">' +
-      '<div class="ac_cta_contenido">' +
-        '<span class="ac_cta_icono">&#128140;</span>' +
-        '<h2>Listo para emocionar a alguien?</h2>' +
-        '<p>Crea tu primer mensaje en menos de 1 minuto</p>' +
-        '<div class="ac_cta_btns">' +
-          '<a href="/crear" class="ac_cta_btn"><i class="fas fa-wand-magic-sparkles"></i> Crear mensaje</a>' +
-          '<a href="/ejemplos" class="ac_cta_btn2"><i class="fas fa-lightbulb"></i> Ver ejemplos</a>' +
-        '</div>' +
-      '</div>' +
-    '</div>' +
-
-    '<div class="ac_footer_extra">' +
-      '<p>Lovewi v10 &middot; Hecho con <i class="fas fa-heart" style="color:var(--mco)"></i> &middot; 2025-2026</p>' +
-    '</div>' +
-
-  '</div>';
+// ── INIT / CLEANUP ──────────────────────────────────────────────────
+let _obs = [];
+export const init = () => {
+  _obs = [
+    wiVista('.wi_fadeUp', null, { anim: 'wi_fadeUp' }),
+    wiVista('.ac_valor_card', null, { anim: 'wi_fadeUp', stagger: 100 }),
+  ];
+  console.log(`ℹ️ ${app} — Acerca de listo`);
 };
-
-export var init = function() {
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-
-  $('.ac_feat, .ac_paso, .ac_team_card, .ac_seccion').each(function() { obs.observe(this); });
-};
-
-export var cleanup = function() {};
+export const cleanup = () => { _obs.forEach(o => o?.disconnect?.()); _obs = []; };

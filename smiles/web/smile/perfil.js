@@ -1,59 +1,54 @@
 import './perfil.css';
 import $ from 'jquery';
 import {
-  getls, Saludar, fechaHoy,
-  calcularTiempoEmpresa, calcMeses,
-  NombreApellido, avatar
+  getls, savels, Saludar, fechaHoy,
+  avatar, Mensaje,
 } from '../../widev.js';
+import { db } from '../firebase.js';
+import { doc, updateDoc } from 'firebase/firestore';
 
 const wi = () => getls('wiSmile');
 
-// ─── MENSAJES POSITIVOS ALEATORIOS ────────────────────────────────
-const MENSAJES = [
-  { ico: 'fa-star',          txt: '¡Tu esfuerzo diario marca la diferencia! 🌟' },
-  { ico: 'fa-heart',         txt: '¡Gracias por ser parte de este gran equipo! ❤️' },
-  { ico: 'fa-rocket',        txt: '¡Cada día eres una versión mejor de ti mismo!' },
-  { ico: 'fa-sun',           txt: '¡Tu energía ilumina el ambiente de trabajo! ☀️' },
-  { ico: 'fa-trophy',        txt: '¡Los grandes resultados vienen de tu dedicación!' },
-  { ico: 'fa-seedling',      txt: '¡Sigues creciendo y eso nos enorgullece!' },
-  { ico: 'fa-hands-clapping',txt: '¡Tu compromiso es un ejemplo para todos!' },
-  { ico: 'fa-gem',           txt: '¡Eres una pieza clave en nuestra misión!' },
-  { ico: 'fa-fire',          txt: '¡Tu pasión por lo que haces se nota siempre!' },
-  { ico: 'fa-lightbulb',     txt: '¡Tus ideas y actitud hacen la diferencia cada día!' },
-  { ico: 'fa-shield-halved', txt: '¡Tu constancia construye cosas extraordinarias!' },
-  { ico: 'fa-leaf',          txt: '¡Seguir adelante con determinación siempre vale la pena!' },
-  { ico: 'fa-bolt',          txt: '¡Tu actitud positiva contagia a quienes te rodean!' },
-  { ico: 'fa-compass',       txt: '¡Vas por el camino correcto, sigue adelante!' },
-  { ico: 'fa-infinity',      txt: '¡Tu potencial no tiene límites. ¡Sigue brillando!' },
+// ─── TEMAS exactos de index.html ──────────────────────────────────
+const TEMAS = [
+  { n: 'Cielo',  c: '#0EBEFF' },
+  { n: 'Dulce',  c: '#FF5C69' },
+  { n: 'Paz',    c: '#29C72E' },
+  { n: 'Oro',    c: '#FFDA34' },
+  { n: 'Mora',   c: '#7000FF' },
+  { n: 'Futuro', c: '#21273B' },
 ];
 
+// ─── GÉNEROS ──────────────────────────────────────────────────────
+const GENEROS = [
+  { v: 'masculino', lbl: '👨 Masculino' },
+  { v: 'femenino',  lbl: '👩 Femenino'  },
+  { v: 'otro',      lbl: '⚧ Otro'       },
+];
+
+// ─── MENSAJES MECANOGRAFÍA ────────────────────────────────────────
+const MENSAJES = [
+  { ico: 'fa-keyboard',       txt: '¡Cada tecla que pulsas te acerca a ser un experto! ⌨️' },
+  { ico: 'fa-bolt',           txt: '¡Tu velocidad mejora con cada práctica. Sigue así! 🚀' },
+  { ico: 'fa-bullseye',       txt: '¡La precisión es tu mejor herramienta. Sin errores! 🎯' },
+  { ico: 'fa-star',           txt: '¡Los mejores mecanógrafos empezaron como tú. Persevera! 🌟' },
+  { ico: 'fa-trophy',         txt: '¡Practica 15 minutos hoy y notarás la diferencia! 🏆' },
+  { ico: 'fa-fire',           txt: '¡Tu racha de práctica es imparable. Mantén el ritmo! 🔥' },
+  { ico: 'fa-hands-clapping', txt: '¡Dedos ágiles, mente brillante. ¡Tú puedes! 👏' },
+  { ico: 'fa-rocket',         txt: '¡Más WPM cada día. La velocidad llega con constancia! 🚀' },
+];
 const msgAleatorio = () => MENSAJES[Math.floor(Math.random() * MENSAJES.length)];
 
-// ─── HELPER: tiempo en empresa visual ─────────────────────────────
-const tiempoBadge = (u) => {
-  const ts = u.fechaIngreso?.seconds;
-  if (!ts) return '';
-  const fi = new Date(ts * 1000);
-  const meses = calcMeses(fi);
-  const texto  = calcularTiempoEmpresa(fi);
-  const color  = meses >= 24 ? '#FFD101' : meses >= 12 ? '#37a1dd' : meses >= 6 ? '#28a745' : '#909090';
-  return `
-    <div class="pf_tiempo_badge" style="--badge-color:${color}">
-      <i class="fas fa-calendar-check"></i>
-      <span>${texto}</span>
-    </div>`;
+// ─── HELPERS ──────────────────────────────────────────────────────
+const getIni = (u) => {
+  const full = `${u.nombre || ''} ${u.apellidos || ''}`.trim();
+  return avatar(full || u.usuario || 'U');
 };
 
-// ─── HELPER: nivel de antigüedad ──────────────────────────────────
-const nivelAntiguedad = (u) => {
-  const ts = u.fechaIngreso?.seconds;
-  if (!ts) return null;
-  const meses = calcMeses(new Date(ts * 1000));
-  if (meses >= 36) return { label: 'Veterano', color: '#FFD101', ico: 'fa-crown' };
-  if (meses >= 24) return { label: 'Experto',  color: '#37a1dd', ico: 'fa-gem' };
-  if (meses >= 12) return { label: 'Senior',   color: '#28a745', ico: 'fa-trophy' };
-  if (meses >= 6)  return { label: 'Avanzado', color: '#fd7e14', ico: 'fa-fire' };
-  return                  { label: 'Nuevo',    color: '#909090', ico: 'fa-seedling' };
+// Timestamp Firestore → "YYYY-MM-DD" para input[type=date]
+const tsToInput = (ts) => {
+  if (!ts?.seconds) return '';
+  return new Date(ts.seconds * 1000).toISOString().split('T')[0];
 };
 
 // ─── RENDER ───────────────────────────────────────────────────────
@@ -61,121 +56,265 @@ export const render = () => {
   const u = wi();
   if (!u) return `
     <div class="pf_wrap">
-      <div class="sm_empty">
+      <div class="pf_empty">
         <i class="fas fa-user-lock"></i>
         <p>Sin sesión activa.</p>
       </div>
     </div>`;
 
-  const msg    = msgAleatorio();
-  const ini    = avatar(u.nombres || 'U S');
-  const nivel  = nivelAntiguedad(u);
-  const tiempo = tiempoBadge(u);
+  const msg  = msgAleatorio();
+  const ini  = getIni(u);
+  const foto = u.foto || `${import.meta.env.BASE_URL}smile.avif`;
+  const [temaNombre] = (u.tema || 'Cielo|#0EBEFF').split('|');
 
-  const fechaStr = u.fechaIngreso?.seconds
-    ? new Date(u.fechaIngreso.seconds * 1000)
+  const creadoStr = u.creado?.seconds
+    ? new Date(u.creado.seconds * 1000)
         .toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' })
     : '—';
 
-  const campos = [
-    { ico: 'fa-id-card',       lbl: 'DNI / Documento',  val: u.dni },
-    { ico: 'fa-envelope',      lbl: 'Correo',            val: u.email },
-    { ico: 'fa-building',      lbl: 'Empresa',           val: u.empresa },
-    { ico: 'fa-briefcase',     lbl: 'Cargo',             val: u.cargo || u.cargoOperaciones },
-    { ico: 'fa-diagram-project',lbl: 'Tipo de Labor',   val: u.TipoLabor },
-    { ico: 'fa-users',         lbl: 'Grupo / Área',      val: u.grupo },
-    { ico: 'fa-map-marker-alt',lbl: 'Sede',              val: u.sede },
-    { ico: 'fa-tags',          lbl: 'Centro de Costo',   val: u.centroCosto },
-    { ico: 'fa-sign-in-alt',   lbl: 'Fecha de Ingreso',  val: fechaStr },
-    { ico: 'fa-user-tag',      lbl: 'Usuario',           val: u.usuario },
-  ].filter(c => c.val && c.val !== '—');
+  const fnacInput = tsToInput(u.fechaNacimiento);
 
   return `
   <div class="pf_wrap">
 
-    <!-- ── HERO ───────────────────────────────── -->
+    <!-- ── HERO ─────────────────────────────────────────── -->
     <div class="pf_hero">
       <div class="pf_hero_bg"></div>
+      <div class="pf_hero_content">
 
-      <div class="pf_hero_left">
-        <div class="pf_avatar_ring">
-          <div class="pf_avatar">${ini}</div>
-          ${nivel ? `<div class="pf_nivel_dot" style="background:${nivel.color}" title="${nivel.label}"><i class="fas ${nivel.ico}"></i></div>` : ''}
+        <!-- Avatar con foto o inicial -->
+        <div class="pf_avatar_wrap">
+          <div class="pf_avatar_ring_pulse"></div>
+          <div class="pf_avatar" id="pf_avatar_preview">
+            ${u.foto
+              ? `<img src="${u.foto}" alt="Foto de perfil" class="pf_avatar_img"
+                      onerror="this.parentElement.innerHTML='${ini}'">`
+              : `<img src="${import.meta.env.BASE_URL}smile.avif" alt="Perfil" class="pf_avatar_img">`
+            }
+          </div>
         </div>
+
+        <!-- Info principal -->
         <div class="pf_hero_info">
-          <div class="pf_saludo">${Saludar()}</div>
-          <div class="pf_nombre">${NombreApellido(u.nombres || '—')}</div>
-          <div class="pf_cargo">${u.cargo || u.cargoOperaciones || '—'}</div>
-          <div class="pf_sede">
-            <i class="fas fa-location-dot"></i>
-            ${u.sede || '—'}
-            ${u.centroCosto ? `· <span>${u.centroCosto}</span>` : ''}
-          </div>
-          ${nivel ? `<div class="pf_nivel_badge" style="--nc:${nivel.color}"><i class="fas ${nivel.ico}"></i> ${nivel.label}</div>` : ''}
-        </div>
-      </div>
-
-      <div class="pf_hero_right">
-        <div class="pf_fecha_hoy">
-          <i class="fas fa-calendar-day"></i>
-          <span>${fechaHoy()}</span>
-        </div>
-        ${tiempo}
-      </div>
-    </div>
-
-    <!-- ── DATOS DEL PERFIL ────────────────────── -->
-    <div class="pf_section_title">
-      <div class="pf_section_ico"><i class="fas fa-user"></i></div>
-      <span>Información de perfil</span>
-      <div class="pf_readonly_badge"><i class="fas fa-lock"></i> Solo lectura</div>
-    </div>
-
-    <div class="pf_datos_grid">
-      ${campos.map(c => `
-        <div class="pf_dato_card">
-          <div class="pf_dato_ico"><i class="fas ${c.ico}"></i></div>
-          <div class="pf_dato_body">
-            <div class="pf_dato_lbl">${c.lbl}</div>
-            <div class="pf_dato_val">${c.val}</div>
+          <p class="pf_saludo">${Saludar()}</p>
+          <h1 class="pf_nombre">${u.nombre || '—'} ${u.apellidos || ''}</h1>
+          <div class="pf_tags">
+            <span class="pf_tag"><i class="fas fa-at"></i> ${u.usuario || '—'}</span>
+            <span class="pf_tag"><i class="fas fa-shield-halved"></i> ${u.rol || 'smile'}</span>
+            ${u.genero ? `<span class="pf_tag"><i class="fas fa-venus-mars"></i> ${u.genero}</span>` : ''}
+            <span class="pf_tag pf_tag_tema" style="--tc: var(--${temaNombre}, #0EBEFF)">
+              <i class="fas fa-circle"></i> ${temaNombre}
+            </span>
           </div>
         </div>
-      `).join('')}
+
+        <!-- Meta -->
+        <div class="pf_hero_meta">
+          <div class="pf_meta_item"><i class="fas fa-calendar-day"></i><span>${fechaHoy()}</span></div>
+          <div class="pf_meta_item"><i class="fas fa-clock"></i><span>Desde ${creadoStr}</span></div>
+          <div class="pf_meta_item"><i class="fas fa-envelope"></i><span>${u.email || '—'}</span></div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- ── MENSAJE POSITIVO ────────────────────── -->
-    <div class="pf_mensaje">
-      <div class="pf_mensaje_ico"><i class="fas ${msg.ico}"></i></div>
-      <div class="pf_mensaje_txt">${msg.txt}</div>
-      <button class="pf_refresh_msg" id="pf_refresh_msg" title="Otro mensaje">
+    <!-- ── MOTIVACIÓN ────────────────────────────────────── -->
+    <div class="pf_motivacion" id="pf_motivacion">
+      <div class="pf_mot_ico"><i class="fas ${msg.ico}"></i></div>
+      <p class="pf_mot_txt">${msg.txt}</p>
+      <button class="pf_mot_refresh" id="pf_refresh_msg" title="Nuevo mensaje">
         <i class="fas fa-arrows-rotate"></i>
       </button>
     </div>
-    
-    </div>
+
+    <!-- ── FORMULARIO INLINE ─────────────────────────────── -->
+    <form class="pf_edit_form" id="pf_form_edit" novalidate>
+
+      <div class="pf_form_header">
+        <div class="pf_form_title_wrap">
+          <div class="pf_form_ico"><i class="fas fa-user-pen"></i></div>
+          <div>
+            <div class="pf_form_title">Mis datos</div>
+            <div class="pf_form_sub">Personaliza tu perfil de estudiante</div>
+          </div>
+        </div>
+        <button type="submit" class="pf_save_btn" id="pf_btn_save">
+          <i class="fas fa-check"></i> Guardar cambios
+        </button>
+      </div>
+
+      <!-- Fila 1: Nombre + Apellidos -->
+      <div class="pf_row">
+        <div class="pf_field">
+          <label class="pf_label" for="pf_nombre">
+            <i class="fas fa-user"></i> Nombre
+          </label>
+          <input type="text" id="pf_nombre" name="nombre"
+            class="pf_input" value="${u.nombre || ''}"
+            placeholder="Tu nombre" autocomplete="given-name" required>
+        </div>
+        <div class="pf_field">
+          <label class="pf_label" for="pf_apellidos">
+            <i class="fas fa-user"></i> Apellidos
+          </label>
+          <input type="text" id="pf_apellidos" name="apellidos"
+            class="pf_input" value="${u.apellidos || ''}"
+            placeholder="Tus apellidos" autocomplete="family-name" required>
+        </div>
+      </div>
+
+      <!-- Fila 2: Fecha nacimiento + Género -->
+      <div class="pf_row">
+        <div class="pf_field">
+          <label class="pf_label" for="pf_fnac">
+            <i class="fas fa-cake-candles"></i> Fecha de nacimiento
+          </label>
+          <input type="date" id="pf_fnac" name="fechaNacimiento"
+            class="pf_input" value="${fnacInput}">
+        </div>
+        <div class="pf_field">
+          <label class="pf_label" for="pf_genero">
+            <i class="fas fa-venus-mars"></i> Género
+          </label>
+          <select id="pf_genero" name="genero" class="pf_input">
+            <option value="">— Seleccionar —</option>
+            ${GENEROS.map(g => `
+              <option value="${g.v}" ${u.genero === g.v ? 'selected' : ''}>${g.lbl}</option>
+            `).join('')}
+          </select>
+        </div>
+      </div>
+
+      <!-- Fila 3: Foto + preview live -->
+      <div class="pf_field">
+        <label class="pf_label" for="pf_foto">
+          <i class="fas fa-image"></i> URL de foto de perfil
+        </label>
+        <div class="pf_foto_row">
+          <img class="pf_foto_preview" id="pf_foto_preview"
+            src="${foto}" alt="Preview"
+            onerror="this.src='${import.meta.env.BASE_URL}smile.avif'">
+          <input type="url" id="pf_foto" name="foto"
+            class="pf_input" value="${u.foto || ''}"
+            placeholder="https://... (opcional)">
+        </div>
+      </div>
+
+      <!-- Fila 4: Solo lectura -->
+      <div class="pf_row">
+        <div class="pf_field">
+          <label class="pf_label"><i class="fas fa-at"></i> Usuario</label>
+          <input type="text" class="pf_input pf_readonly" value="${u.usuario || '—'}" readonly>
+        </div>
+        <div class="pf_field">
+          <label class="pf_label"><i class="fas fa-envelope"></i> Correo</label>
+          <input type="email" class="pf_input pf_readonly" value="${u.email || '—'}" readonly>
+        </div>
+      </div>
+
+      <!-- Selector de temas -->
+      <div class="pf_field">
+        <label class="pf_label"><i class="fas fa-palette"></i> Tema de color</label>
+        <div class="pf_temas_row">
+          ${TEMAS.map(t => `
+            <label class="pf_tema_btn ${temaNombre === t.n ? 'pf_tema_active' : ''}" title="${t.n}">
+              <input type="radio" name="tema" value="${t.n}|${t.c}" ${temaNombre === t.n ? 'checked' : ''}>
+              <span class="pf_tema_dot" style="background:${t.c}"></span>
+              <span class="pf_tema_txt">${t.n}</span>
+            </label>
+          `).join('')}
+        </div>
+      </div>
+
+    </form>
 
   </div>`;
 };
 
 // ─── INIT ─────────────────────────────────────────────────────────
 export const init = () => {
-  // Botón "nuevo mensaje"
-  $(document).off('click.pfmsg').on('click.pfmsg', '#pf_refresh_msg', function() {
-    const msg = msgAleatorio();
-    const $btn = $(this);
-    $btn.addClass('spinning');
-    const $wrap = $btn.closest('.pf_mensaje');
-    $wrap.addClass('pf_fade_out');
+
+  // Mensaje motivacional rotativo
+  $(document).off('click.pfmsg').on('click.pfmsg', '#pf_refresh_msg', function () {
+    const msg  = msgAleatorio();
+    const $w   = $('#pf_motivacion');
+    $w.addClass('pf_fade_out');
     setTimeout(() => {
-      $wrap.find('.pf_mensaje_ico i').attr('class', `fas ${msg.ico}`);
-      $wrap.find('.pf_mensaje_txt').text(msg.txt);
-      $wrap.removeClass('pf_fade_out').addClass('pf_fade_in');
-      $btn.removeClass('spinning');
-      setTimeout(() => $wrap.removeClass('pf_fade_in'), 400);
-    }, 300);
+      $w.find('.pf_mot_ico i').attr('class', `fas ${msg.ico}`);
+      $w.find('.pf_mot_txt').text(msg.txt);
+      $w.removeClass('pf_fade_out').addClass('pf_fade_in');
+      setTimeout(() => $w.removeClass('pf_fade_in'), 400);
+    }, 280);
+  });
+
+  // Preview live de imagen de foto
+  $(document).off('input.pffoto').on('input.pffoto', '#pf_foto', function () {
+    const url  = $(this).val().trim();
+    const base = `${import.meta.env.BASE_URL}smile.avif`;
+    const $img = $('#pf_foto_preview');
+    if (url) {
+      $img.attr('src', url).on('error', function () { $(this).attr('src', base); });
+    } else {
+      $img.attr('src', base);
+    }
+  });
+
+  // Selector de temas visual
+  $(document).off('change.pftheme').on('change.pftheme', 'input[name="tema"]', function () {
+    $('.pf_tema_btn').removeClass('pf_tema_active');
+    $(this).closest('.pf_tema_btn').addClass('pf_tema_active');
+  });
+
+  // Guardar
+  $(document).off('submit.pfsave').on('submit.pfsave', '#pf_form_edit', async function (e) {
+    e.preventDefault();
+    const $btn = $('#pf_btn_save');
+    const u    = wi();
+    if (!u) return;
+
+    const fd        = new FormData(this);
+    const nombre    = fd.get('nombre')?.trim();
+    const apellidos = fd.get('apellidos')?.trim();
+    const tema      = fd.get('tema');
+    const foto      = fd.get('foto')?.trim() || '';
+    const genero    = fd.get('genero') || '';
+    const fnacRaw   = fd.get('fechaNacimiento');
+
+    if (!nombre)    return Mensaje('Por favor ingresa tu nombre.', 'warning');
+    if (!apellidos) return Mensaje('Por favor ingresa tus apellidos.', 'warning');
+    if (!tema)      return Mensaje('Selecciona un tema de color.', 'warning');
+
+    // Convertir fecha de nacimiento a Timestamp compatible (objeto simple)
+    const fechaNacimiento = fnacRaw
+      ? { seconds: Math.floor(new Date(fnacRaw).getTime() / 1000), nanoseconds: 0 }
+      : u.fechaNacimiento || null;
+
+    $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Guardando...');
+
+    try {
+      const data = { nombre, apellidos, tema, foto, genero, fechaNacimiento };
+      await updateDoc(doc(db, 'smiles', u.usuario), data);
+
+      // Super Pro Cache — actualizar wiSmile de inmediato
+      savels('wiSmile', { ...u, ...data }, 24);
+
+      Mensaje('¡Perfil actualizado! 🎉', 'success');
+
+      // Re-render suave
+      setTimeout(() => {
+        const $c = $('#perfil');
+        if ($c.length) { $c.html(render()); init(); }
+      }, 500);
+
+    } catch (err) {
+      console.error('[perfil] Error:', err);
+      Mensaje('No se pudo guardar. Intenta de nuevo.', 'error');
+    } finally {
+      $btn.prop('disabled', false).html('<i class="fas fa-check"></i> Guardar cambios');
+    }
   });
 };
 
 export const cleanup = () => {
-  $(document).off('click.pfmsg');
+  $(document).off('click.pfmsg input.pffoto change.pftheme submit.pfsave');
 };

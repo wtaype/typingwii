@@ -1,0 +1,74 @@
+@import './publico-shared.css';
+
+/* ═══════════════════════════════════════════════════════════
+   PROFESORES.CSS — Estilos específicos del panel de aula
+═══════════════════════════════════════════════════════════ */
+
+/* Quick list de ventajas */
+.pro_quick_list { display: flex; flex-direction: column; gap: 1.5vh; }
+.pro_ql_item {
+  display: flex; align-items: flex-start; gap: 1.4vh;
+  font-size: var(--fz_m1); color: var(--tx3); line-height: 1.55;
+}
+.pro_ql_item strong { color: var(--tx1); display: block; font-size: var(--fz_m2); font-weight: 700; margin-bottom: .2vh; }
+.pro_ql_ico {
+  width: 4.5vh; height: 4.5vh; border-radius: 1vh; flex-shrink: 0;
+  background: color-mix(in srgb,#28a745 13%,var(--bg4));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8vh; color: #28a745; margin-top: .2vh;
+}
+
+/* Panel de aula simulado */
+.pro_panel_card {
+  background: var(--wb);
+  border: 1px solid var(--brd); border-radius: 1.8vh;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.1);
+  transition: transform .35s, box-shadow .35s;
+}
+.pro_panel_card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 36px 80px rgba(0,0,0,.15);
+}
+.pro_panel_hdr {
+  display: flex; align-items: center; gap: 1.2vh;
+  padding: 1.8vh 2.5vh;
+  background: var(--bg4); border-bottom: 1px solid var(--brd);
+  font-size: var(--fz_m2); font-weight: 700; color: var(--tx1);
+}
+.pro_online {
+  margin-left: auto; font-size: var(--fz_s3); font-weight: 700;
+  color: #28a745; display: flex; align-items: center; gap: .5vh;
+}
+.pro_online i { font-size: .8em; animation: pro_blink 1.8s ease-in-out infinite; }
+@keyframes pro_blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+.pro_panel_body { padding: 2vh 2.5vh; display: flex; flex-direction: column; gap: 1.2vh; }
+.pro_student_row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto 120px;
+  align-items: center;
+  gap: 1.2vh;
+  padding: 1vh .8vh;
+  border-radius: 1vh;
+  transition: background .2s;
+}
+.pro_student_row:hover { background: var(--bg4); }
+.pro_st_avatar {
+  width: 3.8vh; height: 3.8vh; border-radius: 50%;
+  background: var(--bg4); border: 1px solid var(--brd);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5vh; color: var(--tx3);
+}
+.pro_st_name { font-size: var(--fz_m1); font-weight: 700; color: var(--tx1); }
+.pro_st_nv   { font-size: var(--fz_s3); color: var(--tx3); }
+.pro_st_wpm, .pro_st_prc { font-size: var(--fz_m2); font-weight: 900; font-variant-numeric: tabular-nums; }
+.pro_st_wpm::after { content: ' WPM'; font-size: var(--fz_s3); font-weight: 600; color: var(--tx3); }
+.pro_st_prc { font-size: var(--fz_m2); }
+.pro_st_bar_w { height: .7vh; background: var(--brd); border-radius: 1vh; overflow: hidden; }
+.pro_st_bar   { height: 100%; border-radius: 1vh; transition: width .6s; }
+.pro_panel_foot {
+  display: flex; gap: 2vh; padding: 1.2vh .8vh 0;
+  border-top: 1px solid var(--brd); margin-top: .5vh;
+  font-size: var(--fz_s4); color: var(--tx3); font-weight: 600;
+}
+.pro_panel_foot i { margin-right: .4vh; }

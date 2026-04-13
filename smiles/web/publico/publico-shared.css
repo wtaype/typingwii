@@ -1,0 +1,315 @@
+/* ═══════════════════════════════════════════════════════════
+   PUBLICO-SHARED.CSS — Estilos compartidos para:
+   estudiantes.css → @import + clases pu_*
+   profesores.css  → @import + clases pro_*
+   empresas.css    → @import + clases emp_*
+═══════════════════════════════════════════════════════════ */
+
+/* ── PAGE ──────────────────────────────────────────────── */
+.pu_page {
+  display: flex;
+  flex-direction: column;
+  gap: 6vh;
+  animation: pu_in .45s cubic-bezier(.4,0,.2,1);
+}
+@keyframes pu_in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* wiVista */
+.wi_fadeUp {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1);
+  transition-delay: var(--d, 0s);
+}
+.wi_fadeUp.wi_visible { opacity: 1; transform: translateY(0); }
+
+/* Gradiente texto global */
+.pu_grad {
+  background: linear-gradient(135deg, var(--mco), var(--Mora, #7000FF));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ════════════════════════════════════════════════════════
+   HERO — compartido
+════════════════════════════════════════════════════════ */
+.pu_hero {
+  position: relative;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 2.5vh;
+  padding: 6vh 5vw;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,.06);
+}
+.pu_hero_bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.pu_orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+}
+.pu_orb1 { width: 40vw; height: 40vw; top: -18%; right: -8%; }
+.pu_orb2 { width: 28vw; height: 28vw; bottom: -12%; left: 3%; }
+
+.pu_hero_inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6vw;
+  align-items: center;
+}
+
+/* Badge */
+.pu_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .9vh;
+  background: var(--bg4);
+  border: 1px solid var(--brd);
+  border-radius: 50px;
+  padding: .65vh 1.8vh;
+  font-size: var(--fz_s4);
+  font-weight: 700;
+  color: var(--mco);
+  margin-bottom: 2.5vh;
+}
+
+/* H1 */
+.pu_h1 {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 900;
+  color: var(--tx1);
+  line-height: 1.12;
+  margin-bottom: 2.5vh;
+}
+
+/* Sub */
+.pu_sub {
+  font-size: var(--fz_m3);
+  color: var(--tx3);
+  line-height: 1.78;
+  margin-bottom: 3.5vh;
+  max-width: 540px;
+}
+.pu_sub strong { color: var(--tx1); font-weight: 700; }
+
+/* CTA botones */
+.pu_hero_cta {
+  display: flex;
+  gap: 1.5vh;
+  flex-wrap: wrap;
+  margin-bottom: 4vh;
+}
+.pu_btn_main {
+  display: inline-flex; align-items: center; gap: .9vh;
+  background: var(--mco); color: var(--txa);
+  border: none; border-radius: 1.2vh;
+  padding: 1.4vh 3vh;
+  font-size: var(--fz_m3); font-weight: 800;
+  text-decoration: none; cursor: pointer;
+  box-shadow: 0 6px 20px var(--bg5);
+  transition: all .25s;
+}
+.pu_btn_main:hover { transform: translateY(-4px); box-shadow: 0 12px 28px var(--bg5); filter: brightness(1.1); color: var(--txa); }
+.pu_btn_gho {
+  display: inline-flex; align-items: center; gap: .9vh;
+  background: transparent; color: var(--tx1);
+  border: 2px solid var(--brd); border-radius: 1.2vh;
+  padding: 1.4vh 2.8vh;
+  font-size: var(--fz_m3); font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  transition: all .25s;
+}
+.pu_btn_gho:hover { border-color: var(--mco); background: var(--bg4); color: var(--tx1); transform: translateY(-3px); }
+
+/* Quick stats */
+.pu_quick_stats {
+  display: flex;
+  align-items: center;
+  gap: 2.5vh;
+  flex-wrap: wrap;
+}
+.pu_qs { text-align: center; }
+.pu_qs_n { font-size: var(--fz_l2); font-weight: 900; color: var(--mco); line-height: 1; }
+.pu_qs_l {
+  font-size: var(--fz_s3); color: var(--tx3); font-weight: 600;
+  text-transform: uppercase; letter-spacing: .06em; margin-top: .4vh;
+  display: flex; align-items: center; gap: .4vh; justify-content: center;
+}
+.pu_qs_l i { color: var(--mco); }
+.pu_qs_sep { width: 1px; height: 4.5vh; background: var(--brd); }
+
+/* ════════════════════════════════════════════════════════
+   SECTIONS
+════════════════════════════════════════════════════════ */
+.pu_sec { }
+.pu_sec_alt {
+  background: var(--bg4);
+  border: 1px solid var(--brd);
+  border-radius: 2vh;
+  padding: 5vh 4vw;
+}
+
+.pu_sec_head {
+  text-align: center;
+  margin-bottom: 5vh;
+  display: flex; flex-direction: column; align-items: center; gap: 1.5vh;
+}
+.pu_sec_badge {
+  display: inline-flex; align-items: center; gap: .8vh;
+  background: var(--wb); border: 1px solid var(--brd); border-radius: 50px;
+  padding: .6vh 1.8vh;
+  font-size: var(--fz_s4); font-weight: 700; color: var(--mco);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.pu_sec_h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+  font-weight: 900; color: var(--tx1); line-height: 1.2; margin: 0;
+}
+.pu_sec_sub {
+  font-size: var(--fz_m3); color: var(--tx3); line-height: 1.7;
+  max-width: 560px; margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════
+   BENEFICIOS / FEATURES GRID (compartido)
+════════════════════════════════════════════════════════ */
+.pu_grid_3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px,100%), 1fr));
+  gap: 2vh;
+}
+.pu_bene_card {
+  background: var(--wb);
+  border: 2px solid transparent;
+  border-radius: 2vh;
+  padding: 2.8vh 2.5vh;
+  display: flex; flex-direction: column; gap: 1.3vh;
+  position: relative; overflow: hidden;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+}
+.pu_bene_card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--bc);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+.pu_bene_card:hover {
+  border-color: var(--bc);
+  transform: translateY(-7px);
+  box-shadow: 0 14px 38px rgba(0,0,0,.09);
+}
+.pu_bene_card:hover::before { transform: scaleX(1); }
+.pu_bene_ico {
+  width: 5.5vh; height: 5.5vh; border-radius: 1.2vh;
+  background: color-mix(in srgb, var(--bc) 13%, var(--bg4));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2vh; color: var(--bc); flex-shrink: 0;
+  transition: background .28s, color .28s, transform .28s;
+}
+.pu_bene_card:hover .pu_bene_ico { background: var(--bc); color: #fff; transform: scale(1.1) rotate(-6deg); }
+.pu_bene_t { font-size: var(--fz_m4); font-weight: 900; color: var(--tx1); margin: 0; }
+.pu_bene_d { font-size: var(--fz_m1); color: var(--tx3); line-height: 1.65; margin: 0; }
+
+/* ════════════════════════════════════════════════════════
+   PASOS (compartido)
+════════════════════════════════════════════════════════ */
+.pu_pasos_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2vh;
+  position: relative;
+}
+.pu_paso {
+  display: flex; flex-direction: column; gap: 1.4vh;
+  background: var(--wb);
+  border: 1px solid var(--brd); border-radius: 2vh;
+  padding: 2.5vh 2vh;
+  position: relative;
+  transition: transform .25s, box-shadow .25s;
+}
+.pu_paso:hover { transform: translateY(-5px); box-shadow: 0 10px 28px rgba(0,0,0,.08); }
+.pu_paso_num {
+  font-size: var(--fz_s3); font-weight: 900; color: var(--mco);
+  font-family: monospace; opacity: .5;
+}
+.pu_paso_ico {
+  width: 5.5vh; height: 5.5vh; border-radius: 1.2vh;
+  background: color-mix(in srgb, var(--mco) 13%, var(--bg4));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2vh; color: var(--mco); flex-shrink: 0;
+}
+.pu_paso_t { font-size: var(--fz_m3); font-weight: 800; color: var(--tx1); margin: 0; }
+.pu_paso_d { font-size: var(--fz_m1); color: var(--tx3); line-height: 1.65; margin: 0; }
+/* Flecha entre pasos */
+.pu_paso_arrow {
+  position: absolute;
+  right: -1.8vh; top: 50%; transform: translateY(-50%);
+  color: var(--brd); font-size: var(--fz_m3); z-index: 2;
+}
+
+/* ════════════════════════════════════════════════════════
+   CTA FINAL (compartido)
+════════════════════════════════════════════════════════ */
+.pu_cta_sec { }
+.pu_cta_card {
+  background: var(--mco);
+  border-radius: 2.5vh;
+  padding: 5.5vh 5vw;
+  position: relative; overflow: hidden;
+  box-shadow: 0 16px 50px var(--bg5);
+}
+.pu_cta_orb {
+  position: absolute; width: 55vw; height: 55vw;
+  border-radius: 50%; background: rgba(255,255,255,.08);
+  top: -25%; right: -12%; pointer-events: none;
+}
+.pu_cta_inner {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; gap: 3vh; flex-wrap: wrap;
+}
+.pu_cta_txt { flex: 1; display: flex; flex-direction: column; gap: 1.2vh; }
+.pu_cta_ico { font-size: 6vh; color: rgba(255,255,255,.25); }
+.pu_cta_txt h2 { font-size: clamp(1.5rem, 2.8vw, 2.2rem); font-weight: 900; color: #fff; margin: 0; line-height: 1.25; }
+.pu_cta_txt p  { font-size: var(--fz_m3); color: rgba(255,255,255,.8); margin: 0; }
+.pu_cta_btns   { display: flex; gap: 1.2vh; flex-wrap: wrap; flex-shrink: 0; }
+
+/* CTA buttons variantes */
+.pu_btn_white { background: #fff; color: var(--mco); box-shadow: 0 6px 20px rgba(0,0,0,.15); }
+.pu_btn_white:hover { filter: brightness(.96); color: var(--mco); }
+.pu_btn_white_o {
+  background: rgba(255,255,255,.14); color: #fff;
+  border-color: rgba(255,255,255,.35);
+  backdrop-filter: blur(8px);
+}
+.pu_btn_white_o:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.7); color: #fff; }
+
+/* ════════════════════════════════════════════════════════
+   RESPONSIVE SHARED
+════════════════════════════════════════════════════════ */
+@media (max-width: 1000px) {
+  .pu_hero_inner { grid-template-columns: 1fr; }
+  .pu_hero { padding: 5vh 4vw; }
+  .pu_pasos_grid { grid-template-columns: repeat(2, 1fr); }
+  .pu_paso_arrow { display: none; }
+}
+@media (max-width: 700px) {
+  .pu_pasos_grid { grid-template-columns: 1fr; }
+  .pu_cta_inner  { flex-direction: column; align-items: flex-start; }
+  .pu_quick_stats { gap: 1.5vh; }
+  .pu_qs_sep { height: 3.5vh; }
+}
+@media (max-width: 520px) {
+  .pu_h1  { font-size: 1.85rem; }
+  .pu_hero_cta { flex-direction: column; }
+  .pu_btn_main, .pu_btn_gho { justify-content: center; }
+  .pu_cta_btns { flex-direction: column; width: 100%; }
+  .pu_cta_btns .pu_btn_main,
+  .pu_cta_btns .pu_btn_gho { justify-content: center; }
+}
