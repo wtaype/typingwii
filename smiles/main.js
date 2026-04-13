@@ -21,10 +21,6 @@ rutas.register('/', (isPre = false) => {
 import('./header.js');
 rutas.init();
 
-requestAnimationFrame(() => requestAnimationFrame(() =>
-  document.getElementById('loading-overlay')?.classList.add('hidden')
-));
-
 wiSmart({
   css: [
     'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap',

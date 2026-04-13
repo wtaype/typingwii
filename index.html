@@ -250,47 +250,6 @@
       background: var(--bg);
     }
 
-    /* ==================== LOADING OVERLAY ==================== */
-    #loading-overlay {
-      position: fixed;
-      inset: 0;
-      background: #fff;
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: opacity .5s ease-in-out, visibility .5s ease-in-out;
-    }
-
-    #loading-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .loading-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .loading-logo {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 15px;
-      object-fit: contain;
-      border-radius: 0;
-      animation: ld_pulse 2s ease-in-out infinite;
-    }
-
-    .loading-content h2 {
-      color: #1B1B1B;
-      font-size: 24px;
-      margin-bottom: 25px;
-      font-weight: 700;
-    }
-
     .ad_empty {
       text-align: center;
       padding: 5vh 2vh;
@@ -305,63 +264,6 @@
     .ad_empty i {
       font-size: 4vh;
       opacity: .3;
-    }
-
-    .loading-spinner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin: 20px 0;
-    }
-
-    .loading-spinner .circle {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
-      animation: ld_bounce 1.4s ease-in-out infinite;
-    }
-
-    .loading-spinner .circle-1 {
-      background: #37a1dd;
-      animation-delay: 0s;
-    }
-
-    .loading-spinner .circle-2 {
-      background: #FFD101;
-      animation-delay: .2s;
-    }
-
-    .loading-spinner .circle-3 {
-      background: #fe413b;
-      animation-delay: .4s;
-    }
-
-    @keyframes ld_pulse {
-
-      0%,
-      100% {
-        transform: scale(.95);
-        opacity: .7;
-      }
-
-      50% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    @keyframes ld_bounce {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-15px);
-      }
     }
 
     #wimain {
