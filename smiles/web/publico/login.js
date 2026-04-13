@@ -1,19 +1,19 @@
 import './login.css';
 import $ from 'jquery';
-import { auth, db } from '../smile/firebase.js';
+import { auth, db } from '../firebase.js';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile,
          sendEmailVerification, sendPasswordResetEmail, onAuthStateChanged, signOut } from 'firebase/auth';
 import { setDoc, getDoc, getDocs, doc, collection, query, where, serverTimestamp } from 'firebase/firestore';
-import { wiTip, Mensaje, savels, getls, wiSpin, wiAuth, abrirModal, cerrarTodos } from '../widev.js';
-import { rutas } from '../rutas/ruta.js';
+import { wiTip, Mensaje, savels, getls, wiSpin, wiAuth, abrirModal, cerrarTodos } from '../../widev.js';
+import { rutas } from '../../rutas/ruta.js';
 
 export { auth, onAuthStateChanged, signOut };
 
 // ==================== CONFIG ====================
 const cfg = { db: 'smiles', rol: 'smile' };
-let modal = 'si', link = 'no', restablecer = 'no', login = 'si', registrar = 'si';
+let modal = 'si', link = 'si', restablecer = 'si', login = 'si', registrar = 'si';
 let pagina = '/smile'; // 'actual' = quedarse, '/proyectos', '/smile', '/'
-let registrando = false;
+let registrando = false; 
 
 const err = {
   'auth/email-already-in-use':'Email ya registrado', 'auth/weak-password':'Contraseña débil',

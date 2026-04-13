@@ -1,0 +1,126 @@
+/* ═══════════════════════════════════════════ roles.css — prefijo rl_
+   Variables globales usadas: --wb, --brd, --inp, --bg4, --bg5,
+   --tx, --tx1, --tx2, --tx3, --mco, --mbg, --txa, --bg2,
+   --error, --sm_rojo
+   (Arquitectura Grid Card / Modal portado de buscar.js / personas.js)
+═══════════════════════════════════════════════════════════════ */
+
+.rl_wrap {  margin: 0 auto; padding: 3vh 2vw 5vh; display: flex; flex-direction: column; gap: 2.4vh; }
+
+/* ── HERO */
+.rl_hero { background: var(--mbg, var(--mco)); border-radius: 1.6vh; padding: 2.6vh 3vh; display: flex; align-items: center; gap: 2vh; box-shadow: 0 6px 28px var(--bg5); position: relative; overflow: hidden; animation: rlFade .4s ease; margin-bottom: 0.5vh; }
+.rl_hero::before { content:''; position:absolute; right:-5vh; top:-5vh; width:20vh; height:20vh; background:rgba(255,255,255,.1); border-radius:50%; }
+.rl_hero_icon { width:6vh; height:6vh; border-radius:1.4vh; background:rgba(255,255,255,.25); display:flex; align-items:center; justify-content:center; font-size:2.2vh; color:var(--txa); flex-shrink:0; z-index:1; }
+.rl_hero_txt { flex:1; z-index:1; }
+.rl_hero_txt h2 { font-size:var(--fz_m5); font-weight:800; color:var(--txa); margin-bottom:.2vh; }
+.rl_hero_txt p  { font-size:var(--fz_s4); color:var(--txa); opacity:.75; margin:0; }
+
+/* ── PANEL DE BÚSQUEDA PRO BLANCO ── */
+.rl_panel_blanco { background: var(--wb); border: 1px solid var(--brd); border-radius: 1.6vh; padding: 2.8vh; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 2.2vh; margin-bottom: 1vh; }
+
+.rl_pb_row { display: flex; gap: 2vh; align-items: flex-end; flex-wrap: wrap; }
+.rl_pb_col { display: flex; flex-direction: column; gap: 1vh; flex: 1; min-width: 18vh; }
+.rl_pb_col.grow-2 { flex: 2; min-width: 38vh; }
+
+.rl_pb_col label { font-size: var(--fz_s4); font-weight: 700; color: var(--tx3); text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: .6vh; }
+.rl_pb_input, .rl_pb_select { padding: 1.4vh 1.8vh; border: 2px solid var(--bg4); border-radius: 1vh; font-size: var(--fz_m1); font-family: inherit; color: var(--tx1); background: var(--bg4, var(--inp)); outline: none; transition: all 0.2s ease; width: 100%; box-sizing: border-box; }
+.rl_pb_input:focus, .rl_pb_select:focus { border-color: var(--mco); background: var(--wb); }
+
+.rl_pb_action { flex: 0 0 auto; display: flex; gap: 1vh; height: 5.4vh; }
+.rl_btn_buscar { display: flex; align-items: center; justify-content: center; gap: 1vh; height: 100%; padding: 0 3vh; background: var(--mco); border: none; border-radius: 1vh; color: var(--txa); font-size: var(--fz_m1); font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.rl_btn_buscar:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+.rl_btn_buscar:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.rl_btn_limpiar { display: flex; align-items: center; justify-content: center; height: 100%; width: 5.4vh; border: 2px solid var(--brd); border-radius: 1vh; background: transparent; color: var(--tx3); font-size: var(--fz_m2); cursor: pointer; transition: all 0.2s; }
+.rl_btn_limpiar:hover { border-color: var(--error); color: var(--error); background: rgba(244, 67, 54, 0.05); }
+
+/* Row filters extra */
+.rl_filtros_avanzados { border-top: 1px dashed var(--brd); padding-top: 2.2vh; margin-top: 0.5vh; }
+
+/* ── RESULTADOS */
+.rl_info { font-size:var(--fz_s4); color:var(--tx3); margin-bottom:1.2vh; font-weight:500; display:flex; gap:1vh; align-items:center; }
+.rl_grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(27vh,1fr)); gap:1.8vh; }
+
+.rl_cash_badge { background:#21a625; color:#fff; padding:.2vh .8vh; border-radius:1vh; font-size:var(--fz_s4); font-weight:800; }
+
+/* ── CARDS */
+.rl_card { background:var(--wb); border:1px solid var(--brd); border-radius:1.4vh; padding:2.2vh; display:flex; flex-direction:column; align-items:center; gap:1vh; text-align:center; transition:box-shadow .2s,transform .2s; animation:rlFade .35s ease both; position:relative; overflow:hidden; }
+.rl_card:hover { box-shadow:0 6px 22px rgba(0,0,0,.09); transform:translateY(-2px); }
+
+.rl_avatar { width:6vh; height:6vh; border-radius:50%; background:var(--bg2); color:white; font-weight:800; font-size:2vh; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+.rl_rol_badge { position:absolute; top:1.4vh; right:1.4vh; padding:.3vh .9vh; border-radius:.5vh; font-size:var(--fz_s3); font-weight:700; text-transform:uppercase; letter-spacing:.04em; }
+
+.rl_card_nombre { font-size:var(--fz_m2); font-weight:700; color:var(--tx1); text-transform:capitalize; width:100%; }
+.rl_card_cargo  { font-size:var(--fz_s4); color:var(--tx3); text-transform:capitalize; width:100%; }
+.rl_card_datos  { font-size:var(--fz_s4); color:var(--tx2); display:flex; flex-direction:column; gap:.3vh; width:100%; text-align:left; padding:1vh 0; border-top:1px solid var(--brd); margin-top:.5vh; }
+.rl_card_datos div { display: flex; align-items: center; }
+.rl_card_datos i { color:var(--tx3); width:1.4vh; margin-right:.5vh; text-align: center; }
+.rl_btn_edit { width:100%; padding:.9vh; border:1px solid var(--brd); border-radius:.8vh; background:var(--wb); color:var(--mco); font-size:var(--fz_m1); font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:.5vh; transition:all .2s; margin-top: 1vh;}
+.rl_btn_edit:hover { background:var(--mco); color:var(--txa); border-color:var(--mco); }
+
+/* ── PAGINACIÓN */
+.rl_pag { display:flex; align-items:center; justify-content:space-between; padding:1.6vh 2vh; background:var(--wb); border:1px solid var(--brd); border-radius:1.2vh; gap:1vh; flex-wrap:wrap; }
+.rl_pag_info { font-size:var(--fz_s4); color:var(--tx3); display:flex; gap:1vh; align-items:center; }
+.rl_pag_info b { font-weight: 800; }
+.rl_pag_btns { display:flex; gap:.8vh; }
+.rl_pag_btn { padding:.7vh 1.4vh; border:1px solid var(--brd); border-radius:.7vh; background:var(--wb); color:var(--tx); font-size:var(--fz_m1); cursor:pointer; transition:all .15s; display:flex; align-items:center; gap:.8vh;}
+.rl_pag_btn:hover:not([disabled]) { border-color:var(--mco); color:var(--mco); }
+.rl_pag_btn:disabled { opacity:.35; cursor:not-allowed; }
+
+/* ── MODAL PRO (usa wiModal) ── */
+.rl_modal_pro { background: var(--wb); padding: 4vh; padding-top: 6vh; display: flex; flex-direction: column; position: relative; overflow: hidden; border-radius: 1vh; width: 100%; min-height: 40vh; max-width: 90vh; }
+.rl_modal_hero { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5vh; padding-bottom: 2.5vh; border-bottom: 1px dashed var(--brd); z-index: 2; margin-top: 2vh;}
+.rl_avatar--xl { width: 9vh!important; height: 9vh!important; font-size: 3vh!important; background: var(--mco); color: var(--txa); display: flex; align-items: center; justify-content: center; border-radius: 50%; z-index: 3; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border: 4px solid var(--wb); }
+.rl_modal_hero_tx { display: flex; flex-direction: column; align-items: center; gap: 0.6vh; }
+.rl_modal_nombre { font-size: var(--fz_m4); font-weight: 800; color: var(--tx1); line-height: 1.2; text-transform: capitalize; }
+.rl_modal_cargo { font-size: var(--fz_m1); color: var(--tx3); text-transform: capitalize; }
+.rl_modal_pro .modalX{color: var(--txa);}
+
+.rl_modal_grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2vh 3vh; margin-top: 3vh; z-index: 2; position: relative; }
+.rl_modal_row_pro { display: flex; flex-direction: column; gap: 0.4vh; padding: 1.2vh 1.6vh; background: var(--bg4); border-radius: 1vh; border: 1px solid transparent; transition: all 0.2s; }
+.rl_modal_row_pro:hover { background: var(--wb); border-color: var(--brd); box-shadow: 0 4px 12px rgba(0,0,0,0.03); transform: translateY(-2px); }
+.rl_modal_lbl_pro { font-size: var(--fz_s4); font-weight: 700; text-transform: uppercase; color: var(--tx3); display: flex; align-items: center; gap: 0.8vh; letter-spacing: 0.03em; }
+.rl_modal_lbl_pro i { color: var(--mco); width: 1.4vh; text-align: center; }
+.rl_modal_val_pro { font-size: var(--fz_m1); font-weight: 600; color: var(--tx1); word-break: break-word; }
+
+/* Seccion Admin Rol Añadida al Modal */
+.rl_admin_sec { margin-top: 3.5vh; border-top: 1px dashed var(--brd); padding-top: 2.5vh; display: flex; flex-direction: column; gap: 1.5vh; }
+.rl_admin_title { font-size: var(--fz_m1); font-weight: 800; color: var(--tx1); display: flex; align-items: center; gap: 1vh;}
+.rl_admin_title i { color: var(--mco); }
+.rl_admin_grid { display: grid; grid-template-columns: 1fr; gap: 2vh; }
+.rl_admin_form { display: flex; flex-direction: column; gap: .8vh; background: var(--bg4); border: 1px dashed var(--brd); padding: 2vh; border-radius: 1vh; }
+.rl_admin_form label { font-size: var(--fz_s4); font-weight: 700; color: var(--tx2); text-transform: uppercase; margin-bottom: 0.5vh; display: block; }
+.rl_admin_select { width: 100%; padding: 1.4vh; border-radius: .8vh; border: 2px solid var(--brd); background: var(--wb); font-family: inherit; font-size: var(--fz_m1); color: var(--tx1); font-weight: 600; outline: none; transition: .2s; cursor: pointer; }
+.rl_admin_select:focus { border-color: var(--mco); box-shadow: 0 0 0 3px rgba(0,0,0,.04); }
+
+.rl_btn_save { width: 100%; margin-top: 1vh; padding: 1.4vh; background: var(--mco); border: none; color: #fff; border-radius: .8vh; font-weight: 700; cursor: pointer; transition:.2s; display: flex; justify-content: center; align-items: center; gap: 1vh; font-size: var(--fz_m1); }
+.rl_btn_save:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,.15); }
+.rl_btn_save:disabled { opacity: 0.6; cursor: wait; }
+
+/* ── EMPTY / LOADING / INICIO */
+.rl_empty,.rl_inicio { text-align:center; padding:5vh 2vh; color:var(--tx3); display:flex; flex-direction:column; align-items:center; gap:1.2vh; border: none;}
+.rl_empty i,.rl_inicio i { font-size:5vh; opacity:.2; }
+.rl_loading { text-align:center; padding:4vh; color:var(--tx3); font-size:var(--fz_m2); }
+
+/* ── ANIMACIONES */
+@keyframes rlFade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+/* ── RESPONSIVE Y UTILITARIOS ── */
+@media(max-width:1024px){.rl_wrap{max-width:94vw}}
+@media(max-width:768px){.rl_wrap{max-width:98vw;padding:2vh 1.5vw}.rl_grid{grid-template-columns:repeat(auto-fill,minmax(20vh,1fr))}.rl_pb_row{flex-direction:column;align-items:stretch;}.rl_pb_col{width:100%}.rl_modal_grid{grid-template-columns:repeat(2, 1fr); gap: 1vh;}}
+@media(max-width:480px){.rl_modal_grid{grid-template-columns:1fr;}}
+
+.rl_d_none { display: none !important; }
+.rl_ico_mco { color: var(--mco); }
+.rl_ico_err { color: var(--error); }
+
+/* Colores Dinámicos Roles */
+.rl_rol_badge--admin { background: rgba(254,65,59,.15); color: var(--success); }
+.rl_rol_badge--people { background: rgba(255,209,1,.2); color: var(--warning); }
+.rl_rol_badge--smile { background: rgba(55,161,221,.15); color: var(--info); }
+
+.rl_modal_top_accent { height: 10vh; border-radius: 1vh 1vh 0 0; position: absolute; top: 0; left: 0; width: 100%; transition: background .3s; }
+.rl_modal_top_accent--admin { background: linear-gradient(135deg, var(--wb), var(--success)); }
+.rl_modal_top_accent--people { background: linear-gradient(135deg, var(--wb), var(--warning)); }
+.rl_modal_top_accent--smile { background: linear-gradient(135deg, var(--wb), var(--info)); }

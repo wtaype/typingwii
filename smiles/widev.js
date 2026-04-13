@@ -242,10 +242,72 @@ export const wiSuma = (sel, fn, num = 5) => {
 };
 
 // FUNCIONES GENIALES V10.1_________________________________
-export const year = () => new Date().getFullYear();
-export const Mayu = (ltr) => ltr.toUpperCase();
-export const Capi = (ltr) => ltr[0].toUpperCase() + ltr.slice(1);
-export const adrm = (a, b) => $(a).addClass(b).siblings().removeClass(b);
+export const year  = () => new Date().getFullYear();
+export const Mayu  = (ltr) => ltr.toUpperCase();
+export const Capi  = (ltr) => ltr[0].toUpperCase() + ltr.slice(1);
+export const adrm  = (a, b) => $(a).addClass(b).siblings().removeClass(b);
 export const mis10 = (txt) => txt.length <= 10 ? txt : txt.substring(0, 10) + '...';
-export const adtm = (se, cl, ti, tf) => $(se).text(ti).addClass(cl).delay(1800).queue(q => $(se).text(tf).removeClass(cl).dequeue());
-export const adup = (x, y) => ($(x).addClass('updating').text(y), setTimeout(() => $(x).removeClass('updating'), 500));
+export const adtm  = (se, cl, ti, tf) => $(se).text(ti).addClass(cl).delay(1800).queue(q => $(se).text(tf).removeClass(cl).dequeue());
+export const adup  = (x, y) => ($(x).addClass('updating').text(y), setTimeout(() => $(x).removeClass('updating'), 500));
+
+// PERSONAS Y FECHAS V11_________________________________
+// Capitaliza cada palabra
+export const Capit = (txt = '') => txt.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+
+// "Primer Nombre + Último Apellido" desde nombres completos
+export const NombreApellido = (nombres = '') => {
+  const p = nombres.trim().split(/\s+/).filter(Boolean);
+  return p.length <= 1 ? Capit(nombres) : `${Capit(p[0])} ${Capit(p[p.length - 1])}`;
+};
+
+// Primer nombre capitalizado
+export const getNombre = (nombres = '') => Capit(nombres.trim().split(/\s+/)[0] || nombres);
+
+// Inicial del apellido (último token) para avatar
+export const avatar = (nombres = '') => {
+  const p = nombres.trim().split(/\s+/).filter(Boolean);
+  return (p[p.length - 1]?.[0] ?? p[0]?.[0] ?? 'U').toUpperCase();
+};
+
+// Fecha de hoy en español (ej: "domingo, 13 de abril de 2026")
+export const fechaHoy = () => new Date().toLocaleDateString('es-PE', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+// Timestamp → "YYYY-MM-DD" para input[type=date]
+export const formatearFechaParaInput = (ts) => {
+  if (!ts) return '';
+  const d = ts?.seconds ? new Date(ts.seconds * 1000) : new Date(ts);
+  return d.toISOString().split('T')[0];
+};
+
+// Timestamp → "13 abr 2026 09:30" legible
+export const formatearFechaHora = (ts) => {
+  if (!ts) return '—';
+  const d = ts?.seconds ? new Date(ts.seconds * 1000) : new Date(ts);
+  return d.toLocaleDateString('es-PE', { day:'2-digit', month:'short', year:'numeric' })
+       + ' ' + d.toLocaleTimeString('es-PE', { hour:'2-digit', minute:'2-digit' });
+};
+
+// Array de fechas escogidas → "13 abr · 14 abr · 15 abr"
+export const formatearFechasEscogidas = (fechas = [], es4horas = false) => {
+  if (!fechas.length) return '—';
+  const fmt = f => {
+    const d = typeof f === 'string' ? new Date(f + 'T12:00:00') : (f?.seconds ? new Date(f.seconds * 1000) : new Date(f));
+    return d.toLocaleDateString('es-PE', { day:'2-digit', month:'short', year:'numeric' });
+  };
+  return fechas.length === 1 ? fmt(fechas[0]) : fechas.map(fmt).join(' · ');
+};
+
+// Meses entre una fecha y hoy
+export const calcMeses = (desde) => {
+  const h = new Date(), f = new Date(desde);
+  return (h.getFullYear() - f.getFullYear()) * 12 + (h.getMonth() - f.getMonth());
+};
+
+// Texto legible del tiempo en la empresa
+export const calcularTiempoEmpresa = (desde) => {
+  const m = calcMeses(desde);
+  if (m < 1)  return 'Recién ingresado';
+  if (m < 12) return `${m} mes${m > 1 ? 'es' : ''} en la empresa`;
+  const a = Math.floor(m / 12), r = m % 12;
+  return `${a} año${a > 1 ? 's' : ''}${r ? ` y ${r} mes${r > 1 ? 'es' : ''}` : ''} en la empresa`;
+};

@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="author" content="Wilder Taype" />
   <meta property="og:type" content="website" />
   <link rel="icon" type="image/avif" href="/smile.avif" />
@@ -60,8 +62,17 @@
       --Cielo: #0EBEFF;
       --Dulce: #FF5C69;
       --Paz: #29C72E;
+      --Oro: #FFDA34;
       --Mora: #7000FF;
       --Futuro: #21273B;
+      /* SmileBeneficios */
+      --sm_azul: #37a1dd;
+      --sm_amarillo: #FFD101;
+      --sm_rojo: #fe413b;
+      --sm_azul_d: #1d7fb8;
+      --sm_azul_l: #d0ecf9;
+      --sm_grad: linear-gradient(135deg, #37a1dd 0%, #1d7fb8 100%);
+      --sm_grad_y: linear-gradient(135deg, #FFD101 0%, #f5a623 100%);
     }
 
     :root[data-theme="Cielo"] {
@@ -139,6 +150,31 @@
       --bg8: #FFF;
     }
 
+    :root[data-theme="Oro"] {
+      --bg: #fff8d1;
+      --wb: #fffde8;
+      --tx: #000;
+      --tx1: #1a1500;
+      --tx2: #332b00;
+      --tx3: #665500;
+      --txa: #000;
+      --txe: #000;
+      --hv: #f0cc00;
+      --hva: #c9a800;
+      --mco: #FFDA34;
+      --mbg: #facc00;
+      --brd: #ffe066;
+      --inp: #fffef5;
+      --bg1: #ffffff42;
+      --bg2: #FFDA34;
+      --bg3: #fffde8;
+      --bg4: rgba(255, 218, 52, 0.1);
+      --bg5: rgba(255, 218, 52, 0.2);
+      --bg6: rgba(255, 243, 176, 0.5);
+      --bg7: #FFF;
+      --bg8: #FFF;
+    }
+
     :root[data-theme="Mora"] {
       --bg: #e4ccff;
       --wb: #f4ebff;
@@ -212,11 +248,130 @@
       background: var(--bg);
     }
 
+    /* ==================== LOADING OVERLAY ==================== */
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity .5s ease-in-out, visibility .5s ease-in-out;
+    }
+
+    #loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .loading-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 15px;
+      object-fit: contain;
+      border-radius: 0;
+      animation: ld_pulse 2s ease-in-out infinite;
+    }
+
+    .loading-content h2 {
+      color: #1B1B1B;
+      font-size: 24px;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .ad_empty {
+      text-align: center;
+      padding: 5vh 2vh;
+      color: var(--tx3);
+      font-size: var(--fz_m1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1vh;
+    }
+
+    .ad_empty i {
+      font-size: 4vh;
+      opacity: .3;
+    }
+
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .loading-spinner .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+      animation: ld_bounce 1.4s ease-in-out infinite;
+    }
+
+    .loading-spinner .circle-1 {
+      background: #37a1dd;
+      animation-delay: 0s;
+    }
+
+    .loading-spinner .circle-2 {
+      background: #FFD101;
+      animation-delay: .2s;
+    }
+
+    .loading-spinner .circle-3 {
+      background: #fe413b;
+      animation-delay: .4s;
+    }
+
+    @keyframes ld_pulse {
+
+      0%,
+      100% {
+        transform: scale(.95);
+        opacity: .7;
+      }
+
+      50% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes ld_bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
     #wimain {
       max-width: 95vw;
       margin: auto;
-      padding: 1vh .6vh;
+      padding: 1vh 4vw;
       min-height: 100vh;
+    }
+
+    #wimain:has(.ini_wrap) {
+      max-width: 100%;
+      padding: 0;
     }
 
     /* ==================== ESTILOS ESENCIALES HTML ==================== */
@@ -230,15 +385,6 @@
     a {
       color: var(--mco);
       transition: color var(--tr_f)
-    }
-
-    label {
-      display: block;
-      color: var(--tx1);
-      font-size: var(--fz_m1);
-      font-weight: 500;
-      margin-bottom: 0.5vh;
-      margin-top: 1.5vh
     }
 
     input,
@@ -294,7 +440,7 @@
 
     button {
       padding: .3vh 1vh;
-      background: var(--mco);
+      background: none;
       color: var(--txa);
       border: none;
       border-radius: 0.6vh;
@@ -330,7 +476,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 2vh 0;
+      margin: 1vh 0;
       background: var(--wb)
     }
 
@@ -370,8 +516,7 @@
       text-align: center
     }
 
-    .dpn,
-    .movil .wilogo {
+    .dpn {
       display: none
     }
 
@@ -391,16 +536,6 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-    }
-
-    .movil * {
-      justify-content: center;
-    }
-
-    .movil .winav,
-    .movil .wiauth {
-      display: flex;
-      flex-direction: column;
     }
 
     .dpvc {
@@ -446,6 +581,12 @@
       transform: scale(1.01)
     }
 
+    .skip-link:focus {
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0
+    }
+
     .tema[data-ths^="Cielo"] {
       background: var(--Cielo)
     }
@@ -464,6 +605,10 @@
 
     .tema[data-ths^="Futuro"] {
       background: var(--Futuro)
+    }
+
+    .tema[data-ths^="Oro"] {
+      background: var(--Oro)
     }
 
     #wiTema:hover {
@@ -514,6 +659,15 @@
       font-size: var(--fz_l1)
     }
 
+    .wilogo_img {
+      height: var(--fz_l1);
+      width: var(--fz_l1);
+      object-fit: contain;
+      border-radius: 0;
+      display: inline-block;
+      vertical-align: middle
+    }
+
     .wilogo:hover {
       transform: scale(1.05);
       filter: drop-shadow(0 0 0.5vh var(--mco))
@@ -544,6 +698,20 @@
       height: 2vh;
       border-radius: 50%;
       object-fit: cover
+    }
+
+    .nv_avatar_ini {
+      height: 2.5vh;
+      width: 2.5vh;
+      border-radius: 50%;
+      background: var(--mco);
+      color: var(--txa);
+      font-size: var(--fz_s4);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
     }
 
     .nv_item i {
@@ -618,6 +786,41 @@
       color: var(--tx);
     }
 
+    /* ==================== UTILIDADES EXTRA ==================== */
+    .df {
+      display: flex
+    }
+
+    .dfc {
+      display: flex;
+      justify-content: center;
+      align-items: center
+    }
+
+    .dfw {
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .dfcc {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center
+    }
+
+    .mwb {
+      max-width: 87vw;
+      margin: auto;
+      width: 100%
+    }
+
+    .wib {
+      width: 100%
+    }
+
     /* ==================== WIANIMA GLOBAL v12 ==================== */
     .wi_fadeUp,
     .wi_fadeLeft,
@@ -649,6 +852,188 @@
       transform: none !important
     }
 
+    .nv_item:focus-visible,
+    .tema:focus-visible,
+    .wibtn_auth:focus-visible,
+    .bt_salir:focus-visible,
+    .wimenu:focus-visible,
+    .btn_primary:focus-visible,
+    .btn_secondary:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--mco);
+      outline-offset: 2px;
+      border-radius: 0.6vh
+    }
+
+    /* ==================== MOBILE DRAWER ==================== */
+    .movil_overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .12);
+      backdrop-filter: blur(.3vw);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--tr_m)
+    }
+
+    .movil_drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 80vw;
+      height: 100dvh;
+      background: var(--bg);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform var(--tr_m);
+      display: flex;
+      flex-direction: column;
+      padding: 2vh 0;
+      overflow-y: auto;
+      box-shadow: -1vh 0 3vh rgba(0, 0, 0, .08)
+    }
+
+    body.movil_open {
+      overflow: hidden
+    }
+
+    body.movil_open .movil_overlay {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    body.movil_open .movil_drawer {
+      transform: translateX(0)
+    }
+
+    .movil_close {
+      color: var(--mco);
+      position: absolute;
+      top: 1px;
+      right: 2px;
+      font-size: var(--fz_m4);
+      padding: .8vh 1.2vh;
+      background: none;
+      border: none;
+      cursor: pointer
+    }
+
+    .movil_close:hover {
+      color: var(--mco)
+    }
+
+    .movil_logo {
+      text-align: center;
+      padding: 3vh 2vh 1vh;
+      font-size: var(--fz_m5);
+      font-weight: 700;
+      color: var(--bg2)
+    }
+
+    .movil_logo i {
+      margin-right: .5vh
+    }
+
+    .movil_nav {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1vh;
+      padding: 0 1vh;
+      text-align: left
+    }
+
+    .movil_nav .nv_item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 2vh;
+      padding: 2.5vh 2.5vh;
+      color: var(--tx);
+      font-size: var(--fz_m2);
+      font-weight: 500;
+      border-bottom: 1px solid var(--brd);
+      background: none;
+      border-radius: 0;
+      box-shadow: none
+    }
+
+    .movil_nav .nv_item:last-child {
+      border-bottom: none
+    }
+
+    .movil_nav .nv_item i {
+      font-size: var(--fz_l);
+      color: var(--mco);
+      min-width: 3vh
+    }
+
+    .movil_nav .nv_item span {
+      font-size: var(--fz_m1)
+    }
+
+    .movil_nav .nv_item.active {
+      color: var(--mco);
+      font-weight: 700;
+      background: var(--bg4);
+      border-radius: .6vh
+    }
+
+    .movil_nav .nv_item.active i {
+      color: var(--mco)
+    }
+
+    .movil_divider {
+      height: 1px;
+      background: var(--brd);
+      margin: 1vh 2.5vh
+    }
+
+    .movil_nav .bt_auth {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 2.5vh;
+      padding: 2.5vh 2.5vh;
+      color: var(--tx);
+      font-size: var(--fz_m2);
+      font-weight: 500;
+      border-bottom: 1px solid var(--brd);
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer
+    }
+
+    .movil_nav .bt_auth:last-child {
+      border-bottom: none
+    }
+
+    .movil_nav .bt_auth i {
+      font-size: var(--fz_l1);
+      color: var(--mco);
+      min-width: 3vh
+    }
+
+    .movil_nav .bt_auth span {
+      font-size: var(--fz_m2)
+    }
+
+    .movil_nav .bt_auth:hover {
+      background: var(--bg4);
+      border-radius: .6vh
+    }
+
+    .movil_nav .bt_salir {
+      color: var(--error)
+    }
+
+    .movil_nav .bt_salir i {
+      color: var(--error)
+    }
+
     /* ==================== RESPONSIVE ==================== */
     @media (max-width:768px) {
       #wimain {
@@ -657,12 +1042,12 @@
 
       .wiheader {
         height: auto;
-        padding: 1.5vh 4vh 1.5vh 1.5vh;
-        position: relative
+        padding: 1.5vh 4vh 1.5vh 1.5vh
       }
 
       .winav,
-      .wiauth {
+      .wiauth,
+      .nv_right {
         display: none
       }
 
@@ -701,40 +1086,22 @@
   <header class="wiheader">
     <div class="nv_left">
       <h1 class="wilogo"><a href="/"><i class="fas fa-code"></i> Widev</a></h1>
-      <nav class="winav">
-        <a href="/" class="nv_item active" data-page="inicio">
-          <i class="fas fa-house"></i> <span>Inicio</span>
-        </a>
-        <a href="/crear" class="nv_item" data-page="crear">
-          <i class="fas fa-circle-plus"></i> <span>Crear</span>
-        </a>
-        <a href="/enviar" class="nv_item" data-page="enviar">
-          <i class="fa-solid fa-qrcode"></i> <span>Enviar QR</span>
-        </a>
-        <a href="/plantilla" class="nv_item" data-page="plantilla">
-          <i class="fas fa-layer-group"></i> <span>Plantillas</span>
-        </a>
-        <a href="/ejemplos" class="nv_item" data-page="ejemplos">
-          <i class="fas fa-wand-magic-sparkles"></i> <span>Ejemplos</span>
-        </a>
-        <a href="/acerca" class="nv_item" data-page="acerca">
-          <i class="fas fa-circle-info"></i> <span>Acerca</span>
-        </a>
-      </nav>
+      <nav class="winav"></nav>
     </div><!--LEFT: Logo+Navegación-->
     <div class="nv_right"></div><!--RIGHT: Auth+Navegación-->
     <div class="wimenu dpn"><i class="fas fa-bars"></i></div>
   </header>
   <main id="wimain"></main>
   <div id="wiTema">
-    <div class="tema mtha" data-ths="Cielo|#0EBEFF"></div>
+    <div class="tema" data-ths="Cielo|#0EBEFF"></div>
     <div class="tema" data-ths="Dulce|#FF5C69"></div>
-    <div class="tema" data-ths="Paz|#29C72E"></div>
+    <div class="tema mtha" data-ths="Paz|#29C72E"></div>
+    <div class="tema" data-ths="Oro|#FFDA34"></div>
     <div class="tema" data-ths="Mora|#7000FF"></div>
     <div class="tema" data-ths="Futuro|#21273B"></div>
   </div>
 </body>
-<script>(() => { const d = document, h = d.documentElement, w = d.querySelector('#wiTema'); if (!w) return; const ts = [...w.querySelectorAll('.tema')], m = d.querySelector('meta[name="theme-color"]') || d.head.appendChild(Object.assign(d.createElement('meta'), { name: 'theme-color' })), st = t => { const [n, c] = t.dataset.ths.split('|'); h.dataset.theme = n; m.content = c; localStorage.wiTema = t.dataset.ths; ts.forEach(x => x.classList.toggle('mtha', x === t)) }; w.addEventListener('click', e => e.target.matches('.tema') && st(e.target), { passive: !0 }); const i = w.querySelector(`[data-ths="${localStorage.wiTema}"]`) || ts[0]; i && st(i) })();</script>
+<script>(() => { const d = document, h = d.documentElement, w = d.querySelector('#wiTema'); if (!w) return; const ts = [...w.querySelectorAll('.tema')], m = d.querySelector('meta[name="theme-color"]') || d.head.appendChild(Object.assign(d.createElement('meta'), { name: 'theme-color' })), st = t => { const [n, c] = t.dataset.ths.split('|'); h.dataset.theme = n; m.content = c; localStorage.wiTema = t.dataset.ths; ts.forEach(x => x.classList.toggle('mtha', x === t)) }; w.addEventListener('click', e => e.target.matches('.tema') && st(e.target), { passive: !0 }); const i = w.querySelector(`[data-ths="${localStorage.wiTema}"]`) || ts[2]; i && st(i) })();</script>
 <script type="module" src="./smiles/main.js" defer></script>
 
 </html>
