@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wtaype.github.io/awonbeee/sitemap.xml
+Sitemap: https://wtaype.github.io/typingwii/sitemap.xml
