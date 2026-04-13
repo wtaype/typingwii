@@ -1,716 +1,217 @@
-/* ══════════════════════════════════════════════════════════════════
-   SMILEBENEFICIOS — LOGIN PAGE  ·  v8 — Smooth & Elegant
-   Sin outlines duros · Forms premium · Entrada suave
-   Paleta: #1e3a8a (navy) · #37A1DD (azul) · #FFD101 (yellow)
-══════════════════════════════════════════════════════════════════ */
-
-
-/* ── Variables ──────────────────────────────────────────────────── */
-:root {
-  --lg-navy:     #1e3a8a;
-  --lg-azul:     #37A1DD;
-  --lg-yellow:   #FFD101;
-  --lg-yellow2:  #ffda34;
-  --lg-red:      #fe413b;
-  --lg-ease:     cubic-bezier(.4, 0, .2, 1);
-  --lg-spring:   cubic-bezier(.22, 1, .36, 1);
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   BASE RESET
-══════════════════════════════════════════════════════════════════ */
-.ini_wrap *,
-.ini_wrap *::before,
-.ini_wrap *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  outline: none;          /* ← sin outline en todo */
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* ── Fondo gris contenedor ──────────────────────────────────────── */
-.ini_wrap {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  min-height: 100vh;
-  width: 100%;
+/* ==================== 1. WRAP ==================== */
+.wilg_wrap {
+  min-height: 92vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 2rem;
-  background: #f0f4f9;
-  background-size: cover;
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   CARD WRAP — entrada súper suave
-══════════════════════════════════════════════════════════════════ */
-.ini_card_wrap {
-  width: 100%;
-  max-width: 1300px;
-  display: flex;
-  flex-wrap: wrap;
-  background: #ffffff;
-  border-radius: 2rem;
-  box-shadow:
-    0 32px 80px -12px rgba(15, 31, 75, 0.18),
-    0 8px 24px -4px rgba(15, 31, 75, 0.06);
+  padding-top: 6vh;
+  position: relative;
   overflow: hidden;
-  /* Entrada suave */
-  opacity: 0;
-  transform: translateY(32px);
-  animation: lgWrapIn .72s var(--lg-spring) .08s forwards;
 }
 
-@keyframes lgWrapIn {
-  to { opacity: 1; transform: translateY(0); }
-}
 
-/* ══════════════════════════════════════════════════════════════════
-   LADO IZQUIERDO — 45%   imagen + beneficios
-══════════════════════════════════════════════════════════════════ */
-.ini_left {
-  flex: 0 0 45%;
+
+/* ==================== 2. CARD ==================== */
+.wilg_card {
   position: relative;
-  background:
-    url('https://i.postimg.cc/2rTpBsNk/img.webp')
-    center / cover no-repeat;
-  min-height: 620px;
-  display: flex;
-}
-
-/* Gradiente azul */
-.ini_left::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    145deg,
-    rgba(30, 58, 138, 0.92) 0%,
-    rgba(55, 161, 221, 0.82) 100%
-  );
+  width: 100%;
+  max-width: 26vw;
+  min-width: 320px;
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 2.4vh;
+  box-shadow:
+    0 2vh 6vh rgba(0,0,0,.1),
+    0 0 0 1px var(--bg4),
+    inset 0 1px 0 rgba(255,255,255,.7);
   z-index: 1;
+  overflow: hidden;
+  animation: liEntrar .4s cubic-bezier(.4,0,.2,1);
 }
 
-/* Radial suave amarillo */
-.ini_left_overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 22% 48%,
-    rgba(255, 209, 1, 0.1) 0%,
-    rgba(0, 0, 0, 0.15) 100%
-  );
-  z-index: 2;
+@keyframes liEntrar {
+  from { opacity: 0; transform: translateY(2.5vh) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.ini_left_content {
+
+
+/* ==================== 4. FORM ==================== */
+#liForm {
   position: relative;
-  z-index: 3;
-  padding: 2.6rem;
+  z-index: 1;
+  padding: 3.5vh 2.4vw 3vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  color: white;
+  gap: 1.5vh;
+  background: var(--bg);
 }
 
-/* ── Brand pill ─────────────────────────────────────────────────── */
-.ini_brand {
-  display: flex;
-  align-items: center;
-  gap: .95rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 60px;
-  padding: .55rem 1.3rem .55rem .7rem;
-  width: fit-content;
-  border: 1px solid rgba(255, 209, 1, 0.38);
-  /* Animación propia */
-  opacity: 0;
-  transform: translateY(18px);
-  animation: lgItemIn .6s var(--lg-spring) .35s forwards;
-}
+/* HEAD */
+.wilg_head { display: flex; flex-direction: column; align-items: center; gap: .7vh; margin-bottom: 1vh; }
+.wilg_head h2 { font-family: var(--ff_G); font-size: var(--fz_l2); font-weight: 700; color: var(--mco); letter-spacing: -.03em; margin: 0; }
+.wilg_head p  { font-size: var(--fz_m1); color: var(--tx3); margin: 0; opacity: .85; }
 
-.ini_brand_logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, .95);
-  flex-shrink: 0;
-}
-.ini_brand_logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 4px;
-}
-
-.ini_brand_name {
-  font-size: 1.18rem;
-  font-weight: 800;
-  background: linear-gradient(120deg, #fff, #FFD101);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.1;
-}
-.ini_brand_sub {
-  font-size: .66rem;
-  opacity: .78;
-  margin-top: .18rem;
-  -webkit-text-fill-color: rgba(255, 255, 255, .78);
-}
-
-/* ── Claim ──────────────────────────────────────────────────────── */
-.ini_claim {
-  margin-top: auto;
-  margin-bottom: 1.3rem;
-  opacity: 0;
-  transform: translateY(18px);
-  animation: lgItemIn .65s var(--lg-spring) .5s forwards;
-}
-
-.ini_claim h1 {
-  font-size: clamp(2.1rem, 4.2vh, 3.1rem);
-  font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: .6rem;
-  text-shadow: 0 3px 20px rgba(0, 0, 0, .35);
-}
-.ini_grad {
-  background: linear-gradient(120deg, #FFD101, #FFB347);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.ini_claim p {
-  font-size: .88rem;
-  opacity: .88;
-  line-height: 1.55;
-  color: var(--txa);
-}
-.ini_in p{color: var(--txa);}
-
-/* ── Benefit highlight ──────────────────────────────────────────── */
-.benefit_highlight {
-  background: rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: .95rem 1.25rem;
-  margin-bottom: 1.2rem;
-  border-left: 3px solid var(--lg-yellow);
-  opacity: 0;
-  transform: translateY(14px);
-  animation: lgItemIn .6s var(--lg-spring) .65s forwards;
-}
-
-.benefit_highlight p {
-  font-size: .82rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 5px 0;
-  line-height: 1.45;
-}
-.benefit_highlight i {
-  color: var(--lg-yellow);
-  width: 20px;
-  font-size: .95rem;
-  flex-shrink: 0;
-}
-.benefit_highlight strong {
-  color: var(--lg-yellow);
-  font-weight: 700;
-}
-
-/* ── Pills ──────────────────────────────────────────────────────── */
-.ini_pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .65rem;
-  opacity: 0;
-  transform: translateY(12px);
-  animation: lgItemIn .55s var(--lg-spring) .8s forwards;
-}
-
-.ini_pill {
-  background: rgba(30, 58, 138, 0.48);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  padding: .42rem 1.1rem;
-  border-radius: 40px;
-  font-size: .75rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid rgba(255, 209, 1, 0.5);
-  color: rgba(255, 255, 255, .92);
-  transition: all .22s var(--lg-ease);
-  cursor: default;
-}
-.ini_pill:hover {
-  background: rgba(30, 58, 138, 0.68);
-  border-color: rgba(255, 209, 1, .85);
-  transform: translateY(-2px);
-}
-.ini_pill i {
-  color: var(--lg-yellow);
-  font-size: .72rem;
-}
-
-/* ── Keyframe compartido para el lado izquierdo ─────────────────── */
-/* (brand, claim, benefit_highlight, pills usan este) */
-@keyframes lgItemIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ── Clases JS (se añaden con .addClass) — soporte retrocompat. ─── */
-.ini_brand.ini_in,
-.ini_claim.ini_in,
-.benefit_highlight.ini_in,
-.ini_pills.ini_in { opacity: 1; transform: none; }
-
-/* ══════════════════════════════════════════════════════════════════
-   LADO DERECHO — 55%   formulario
-══════════════════════════════════════════════════════════════════ */
-.ini_right {
-  flex: 0 0 55%;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2.8rem 2.5rem;
-  /* Entrada con retraso */
-  opacity: 0;
-  animation: lgRightIn .7s var(--lg-spring) .18s forwards;
-}
-
-@keyframes lgRightIn {
-  from { opacity: 0; transform: translateX(22px); }
-  to   { opacity: 1; transform: none; }
-}
-
-.ini_card {
-  width: 100%;
-  max-width: 460px;
-}
-
-/* ── Logo sobre el heading ──────────────────────────────────────── */
-.ini_card_logo {
-  text-align: center;
-  margin-bottom: .6rem;
-}
-.ini_card_logo a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 68px;
-  height: 68px;
-  border-radius: 20px;
-  background: linear-gradient(145deg, #f4f8ff, #e8f0ff);
-  box-shadow:
-    0 4px 20px rgba(55, 161, 221, .13),
-    0 1px 4px rgba(0, 0, 0, .05),
-    inset 0 1px 0 rgba(255, 255, 255, .9);
-  transition: transform .26s var(--lg-spring), box-shadow .26s;
-  text-decoration: none;
-  border: none;
-}
-.ini_card_logo a:hover {
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 8px 30px rgba(55, 161, 221, .2), 0 2px 8px rgba(0, 0, 0, .07);
-}
-.ini_card_logo img {
-  width: 44px;
-  height: 44px;
-  object-fit: contain;
-}
-
-/* ── Heading ────────────────────────────────────────────────────── */
-.lg_head {
-  text-align: center;
-  margin-bottom: 2rem;
-  margin-top: .15rem;
-}
-.lg_head h2 {
-  font-size: 1.9rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--lg-navy) 30%, var(--lg-azul) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: .35rem;
-  line-height: 1.2;
-}
-.lg_head p {
-  color: #5e7a90;
-  font-weight: 500;
-  font-size: .88rem;
-}
-.lg_head strong { color: var(--lg-azul); font-weight: 700; }
-
-/* ══════════════════════════════════════════════════════════════════
-   CAMPOS — pill sin outline, con sombra suave
-══════════════════════════════════════════════════════════════════ */
-.lg_campo {
-  display: flex;
-  align-items: center;
-  background: #f6f9fd;
-  border-radius: 60px;
-  padding: 0 1.2rem;
-  margin-bottom: 1rem;
-  height: 52px;
-  /* Sombra sutil siempre visible */
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, .05),
-    0 0 0 1.5px rgba(210, 225, 240, .8);
-  transition:
-    box-shadow .25s var(--lg-ease),
-    background .25s;
-  position: relative;
-}
-
-/* Focus: glow suave sin outline duro */
-.lg_campo:focus-within {
-  background: #ffffff;
-  box-shadow:
-    0 2px 8px rgba(255, 209, 1, .18),
-    0 0 0 2px rgba(255, 209, 1, .55);
-}
-
-/* Icono izquierdo */
-.lg_campo > i:first-child {
-  color: #c4d4e2;
-  font-size: 1rem;
-  margin-right: 12px;
-  flex-shrink: 0;
-  width: 20px;
-  pointer-events: none;
-  transition: color .22s;
-}
-.lg_campo:focus-within > i:first-child {
-  color: var(--lg-yellow2);
-}
-
-/* Input */
-.lg_campo input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  font-size: .95rem;
-  font-weight: 500;
-  color: #1a2b45;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  caret-color: var(--lg-yellow);
-  outline: none;
-  box-shadow: none;
-  appearance: none;
-  padding: 1.2vh 1vh;
-}
-.lg_campo input::placeholder {
-  color: #b4c7d5;
-  font-weight: 400;
-}
-.lg_campo input[readonly] {
-  opacity: .55;
-  cursor: not-allowed;
-}
-.lg_campo input[type="date"] {
-  cursor: pointer;
-  color-scheme: light;
-}
-.lg_campo input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(.4) sepia(1) saturate(3) hue-rotate(8deg);
-  cursor: pointer;
-  padding: 0;
-  width: 17px;
-  height: 17px;
-  opacity: .7;
-  transition: opacity .2s;
-}
-.lg_campo input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  opacity: 1;
-}
-
-/* Ojo contraseña */
-.lg_ojo {
-  cursor: pointer;
-  color: #c4d4e2;
-  font-size: .92rem;
-  margin-left: 8px;
-  flex-shrink: 0;
-  transition: color .2s;
-  background: none;
-  border: none;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-.lg_ojo:hover { color: var(--lg-yellow); }
-
-/* ── Barra de fuerza de contraseña ─────────────────────────────── */
-.lg_strength {
-  display: flex;
-  gap: 5px;
-  padding: 0 1.4rem;
-  margin: -.2rem 0 .8rem;
-}
-.lg_strength_bar {
-  flex: 1;
-  height: 3px;
-  border-radius: 2px;
-  background: #e8eef5;
-  transition: background .3s var(--lg-ease);
-}
-
-/* ── Mensaje validación ─────────────────────────────────────────── */
-.lg_upd_msg {
-  min-height: 22px;
-  padding: 0 1.3rem;
-  margin-bottom: .5rem;
-  font-size: .77rem;
-  animation: lgMsgIn .2s var(--lg-ease);
-}
-@keyframes lgMsgIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: none; }
-}
-.lg_warn { color: #dc2626; font-weight: 600; display: flex; align-items: center; gap: 5px; }
-.lg_ok   { color: #16a34a; font-weight: 700; display: flex; align-items: center; gap: 5px; }
-
-/* ── Términos y condiciones ─────────────────────────────────────── */
-.lg_terminos {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 1.4rem;
-  margin-bottom: 1.2rem;
-  font-size: .84rem;
-  color: #5e7a90;
-  cursor: pointer;
-  user-select: none;
-}
-.lg_terminos input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--lg-azul);
-  cursor: pointer;
-  flex-shrink: 0;
-  border-radius: 4px;
-}
-.lg_terminos span {
-  line-height: 1.3;
-}
-.lg_terminos a {
-  color: var(--lg-azul);
-  text-decoration: none;
-  font-weight: 700;
-  transition: color .2s var(--lg-ease);
-}
-.lg_terminos a:hover {
-  color: var(--lg-navy);
-  text-decoration: underline;
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   BOTÓN pill — amarillo premium con shimmer
-══════════════════════════════════════════════════════════════════ */
-.lg_btn {
-  width: 100%;
-  border: none;
-  padding: .9rem 1.5rem;
-  border-radius: 60px;
-  background: linear-gradient(95deg, var(--lg-yellow), var(--lg-yellow2) 55%, var(--lg-yellow));
-  background-size: 200% auto;
-  color: var(--lg-navy);
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  font-size: .96rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
-  letter-spacing: .015em;
-  box-shadow:
-    0 6px 20px rgba(255, 209, 1, .38),
-    0 2px 6px rgba(255, 209, 1, .18);
-  margin-top: .5rem;
-  /* Transición suave */
-  transition:
-    background-position .5s var(--lg-ease),
-    transform .22s var(--lg-ease),
-    box-shadow .22s var(--lg-ease);
-  outline: none;
-}
-.lg_btn:hover:not(:disabled) {
-  background-position: right center;
-  transform: translateY(-3px);
-  box-shadow:
-    0 12px 28px rgba(255, 209, 1, .46),
-    0 4px 10px rgba(255, 209, 1, .22);
-}
-.lg_btn:active:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(255, 209, 1, .3);
-}
-.lg_btn:disabled {
-  opacity: .42;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-  background: #e4eaf2;
-  color: #8ea5bc;
-}
-
-/* ── Link "olvidé contraseña" / volver ─────────────────────────── */
-.lg_links {
-  margin-top: 1.3rem;
-  text-align: center;
-}
-.lg_rec,
-.lg_volver {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--lg-azul);
-  font-size: .82rem;
-  font-weight: 600;
-  cursor: pointer;
-  background: #f0f5fb;
-  padding: .5rem 1.3rem;
-  border-radius: 40px;
-  transition: all .22s var(--lg-ease);
-  text-decoration: none;
-  border: none;
-  outline: none;
-}
-.lg_rec i, .lg_volver i { color: var(--lg-yellow); }
-.lg_rec:hover, .lg_volver:hover {
-  background: #e4ecf5;
-  color: var(--lg-navy);
-  transform: translateY(-1px);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, .06);
-}
-
-/* ── Footer "acceso exclusivo" ──────────────────────────────────── */
-.ini_foot_txt {
-  margin-top: 1.6rem;
-  font-size: .7rem;
-  color: #7a9aaa;
-  border-top: 1px solid #edf2f6;
-  padding-top: 1.1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  justify-content: center;
-  letter-spacing: .04em;
-}
-.ini_foot_txt i { color: var(--lg-yellow); font-size: .82em; }
-
-/* ══════════════════════════════════════════════════════════════════
-   HEADER — compatibilidad nav
-══════════════════════════════════════════════════════════════════ */
-.nv_perfil {
-  display: flex;
-  align-items: center;
-  gap: .9vh;
-  padding: .5vh 1.2vh;
-  background: var(--bg1, rgba(255,255,255,.08));
-  border-radius: .8vh;
-  border: 1px solid var(--brd, rgba(0,0,0,.07));
-  transition: background .2s;
-}
-.nv_avatar {
-  width: 3.6vh; height: 3.6vh;
+/* LOGO */
+.wilg_logo {
+  width: 8.5vh; height: 8.5vh;
   border-radius: 50%;
-  background: linear-gradient(135deg, #37a1dd, #1a6fa8);
-  color: #fff;
-  font-size: 1.35vh;
-  font-weight: 800;
+  background: linear-gradient(135deg, var(--mco), var(--hva));
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 2px 10px rgba(55,161,221,.35);
+  box-shadow: 0 1.5vh 4vh var(--bg5), 0 0 0 4px var(--bg4);
+  animation: liFloat 3.5s ease-in-out infinite;
+  transition: all var(--tr_f);
+  cursor: pointer;
 }
-.nv_info { display: flex; flex-direction: column; gap: .15vh; }
-.nv_nombre { font-size: var(--fz_m1,.85rem); font-weight: 700; color: var(--tx,#000); line-height: 1.1; }
-.nv_rol {
-  font-size: var(--fz_s3,.68rem);
-  font-weight: 700;
-  color: #fff;
-  padding: .18vh .75vh;
-  border-radius: .4vh;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  line-height: 1.3;
+.wilg_logo_sm { width: 7vh; height: 7vh; }
+.wilg_logo:hover { transform: scale(1.08) rotate(6deg); box-shadow: 0 2vh 5vh var(--bg5), 0 0 0 6px var(--bg4); }
+.wilg_logo img   { width: 86%; height: 86%; object-fit: cover; border-radius: 50%; }
+
+@keyframes liFloat {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-.6vh); }
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   RESPONSIVE — Tablet (≤ 1050px)
-══════════════════════════════════════════════════════════════════ */
-@media (max-width: 1050px) {
-  .ini_left  { flex: 0 0 42%; min-height: 540px; text-align: center;}
-  .ini_right { flex: 0 0 58%; padding: 2.2rem; }
-  .ini_claim h1 { font-size: 2.2rem; }
+/* GRID REGISTRO */
+.wilg_grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3vh 1vw; }
+
+/* ==================== 5. INPUTS ==================== */
+.wilg_grupo {
+  position: relative;
+  width: 100%;
+  animation: liFadeUp .35s ease backwards;
+}
+.wilg_grupo:nth-child(1){animation-delay:.05s}
+.wilg_grupo:nth-child(2){animation-delay:.1s}
+.wilg_grupo:nth-child(3){animation-delay:.15s}
+.wilg_grupo:nth-child(4){animation-delay:.2s}
+.wilg_grupo:nth-child(5){animation-delay:.25s}
+.wilg_grupo:nth-child(6){animation-delay:.3s}
+
+@keyframes liFadeUp {
+  from { opacity: 0; transform: translateY(1.2vh); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   RESPONSIVE — Mobile (≤ 800px)
-══════════════════════════════════════════════════════════════════ */
-@media (max-width: 800px) {
-  .ini_wrap {
-    padding: 0;
-    align-items: flex-start;
-    background: #eef1f8;
-  }
-  .ini_card_wrap {
-    flex-direction: column;
-    border-radius: 0;
-    box-shadow: none;
-    min-height: 100svh;
-    /* Animación simplificada en mobile */
-    transform: translateY(16px);
-    animation: lgWrapIn .55s var(--lg-spring) .04s forwards;
-  }
-  .ini_left {
-    flex: none;
-    min-height: 52vw;
-    max-height: 300px;
-  }
-  .ini_left_content { padding: 1.6rem 1.6rem 1.8rem; }
-  .ini_claim h1 { font-size: 1.9rem; }
-  .ini_claim p   { font-size: .82rem; }
-  .benefit_highlight p { font-size: .76rem; }
+.wilg_grupo > i:first-of-type {
+  position: absolute; left: 1.3vh; top: 50%; transform: translateY(-50%);
+  color: var(--mco); opacity: .6; font-size: var(--fz_m2);
+  pointer-events: none; transition: all var(--tr_f); z-index: 2;
+}
+.wilg_grupo:focus-within > i:first-of-type { opacity: 1; color: var(--hva); transform: translateY(-50%) scale(1.15); }
 
-  .ini_right {
-    flex: 1;
-    padding: 2rem 1.5rem;
-    align-items: flex-start;
-    /* Sin animación lateral en mobile */
-    animation: lgWrapIn .5s var(--lg-spring) .1s forwards;
-  }
-  .ini_card { max-width: none; }
-  .lg_head h2 { font-size: 1.65rem; }
-  .nv_info { display: none; }
+.wilg_grupo input {
+  width: 100%;
+  padding: 1.35vh 3.8vh 1.35vh 3.5vh;
+  background: var(--inp);
+  border: 2px solid var(--brd);
+  border-radius: 1.1vh;
+  color: var(--tx);
+  font-size: var(--fz_m2);
+  font-family: var(--ff_P);
+  outline: none;
+  box-sizing: border-box;
+  transition: all var(--tr_f);
+}
+.wilg_grupo input:hover  { border-color: var(--mco); background: var(--wb); }
+.wilg_grupo input:focus  { border-color: var(--mco); background: var(--wb); box-shadow: 0 0 0 4px var(--bg4); transform: translateY(-.1vh); }
+.wilg_grupo input::placeholder       { color: var(--tx3); opacity: .7; }
+.wilg_grupo input:focus::placeholder { opacity: .4; }
+
+/* OJO */
+.wilg_ojo {
+  position: absolute !important; right: 1.2vh !important; top: 50% !important;
+  transform: translateY(-50%) !important; color: var(--tx3) !important; opacity: .55 !important;
+  font-size: var(--fz_m2) !important; cursor: pointer !important; pointer-events: all !important;
+  transition: all var(--tr_f) !important; z-index: 3 !important;
+}
+.wilg_ojo:hover { opacity: 1 !important; color: var(--mco) !important; transform: translateY(-50%) scale(1.15) !important; }
+
+/* CHECKBOX */
+.wilg_check label { display: flex; align-items: center; gap: .8vh; font-size: var(--fz_m1); color: var(--tx); cursor: pointer; margin: 0; transition: color var(--tr_f); }
+.wilg_check label:hover { color: var(--mco); }
+.wilg_check input[type="checkbox"] { width: 1.8vh; height: 1.8vh; padding: 0; accent-color: var(--mco); flex-shrink: 0; }
+.wilg_check a { color: var(--mco); text-decoration: underline; font-weight: 500; transition: color var(--tr_f); }
+.wilg_check a:hover { color: var(--hva); }
+
+/* BOTÓN */
+.wilg_btn {
+  width: 100%; padding: 1.55vh 2vw;
+  background: linear-gradient(135deg, var(--mco) 0%, var(--hva) 100%);
+  color: var(--txa); border: none; border-radius: 1.1vh;
+  font-size: var(--fz_m3); font-weight: 600; font-family: var(--ff_P);
+  cursor: pointer; letter-spacing: .02em;
+  box-shadow: 0 .8vh 2.4vh var(--bg5);
+  transition: all var(--tr_f); position: relative; overflow: hidden;
+  animation: liFadeUp .35s ease .32s backwards;
+}
+.wilg_btn:hover   { transform: translateY(-.35vh) scale(1.02); box-shadow: 0 1.2vh 3vh var(--bg5);  }
+.wilg_btn.inactivo, .wilg_btn:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* LINKS */
+.wilg_links {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: .8vh; margin-top: .6vh;
+  animation: liFadeUp .35s ease .38s backwards;
+}
+.wilg_links span {
+  color: var(--mco); font-size: var(--fz_m1); font-weight: 500;
+  cursor: pointer; padding: .6vh .8vw; border-radius: .6vh;
+  transition: all var(--tr_f); position: relative; white-space: nowrap;
+}
+.wilg_links span::after { content:''; position:absolute; bottom:.2vh; left:50%; width:0; height:2px; background:var(--mco); transform:translateX(-50%); transition:width var(--tr_f); border-radius:1px; }
+.wilg_links span:hover  { color: var(--hva); background: var(--bg4); transform: translateY(-.2vh); }
+.wilg_links span:hover::after { width: 75%; }
+
+/* ==================== 6. MODAL OVERLAY ==================== */
+.wilg_mod .modalBody {
+  max-width: 28vw; min-width: 320px; padding: 0;
+  background: var(--wb); border-radius: 2.4vh;
+  box-shadow: 0 2vh 6vh rgba(0,0,0,.2); border: 1px solid var(--brd);
+  animation: liEntrar var(--tr_m) cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+}
+.wilg_mod_reg .modalBody { max-width: 42vw; }
+
+.wilg_mod .modalX {
+  position: absolute; top: 1.5vh; right: 1.5vh;
+  background: var(--bg4); color: var(--tx2); border: none;
+  width: 3.5vh; height: 3.5vh; border-radius: 50%;
+  font-size: var(--fz_m3); cursor: pointer;
+  transition: all var(--tr_f);
+  display: flex; align-items: center; justify-content: center; z-index: 10;
+}
+.wilg_mod .modalX:hover { background: var(--mco); color: var(--txa); transform: rotate(90deg) scale(1.1); }
+
+.wilg_mod #liForm {
+  padding: 3.5vh 2.5vw 3vh;
+  display: flex; flex-direction: column; gap: 1.5vh;
+  background: var(--bg);
+}
+.wilg_mod p { color: var(--tx); font-size: var(--fz_m2); margin: 1vh 0 1.5vh; opacity: .9; font-weight: 500; text-align: center; }
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1200px) {
+  .wilg_card { max-width: 36vw; }
+  .wilg_mod .modalBody { max-width: 36vw; }
+  .wilg_mod_reg .modalBody { max-width: 52vw; }
 }
 
-@media (max-width: 540px) {
-  .ini_pills.ini_in, .benefit_highlight.ini_in{display: none;}
+@media (max-width: 768px) {
+  .wilg_wrap  { padding-top: 4vh; padding-inline: 4vw; }
+  .wilg_card  { max-width: 100%; min-width: auto; }
+  #liForm   { padding: 3vh 5vw; }
+  .wilg_grid  { grid-template-columns: 1fr; }
+  .wilg_links { flex-direction: column; }
+  .wilg_links span { width: 100%; text-align: center; }
+  .wilg_mod .modalBody { max-width: 95vw; min-width: auto; }
+  .wilg_mod_reg .modalBody { max-width: 95vw; }
+  .wilg_mod #liForm { padding: 3vh 4vw; }
 }
 
 @media (max-width: 480px) {
-  .ini_left { max-height: 240px; min-height: 44vw; }
-  .ini_left_content { padding: 1.3rem; align-items: center; gap: 2vh;}
-  .ini_right { padding: 1.6rem 1.2rem; }
-  .lg_head h2 { font-size: 1.45rem; }
-  .ini_card_logo a { width: 58px; height: 58px; border-radius: 16px; }
-  .ini_card_logo img { width: 38px; height: 38px; }
-  .benefit_highlight { padding: .75rem 1rem; }
-  .lg_campo { height: 48px; padding: 0 1rem; }
+  .wilg_wrap { padding-top: 2vh; }
+  #liForm  { padding: 2.5vh 4vw; }
+  .wilg_logo { width: 7.5vh; height: 7.5vh; }
+  .wilg_mod #liForm { padding: 2.5vh 3vw; }
 }
