@@ -17,5 +17,9 @@ git tag v9 -m "Version v9" ; git push origin v9
 // Actualizar versiones de seguridad [TAG REMPLAZO] (3)
 git tag -d v9 ; git tag v9 -m "Version v9 actualizada" ; git push origin v9 --force
 
+// Actualizar versiones de seguridad [ELIMINAR CARPETA - ARCHIVO ONLINE] (4)
+git rm --cached skills-lock.json ; git commit -m "Eliminado archivo" ; git push origin main
+git rm -r --cached .claude/ ; git commit -m "Eliminada carpeta" ; git push origin main
+
 
  ACTUALIZACION TAG[END] */
