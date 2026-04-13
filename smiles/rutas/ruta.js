@@ -37,7 +37,7 @@ export const NAV = {
   },
   gestor: {
     winav: [
-      { href: '/people',     page: 'people',     ico: 'fa-home',        txt: 'Bienvenido'          },
+      { href: '/gestor',     page: 'gestor',     ico: 'fa-home',        txt: 'Bienvenido'          },
       { href: '/aprobar',    page: 'aprobar',    ico: 'fa-check-circle',txt: 'Aprobar Solicitudes' },
       { href: '/beneficios', page: 'beneficios', ico: 'fa-gift',        txt: 'Gestionar Beneficios'},
       { href: '/buscar',     page: 'buscar',     ico: 'fa-search',      txt: 'Buscador'            },
@@ -114,14 +114,17 @@ class WiRutas {
   register(ruta, mod) { this.rutas[ruta] = mod; }
 
   registerAll(getRol) {
-    const lock = (p) => `<div class="${p}_wrap"><div class="${p}_empty"><i class="fas fa-lock" style="font-size:2rem;color:var(--error);margin-bottom:1rem"></i><p>Acceso restringido</p></div></div>`;
+    const noAuth = () => Promise.resolve({
+      render : () => '',
+      init   : () => setTimeout(() => this.navigate('/'), 0)
+    });
     RUTAS.forEach(({ path, area, roles = null, mod }) => {
       const page = mod ?? path.slice(1);
       const imp  = mod$(area, page);
       if (!imp) { console.warn(`[ruta] no encontrado: ../web/${area}${page}.js`); return; }
       this.register(path, roles === null ? imp : () => {
         const rol = getRol?.();
-        return roles.includes(rol) ? imp() : Promise.resolve({ render: () => lock(area.slice(0,-1) || page), init: ()=>{} });
+        return roles.includes(rol) ? imp() : noAuth();
       });
     });
   }
