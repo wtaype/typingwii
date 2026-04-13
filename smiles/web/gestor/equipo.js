@@ -1,208 +1,149 @@
-/**
- * equipo.js — Módulo Equipo People (usuarios con rol 'people')
- * Lista del equipo RRHH con su info y estado
- * Exports: render | init | cleanup
- */
+
 
 import './equipo.css';
 import $ from 'jquery';
-import { db } from '../firebase.js';
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { getls, savels, Capit, avatar, calcularTiempoEmpresa, abrirModal } from '../../widev.js';
+import { wiVista } from '../../widev.js';
+import { app } from '../../wii.js';
 
-const wi = () => getls('wiSmile');
+// ── DATOS ──────────────────────────────────────────────────────────
+const VALORES = [
+  { ico: 'fa-bullseye',  c: '#0EBEFF', t: 'Aprendizaje enfocado', d: 'Creemos que la mecanografía debe aprenderse de forma estructurada, eliminando distracciones para centrarse en la memoria muscular.' },
+  { ico: 'fa-universal-access', c: '#28a745', t: 'Accesibilidad', d: 'Diseñamos herramientas que cualquiera, desde un niño hasta un profesional, pueda usar sin barreras técnicas ni costos.' },
+  { ico: 'fa-microchip', c: '#fd7e14', t: 'Innovación constante', d: 'Usamos tecnología de punta para medir cada pulsación y ofrecer métricas precisas que ayuden al usuario a mejorar.' },
+  { ico: 'fa-heart',     c: '#FF5C69', t: 'Pasión por la educación', d: 'TypingWii nació de la necesidad de mejorar las habilidades digitales en un mundo cada vez más conectado.' },
+];
 
-// ─── CONSTANTES Y ESTADO ─────────────────────────────────────────
-const K_EQUIPO = 'peEquipo';
-const st = { equipo: [] };
+const STATS = [
+  { n: '+50K', l: 'Palabras escritas', ico: 'fa-keyboard' },
+  { n: '100%', l: 'Gratuito', ico: 'fa-gift' },
+  { n: '+12',  l: 'Lecciones guiadas', ico: 'fa-book' },
+  { n: '24/7', l: 'Disponibilidad', ico: 'fa-cloud' },
+];
 
-// ─── RENDER ──────────────────────────────────────────────────────
-export const render = async () => {
-  if (!wi()) return `<div class="eq_wrap"><div class="eq_empty"><i class="fas fa-lock"></i><p>Sin sesión.</p></div></div>`;
+// ── RENDER ─────────────────────────────────────────────────────────
+export const render = () => `
+<div class="ac_page">
 
-  return `
-  <div class="eq_wrap" id="eq_root">
+  <!-- ══ HERO ══ -->
+  <section class="ac_hero">
+    <div class="ac_hero_bg">
+      <div class="ac_orb ac_orb1"></div>
+      <div class="ac_orb ac_orb2"></div>
+    </div>
+    <div class="ac_hero_inner">
+      <div class="ac_badge"><i class="fas fa-info-circle"></i> Acerca de nosotros</div>
+      <h1 class="ac_h1">Transformando la forma en que el mundo <span class="ac_grad">escribe</span></h1>
+      <p class="ac_sub">En ${app}, nuestra misión es empoderar a estudiantes y profesionales con la habilidad digital más fundamental: la mecanografía rápida y precisa.</p>
+    </div>
+  </section>
 
-    <!-- HERO -->
-    <div class="eq_hero">
-      <div class="eq_hero_icon"><i class="fas fa-users-cog"></i></div>
-      <div class="eq_hero_txt">
-        <h2>Equipo People</h2>
-        <p>Gestores de RRHH con acceso al sistema</p>
+  <!-- ══ HISTORIA / MISION ══ -->
+  <section class="ac_sec">
+    <div class="ac_mision_grid">
+      <div class="ac_mision_img wi_fadeUp">
+        <div class="ac_img_card">
+          <i class="fas fa-quote-left"></i>
+          <p>La mecanografía no es solo escribir rápido, es liberar tu mente para que tus dedos sigan el ritmo de tus pensamientos.</p>
+          <div class="ac_img_author">
+            <div class="ac_author_av">WT</div>
+            <div>
+              <strong>Wilder Taype</strong>
+              <span>Fundador de ${app}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="eq_hero_badge" id="eq_count">
-        <i class="fas fa-spinner fa-spin"></i>
+      <div class="ac_mision_txt wi_fadeUp" style="--d:.15s">
+        <div class="ac_sec_badge"><i class="fas fa-rocket"></i> Nuestra historia</div>
+        <h2 class="ac_sec_h2">¿Qué es <span class="ac_grad">${app}</span>?</h2>
+        <p class="ac_sec_p">
+          ${app} nació como un proyecto personal para resolver una necesidad común: la falta de plataformas profesionales, gratuitas y divertidas para aprender mecanografía en español. 
+          <br><br>
+          Lo que comenzó como una herramienta simple para amigos, se ha convertido en una plataforma robusta utilizada por estudiantes, profesores y empresas que buscan mejorar su productividad diaria.
+        </p>
+        <div class="ac_mision_stats">
+          ${STATS.map(s => `
+            <div class="ac_ms">
+              <span class="ac_ms_n">${s.n}</span>
+              <span class="ac_ms_l">${s.l}</span>
+            </div>`).join('')}
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- BUSCADOR LOCAL -->
-    <div class="eq_controles">
-      <div class="eq_busqueda">
-        <i class="fas fa-search"></i>
-        <input type="text" id="eq_q" placeholder="Buscar en el equipo…">
-      </div>
-      <button class="eq_btn_refresh" id="eq_refresh">
-        <i class="fas fa-sync-alt"></i> Actualizar
-      </button>
+  <!-- ══ VALORES ══ -->
+  <section class="ac_sec ac_sec_alt">
+    <div class="ac_sec_head wi_fadeUp">
+      <div class="ac_sec_badge"><i class="fas fa-star"></i> Nuestros valores</div>
+      <h2 class="ac_sec_h2">Lo que nos <span class="ac_grad">impulsa cada día</span></h2>
+      <p class="ac_sec_sub">Principios que guían cada línea de código y cada lección que diseñamos.</p>
     </div>
-
-    <!-- LISTA -->
-    <div id="eq_lista">
-      <div class="eq_loading"><i class="fas fa-spinner fa-spin"></i></div>
-    </div>
-
-    <!-- MODAL PERFIL PRO -->
-    <div id="modal_equipo" class="wiModal">
-      <div class="modalBody eq_modal_pro">
-        <button class="modalX" title="Cerrar"><i class="fas fa-times"></i></button>
-        <div id="eq_modal_body"></div>
-      </div>
-    </div>
-
-  </div>`;
-};
-
-// ─── INIT ─────────────────────────────────────────────────────────
-export const init = async () => {
-  if (!wi()) return;
-  await _cargarEquipo();
-  _bindEvents();
-};
-
-// ─── CLEANUP ──────────────────────────────────────────────────────
-export const cleanup = () => {
-  $(document).off('.eq');
-};
-
-// ─── CARGAR EQUIPO ────────────────────────────────────────────────
-async function _cargarEquipo(forzar = false) {
-  if (!forzar) {
-    const cache = getls(K_EQUIPO);
-    if (cache && cache.length) {
-      st.equipo = cache;
-      _dibujarResumen();
-      return;
-    }
-  }
-
-  $('#eq_refresh').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i>');
-  if (forzar) $('#eq_lista').html(`<div class="eq_loading"><i class="fas fa-spinner fa-spin"></i></div>`);
-
-  try {
-    const snap = await getDocs(query(
-      collection(db, 'smiles'),
-      where('rol', '==', 'people')
-    ));
-    st.equipo = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-      .sort((a, b) => (a.nombres || '').localeCompare(b.nombres || ''));
-
-    savels(K_EQUIPO, st.equipo, 4); // Cache 4 hrs
-    _dibujarResumen();
-  } catch (e) {
-    console.error('[equipo]', e);
-    $('#eq_lista').html(`<div class="eq_empty"><i class="fas fa-exclamation-circle" style="color:var(--error); font-size:4vh; margin-bottom:1vh;"></i><p>Error al cargar el equipo.</p></div>`);
-  } finally {
-    $('#eq_refresh').prop('disabled', false).html('<i class="fas fa-sync-alt"></i> Actualizar');
-  }
-}
-
-function _dibujarResumen() {
-  $('#eq_count').html(`<i class="fas fa-users"></i> ${st.equipo.length} miembro${st.equipo.length !== 1 ? 's' : ''}`);
-  _renderLista(st.equipo);
-}
-
-// ─── RENDER LISTA ─────────────────────────────────────────────────
-function _renderLista(datos) {
-  if (!datos.length) {
-    $('#eq_lista').html(`<div class="eq_empty"><i class="fas fa-user-slash"></i><p>No hay miembros en el equipo People.</p></div>`);
-    return;
-  }
-  $('#eq_lista').html(`<div class="eq_grid">${datos.map(_htmlCard).join('')}</div>`);
-}
-
-function _htmlCard(e) {
-  const av  = e.avatar || (e.nombres ? avatar(e.nombres) : '??');
-  const est = (e.estado || 'activo').toLowerCase();
-  const fi  = e.fechaIngreso?.seconds ? new Date(e.fechaIngreso.seconds * 1000) : null;
-  const tiempo = fi ? calcularTiempoEmpresa(fi) : null;
-
-  return `
-    <div class="eq_card" data-id="${e.id}">
-      <div class="eq_card_badge eq_badge--${est}">${est}</div>
-      <div class="eq_avatar">${av}</div>
-      <div class="eq_card_nombre">${Capit(e.nombres || '—')}</div>
-      <div class="eq_card_cargo">${Capit(e.cargo || e.cargoOperaciones || 'People')}</div>
-      <div class="eq_card_info">
-        ${e.email    ? `<div><i class="fas fa-envelope"></i> ${e.email}</div>` : ''}
-        ${e.sede     ? `<div><i class="fas fa-map-marker-alt"></i> ${Capit(e.sede)}</div>` : ''}
-        ${tiempo     ? `<div><i class="fas fa-clock"></i> ${tiempo}</div>` : ''}
-      </div>
-      <button class="eq_btn_ver eq_ver" data-id="${e.id}">
-        <i class="fas fa-eye"></i> Ver perfil
-      </button>
-    </div>`;
-}
-
-// ─── MODAL PERFIL ─────────────────────────────────────────────────
-function _abrirPerfil(id) {
-  const e = st.equipo.find(x => x.id === id);
-  if (!e) return;
-
-  const av  = e.avatar || (e.nombres ? avatar(e.nombres) : '??');
-  const fi  = e.fechaIngreso?.seconds ? new Date(e.fechaIngreso.seconds * 1000) : null;
-  const fiStr = fi ? fi.toLocaleDateString('es-PE', { day: '2-digit', month: 'long', year: 'numeric' }) : '—';
-  const est  = (e.estado || 'activo').toLowerCase();
-
-  const campos = [
-    ['fa-id-card',       'DNI',             e.dni],
-    ['fa-envelope',      'Correo',          e.email],
-    ['fa-phone',         'Teléfono',        e.telefono],
-    ['fa-briefcase',     'Cargo',           e.cargo || e.cargoOperaciones],
-    ['fa-building',      'Empresa',         e.empresa],
-    ['fa-map-marker-alt','Sede',            e.sede],
-    ['fa-tags',          'Centro de Costo', e.centroCosto],
-    ['fa-file-contract', 'Tipo Labor',      e.TipoLabor],
-    ['fa-sign-in-alt',   'Fecha Ingreso',   fiStr],
-    ['fa-user-shield',   'Rol',             e.rol],
-  ].filter(([,, v]) => v && v !== '—');
-
-  $('#eq_modal_body').html(`
-    <div class="eq_modal_top_accent" style="height: 10vh; background: linear-gradient(135deg, var(--mco), var(--mco_dark, var(--mco))); border-radius: 1vh 1vh 0 0; position: absolute; top:0; left:0; width:100%;"></div>
-    
-    <div class="eq_modal_hero" style="position:relative; z-index:2; margin-top: 2vh;">
-      <div class="eq_avatar eq_avatar--xl" style="box-shadow: 0 6px 20px rgba(0,0,0,0.15); border: 4px solid var(--wb);">${av}</div>
-      <div class="eq_modal_hero_tx">
-        <div class="eq_modal_nombre">${Capit(e.nombres || '—')}</div>
-        <div class="eq_modal_cargo">${Capit(e.cargo || e.cargoOperaciones || 'People')}</div>
-        <span class="eq_badge eq_badge--${est}" style="margin-top: 0.5vh;">${est}</span>
-      </div>
-    </div>
-
-    <div class="eq_modal_grid">
-      ${campos.map(([ico, lbl, val]) => `
-        <div class="eq_modal_row_pro">
-          <div class="eq_modal_lbl_pro"><i class="fas ${ico}"></i> ${lbl}</div>
-          <div class="eq_modal_val_pro">${Capit(String(val))}</div>
+    <div class="ac_grid_2">
+      ${VALORES.map((v, i) => `
+        <div class="ac_valor_card wi_fadeUp" style="--vc:${v.c};--d:${i * .1}s">
+          <div class="ac_v_ico"><i class="fas ${v.ico}"></i></div>
+          <div class="ac_v_txt">
+            <h3>${v.t}</h3>
+            <p>${v.d}</p>
+          </div>
         </div>`).join('')}
     </div>
-  `);
-  abrirModal('modal_equipo');
-}
+  </section>
 
-// ─── BÚSQUEDA LOCAL ───────────────────────────────────────────────
-function _filtrarLocal() {
-  const t = ($('#eq_q').val() || '').toLowerCase();
-  if (!t) { _renderLista(st.equipo); return; }
-  _renderLista(st.equipo.filter(e =>
-    (e.nombres || '').toLowerCase().includes(t) ||
-    (e.email   || '').toLowerCase().includes(t) ||
-    (e.cargo   || '').toLowerCase().includes(t)
-  ));
-}
+  <!-- ══ VISION ══ -->
+  <section class="ac_sec">
+    <div class="ac_vision_card wi_fadeUp">
+      <div class="ac_vision_txt">
+        <div class="ac_sec_badge" style="color:#fff;border-color:rgba(255,255,255,.3)"><i class="fas fa-eye"></i> Nuestra Visión</div>
+        <h2 class="ac_vision_h2">Ser la plataforma líder en <span class="ac_vision_grad">capacitación digital</span> del Perú para el 2026.</h2>
+        <p class="ac_vision_p">Queremos que cada aula y cada empresa tenga acceso a herramientas de primer nivel para cerrar la brecha digital.</p>
+        <div class="ac_vision_item">
+          <i class="fas fa-check-circle"></i>
+          <span>Impactar a más de 100,000 estudiantes.</span>
+        </div>
+        <div class="ac_vision_item">
+          <i class="fas fa-check-circle"></i>
+          <span>Expandir nuestro catálogo a mecanografía técnica y de código.</span>
+        </div>
+      </div>
+      <div class="ac_vision_icon">
+        <i class="fas fa-earth-americas"></i>
+      </div>
+    </div>
+  </section>
 
-function _bindEvents() {
-  let t;
-  $(document).on('input.eq', '#eq_q', () => { clearTimeout(t); t = setTimeout(_filtrarLocal, 250); });
-  $(document).on('click.eq', '#eq_refresh', () => _cargarEquipo(true));
-  $(document).on('click.eq', '.eq_ver', function() { _abrirPerfil(String($(this).data('id'))); });
-}
+  <!-- ══ CTA FINAL ══ -->
+  <section class="ac_cta_sec wi_fadeUp">
+    <div class="ac_cta_card">
+      <div class="ac_cta_orb"></div>
+      <div class="ac_cta_inner">
+        <div class="ac_cta_ico"><i class="fas fa-keyboard"></i></div>
+        <div class="ac_cta_txt">
+          <h2>¿Listo para mejorar tu velocidad?</h2>
+          <p>Únete a miles de personas que ya están escribiendo como expertos en ${app}.</p>
+        </div>
+        <div class="ac_cta_btns">
+          <a href="/comenzar" class="ac_btn_pri nv_item" data-page="comenzar">
+            <i class="fas fa-play"></i> Probar gratis
+          </a>
+          <a href="/registrar" class="ac_btn_gho nv_item" data-page="registrar">
+            <i class="fas fa-user-plus"></i> Crear cuenta
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>`;
+
+// ── INIT / CLEANUP ──────────────────────────────────────────────────
+let _obs = [];
+export const init = () => {
+  _obs = [
+    wiVista('.wi_fadeUp', null, { anim: 'wi_fadeUp' }),
+    wiVista('.ac_valor_card', null, { anim: 'wi_fadeUp', stagger: 100 }),
+  ];
+  console.log(`ℹ️ ${app} — Acerca de listo`);
+};
+export const cleanup = () => { _obs.forEach(o => o?.disconnect?.()); _obs = []; };
