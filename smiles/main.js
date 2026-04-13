@@ -9,7 +9,7 @@ rutas.register('/', (isPre = false) => {
   if (!u) return import('./web/todos/inicio.js');
   const map = {
     smile:  { r: '/smile',  m: () => import('./web/smile/smile.js') },
-    gestor: { r: '/people', m: () => import('./web/gestor/gestor.js') },
+    gestor: { r: '/gestor', m: () => import('./web/gestor/gestor.js') },
     admin:  { r: '/admin',  m: () => import('./web/admin/admin.js') }
   };
   const t = map[u.rol] || map.smile;
