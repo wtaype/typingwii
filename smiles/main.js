@@ -6,7 +6,7 @@ rutas.registerAll(() => getls('wiSmile')?.rol);
 
 rutas.register('/', (isPre = false) => {
   const u = getls('wiSmile');
-  if (!u) return import('./web/publico/inicio.js');
+  if (!u) return import('./web/todos/inicio.js');
   const map = {
     smile:  { r: '/smile',  m: () => import('./web/smile/smile.js') },
     gestor: { r: '/people', m: () => import('./web/gestor/gestor.js') },

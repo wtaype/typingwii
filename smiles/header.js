@@ -11,7 +11,7 @@ const buildNav = (items, wi) => items.map(i => {
 }).join('');
 
 const renderHeader = (wi) => {
-  const cfg = NAV[wi?.rol] ?? NAV.publico;
+  const cfg = NAV[wi?.rol] ?? NAV.todos;
   if (wi) Mensaje?.('Bienvenido ' + wi.nombre);
   $('.winav').html(buildNav(cfg.winav, wi));
   $('.nv_right').html(buildNav(cfg.nvrig, wi));
@@ -23,11 +23,11 @@ const wi = wiAuth.user; wi ? renderHeader(wi) : renderHeader();
 
 // ── EVENTOS GLOBALES ──────────────────────────────────────────────────────────
 $(document).on('click', '.bt_salir', async () => {
-  const { salir } = await import('./web/publico/login.js');
+  const { salir } = await import('./web/todos/login.js');
   salir(['wiTema', 'wiSmart', 'wiFresh']);
 });
 
 $(document).on('click', '.bt_auth', async function () {
-  const { abrirLogin } = await import('./web/publico/login.js');
+  const { abrirLogin } = await import('./web/todos/login.js');
   abrirLogin($(this).hasClass('registrar') ? 'registrar' : 'login');
 });

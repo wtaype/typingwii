@@ -5,7 +5,7 @@ import { Notificacion } from '../widev.js';
 
 // ── NAV — Config visual por rol ────────────────────────────────────────────────
 export const NAV = {
-  publico: {
+  todos: {
     winav: [
       { href: '/',            page: 'inicio',      ico: 'fa-house',               txt: 'Inicio'      },
       { href: '/comenzar',    page: 'comenzar',    ico: 'fa-play',                txt: 'Comenzar'    },
@@ -63,18 +63,18 @@ export const NAV = {
 //   area:  subcarpeta dentro de web/ incluyendo slash final
 // ──────────────────────────────────────────────────────────────────────────────
 export const RUTAS = [
-  // PÚBLICAS — web/publico/
-  { path: '/inicio',      area: 'publico/' },
-  { path: '/comenzar',    area: 'publico/' },
-  { path: '/lecciones',   area: 'publico/' },
-  { path: '/estudiantes', area: 'publico/' },
-  { path: '/profesores',  area: 'publico/' },
-  { path: '/empresas',    area: 'publico/' },
-  { path: '/precios',     area: 'publico/' },
-  { path: '/contacto',    area: 'publico/' },
-  { path: '/acerca',      area: 'publico/' },
-  { path: '/login',       area: 'publico/' },
-  { path: '/descubre',    area: 'publico/' },
+  // PÚBLICAS — web/todos/
+  { path: '/inicio',      area: 'todos/' },
+  { path: '/comenzar',    area: 'todos/' },
+  { path: '/lecciones',   area: 'todos/' },
+  { path: '/estudiantes', area: 'todos/' },
+  { path: '/profesores',  area: 'todos/' },
+  { path: '/empresas',    area: 'todos/' },
+  { path: '/precios',     area: 'todos/' },
+  { path: '/contacto',    area: 'todos/' },
+  { path: '/acerca',      area: 'todos/' },
+  { path: '/login',       area: 'todos/' },
+  { path: '/descubre',    area: 'todos/' },
 
   // SMILE — web/smile/     roles: ['smile','gestor','admin']
   { path: '/smile',     area: 'smile/', roles: ['smile','gestor','admin'] },
@@ -136,7 +136,7 @@ class WiRutas {
     this.cargand = true;
     let norm = wiPath.limpiar(ruta);
     if (norm === '/') norm = `/${this.HOME}`;
-    const cargar = this.rutas[norm] ?? mod$('publico/', '404');
+    const cargar = this.rutas[norm] ?? mod$('todos/', '404');
     try {
       this.modActual?.cleanup?.();
       const mod    = typeof cargar === 'function' ? await cargar() : cargar;
