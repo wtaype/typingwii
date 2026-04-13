@@ -2,21 +2,23 @@ import './login.css';
 import $ from 'jquery';
 import { auth, db } from '../firebase.js';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile,
-         sendEmailVerification, sendPasswordResetEmail, onAuthStateChanged, signOut } from 'firebase/auth';
+         sendEmailVerification, sendPasswordResetEmail, signOut } from 'firebase/auth';
 import { setDoc, getDoc, getDocs, doc, collection, query, where, serverTimestamp } from 'firebase/firestore';
 import { wiTip, Mensaje, savels, getls, wiSpin, wiAuth, abrirModal, cerrarTodos } from '../../widev.js';
 import { rutas } from '../../rutas/ruta.js';
 
-export { auth, onAuthStateChanged, signOut };
+export { auth, signOut };
 
-// ==================== CONFIG ====================
-const cfg = { db: 'smiles', rol: 'smile' };
+// ── CONFIG ───────────────────────────────────────────────────────────────────
+const cfg = { db: 'smiles', rol: 'smile', pagina: 'rol' };
+// Flags de control: 'si' | 'no'
 let modal = 'si', link = 'si', restablecer = 'si', login = 'si', registrar = 'si';
-let pagina = '/smile'; // 'actual' = quedarse, '/proyectos', '/smile', '/'
-let registrando = false; 
+
+// Ruta por rol: admin → /admin, gestor → /gestor, smile → /smile
+const ROL_PATH = { smile: '/smile', gestor: '/gestor', admin: '/admin' };
 
 const err = {
-  'auth/email-already-in-use':'Email ya registrado', 'auth/weak-password':'Contraseña débil',
+  'auth/email-already-in-use':'Email ya registrado', 'auth/weak-password':'Contraseña débil (mín. 6)',
   'auth/invalid-credential':'Contraseña incorrecta', 'auth/invalid-email':'Email no válido',
   'auth/missing-email':'Usuario no registrado',      'auth/too-many-requests':'Demasiados intentos'
 };
@@ -24,33 +26,33 @@ const err = {
 const reglas = {
   regEmail:     [v => v.toLowerCase().trim(),                            v => /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(v) || 'Email inválido'],
   regUsuario:   [v => v.toLowerCase().replace(/[^a-z0-9_]/g,'').trim(), v => v.length >= 4 || 'Mínimo 4 caracteres'],
-  regNombre:    [v => v.trim(),                                           v => v.length > 0 || 'Ingresa tu nombre'],
-  regApellidos: [v => v.trim(),                                           v => v.length > 0 || 'Ingresa tus apellidos'],
-  regPassword:  [v => v,                                                  v => v.length >= 6 || 'Mínimo 6 caracteres'],
-  regPassword1: [v => v,                                                  v => v === $('#regPassword').val() || 'No coinciden']
+  regNombre:    [v => v.trim(),                                          v => v.length > 0 || 'Ingresa tu nombre'],
+  regApellidos: [v => v.trim(),                                          v => v.length > 0 || 'Ingresa tus apellidos'],
+  regPassword:  [v => v,                                                 v => v.length >= 6 || 'Mínimo 6 caracteres'],
+  regPassword1: [v => v,                                                 v => v === $('#regPassword').val() || 'No coinciden']
 };
 
-// ==================== TEMPLATES ====================
+// ── TEMPLATES ────────────────────────────────────────────────────────────────
 const campo = (ico, tipo, id, place, ojo = false) =>
   `<div class="wilg_grupo"><i class="fas fa-${ico}"></i><input type="${tipo}" id="${id}" placeholder="${place}" autocomplete="off">${ojo ? '<i class="fas fa-eye wilg_ojo"></i>' : ''}</div>`;
 
 const tpl = {
   login: () => `
     <div class="wilg_head">
-      <div class="wilg_logo"><img src="./smile.avif" alt="Awonbe"></div>
+      <div class="wilg_logo"><img src="./smile.avif" alt="TypingWii"></div>
       <h2>Bienvenido</h2><p>Inicia sesión en tu cuenta</p>
     </div>
     ${campo('envelope','text','email','Email o usuario')}
     ${campo('lock','password','password','Contraseña',true)}
     <button type="button" id="Login" class="wilg_btn inactivo"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</button>
     ${(restablecer==='si'||registrar==='si') ? `<div class="wilg_links">
-      ${restablecer==='si' ? '<span class="wilg_rec">¿Olvidaste tu contraseña?</span>' : ''}
+      ${restablecer==='si' ? '<span class="wilg_rec"><i class="fas fa-key"></i> ¿Olvidaste tu contraseña?</span>' : ''}
       ${registrar==='si'   ? '<span class="wilg_reg">Crear cuenta <i class="fas fa-arrow-right"></i></span>' : ''}
     </div>` : ''}`,
 
   registrar: () => `
     <div class="wilg_head">
-      <div class="wilg_logo"><img src="./smile.avif" alt="Awonbe"></div>
+      <div class="wilg_logo"><img src="./smile.avif" alt="TypingWii"></div>
       <h2>Crear Cuenta</h2><p>Únete a la comunidad</p>
     </div>
     <div class="wilg_grid">
@@ -69,15 +71,15 @@ const tpl = {
 
   restablecer: () => `
     <div class="wilg_head">
-      <div class="wilg_logo wilg_logo_sm"><img src="./smile.avif" alt="Awonbe"></div>
-      <h2>Restablecer</h2><p>Te enviaremos un enlace a tu email</p>
+      <div class="wilg_logo wilg_logo_sm"><img src="./smile.avif" alt="TypingWii"></div>
+      <h2>Recuperar</h2><p>Te enviaremos un enlace a tu email</p>
     </div>
     ${campo('envelope','text','recEmail','Email o usuario')}
-    <button type="button" id="Recuperar" class="wilg_btn inactivo"><i class="fas fa-paper-plane"></i> Enviar enlace</button>
+    <button type="button" id="Recuperar" class="wilg_btn"><i class="fas fa-paper-plane"></i> Enviar enlace</button>
     <div class="wilg_links"><span class="wilg_log"><i class="fas fa-arrow-left"></i> Volver</span></div>`
 };
 
-// ==================== MODAL ====================
+// ── MODAL ────────────────────────────────────────────────────────────────────
 const modalHTML = (vista, cls = '') =>
   `<div id="wilg_modal" class="wiModal wilg_mod ${cls}"><div class="modalBody"><button class="modalX">&times;</button>
    <form id="liForm">${tpl[vista]()}</form></div></div>`;
@@ -91,39 +93,43 @@ const inyectarModal = (vista = 'login') => {
 
 const mostrarModal = v => {
   const cls = v === 'registrar' ? 'wilg_mod_reg' : '';
-  $('#wilg_modal').removeClass('wilg_mod_reg').addClass(cls);
+  $('#wilg_modal').toggleClass('wilg_mod_reg', cls === 'wilg_mod_reg');
   $('#liForm').html(tpl[v]()).attr('data-vista', v);
-  $('#liForm input:first').focus();
+  setTimeout(() => $('#liForm input:first').focus(), 30);
 };
 
-// ==================== RENDER (PÁGINA) ====================
+// ── RENDER (PÁGINA) ──────────────────────────────────────────────────────────
 export const render = () => (link !== 'si' || wiAuth.user)
   ? ''
   : `<div class="wilg_wrap"><div class="wilg_card"><form id="liForm"></form></div></div>`;
 
 export const init = () => {
   if (link !== 'si') { setTimeout(() => rutas.navigate('/'), 0); return; }
-  if (wiAuth.user) { setTimeout(() => { entrar(wiAuth.user); rutas.navigate('/smile'); }, 0); return; }
+  const wi = wiAuth.user;
+  if (wi) { setTimeout(() => rutas.navigate(ROL_PATH[wi.rol] || '/'), 0); return; }
   mostrar('login');
 };
 
-const mostrar = v => { $('#liForm').html(tpl[v]()).attr('data-vista', v); $('#liForm input:first').focus(); };
+const mostrar = v => { $('#liForm').html(tpl[v]()).attr('data-vista', v); setTimeout(() => $('#liForm input:first').focus(), 30); };
 
-// ==================== UTILS ====================
-const val    = id => $(`#${id}`).val().trim();
+// ── UTILS ────────────────────────────────────────────────────────────────────
+const val     = id => $(`#${id}`).val().trim();
 const esModal = () => $('#wilg_modal.active').length > 0;
-const swap   = v  => esModal() ? mostrarModal(v) : mostrar(v);
-const accion = async (btn, txt, fn) => {
+const swap    = v  => esModal() ? mostrarModal(v) : mostrar(v);
+const accion  = async (btn, txt, fn) => {
   wiSpin(btn, true, txt);
   try { await fn(); } catch(e) { Mensaje(err[e.code] || e.message, 'error'); }
   finally { wiSpin(btn, false); }
 };
-const correo = async v => {
-  if (v.includes('@')) return v;
-  const snap = await getDoc(doc(db, cfg.db, v));
+
+// Resuelve email desde username — REUTILIZA datos si ya los tiene
+const fetchUser = async input => {
+  if (input.includes('@')) return { email: input, wi: null };
+  const snap = await getDoc(doc(db, cfg.db, input));
   if (!snap.exists()) throw new Error('Usuario no encontrado');
-  return snap.data().email;
+  return { email: snap.data().email, wi: snap.data() };
 };
+
 const tema = t => {
   if (!t) return;
   const [n, c] = t.split('|');
@@ -131,16 +137,24 @@ const tema = t => {
   $('meta[name="theme-color"]').attr('content', c);
   $('.tema').removeClass('mtha').filter(`[data-ths="${t}"]`).addClass('mtha');
 };
-const redir = () => pagina === 'actual' ? null : rutas.navigate(pagina);
+
+const redir = wi => {
+  if (cfg.pagina === 'actual') return;
+  const ruta = cfg.pagina === 'rol' ? (ROL_PATH[wi?.rol] || '/') : cfg.pagina;
+  rutas.navigate(ruta);
+};
+
 const entrar = wi => {
   wiAuth.login(wi, 7);
   if (wi?.tema) { localStorage.wiTema = wi.tema; tema(wi.tema); }
   if (esModal()) cerrarTodos();
-  redir();
+  redir(wi);
 };
 
-// ==================== EVENTOS ====================
+// ── EVENTOS ──────────────────────────────────────────────────────────────────
 $(document)
+  // Prevenir submit del form en TODOS los casos (evita reload de página)
+  .on('submit.wi', '#liForm', e => e.preventDefault())
   .on('click.wi', '.wilg_ojo', function () {
     const $i = $(this).siblings('input');
     $i.attr('type', $i.attr('type') === 'password' ? 'text' : 'password');
@@ -148,11 +162,11 @@ $(document)
   })
   .on('input.wi', '#email,#recEmail,#regEmail,#regUsuario', function () { $(this).val($(this).val().toLowerCase()); })
   .on('click.wi', '.wilg_reg', () => { registrar === 'si' && swap('registrar'); })
-  .on('click.wi', '.wilg_rec', () => swap('restablecer'))
+  .on('click.wi', '.wilg_rec', () => { restablecer === 'si' && swap('restablecer'); })
   .on('click.wi', '.wilg_log', () => swap('login'))
   .on('input.wi keyup.wi', '#password',     e => { $('#Login').removeClass('inactivo');     e.key === 'Enter' && $('#Login').click(); })
   .on('input.wi keyup.wi', '#regPassword1', e => { $('#Registrar').removeClass('inactivo'); e.key === 'Enter' && $('#Registrar').click(); })
-  .on('input.wi keyup.wi', '#recEmail',     e => { $('#Recuperar').removeClass('inactivo'); e.key === 'Enter' && $('#Recuperar').click(); })
+  .on('input.wi keyup.wi', '#recEmail',     e => { e.key === 'Enter' && $('#Recuperar').trigger('click'); })
   .on('blur.wi', Object.keys(reglas).map(id => `#${id}`).join(','), function () {
     const raw = $(this).val(); if (!raw) return;
     const [trans, vld] = reglas[this.id];
@@ -160,9 +174,8 @@ $(document)
     const r = vld(v); r !== true && wiTip(this, r, 'error', 2500);
   })
   .on('blur.wi', '#regUsuario', async function () {
-    const u = val('regUsuario'); if (!u) return;
+    const u = val('regUsuario'); if (!u || u.length < 3) return;
     if (u.includes('@')) return ($(this).data('ok', false), wiTip(this, 'No puede contener @', 'error', 2500));
-    if (u.length < 3) return;
     const libre = !(await getDoc(doc(db, cfg.db, u))).exists();
     $(this).data('ok', libre);
     wiTip(this, `Usuario ${libre ? 'disponible <i class="fa-solid fa-check-circle"></i>' : 'no disponible <i class="fa-solid fa-times-circle"></i>'}`, libre ? 'success' : 'error', 3000);
@@ -173,15 +186,19 @@ $(document)
     $(this).data('ok', libre);
     wiTip(this, `Email ${libre ? 'disponible <i class="fa-solid fa-check-circle"></i>' : 'no disponible <i class="fa-solid fa-times-circle"></i>'}`, libre ? 'success' : 'error', 3000);
   })
+  // ── LOGIN: optimizado — username hace solo 1 getDoc que ya trae email + datos ──
   .on('click.wi', '#Login', async function () {
     await accion(this, 'Iniciando', async () => {
-      await signInWithEmailAndPassword(auth, await correo(val('email')), val('password'));
-      const wi = (await getDoc(doc(db, cfg.db, auth.currentUser.displayName || val('email')))).data();
+      const input = val('email'), pass = val('password');
+      const { email, wi: wiPre } = await fetchUser(input);
+      await signInWithEmailAndPassword(auth, email, pass);
+      const wi = wiPre ?? (await getDoc(doc(db, cfg.db, auth.currentUser.displayName || input))).data();
       entrar(wi);
     });
   })
+  // ── REGISTRO ────────────────────────────────────────────────────────────────
   .on('click.wi', '#Registrar', async function () {
-    if (registrando) return;
+    if ($(this).data('busy')) return;
     const chk = [
       [!$('#regTerminos').is(':checked'), '#regTerminos', 'Acepta los términos'],
       [!$('#regUsuario').data('ok'),      '#regUsuario',  'Verifica el usuario'],
@@ -189,7 +206,7 @@ $(document)
     ];
     const fallo = chk.find(([c]) => c);
     if (fallo) return wiTip($(fallo[1])[0], fallo[2], 'error', 2500);
-    registrando = true;
+    $(this).data('busy', true);
     await accion(this, 'Registrando', async () => {
       const d = { email: val('regEmail'), usuario: val('regUsuario'), nombre: val('regNombre'), apellidos: val('regApellidos'), password: val('regPassword') };
       const { user } = await createUserWithEmailAndPassword(auth, d.email, d.password);
@@ -198,11 +215,15 @@ $(document)
       await setDoc(doc(db, cfg.db, d.usuario), { ...wi, creado: serverTimestamp() });
       entrar(wi); Mensaje('<i class="fa-solid fa-check-circle"></i> Cuenta creada. Verifica tu email', 'success');
     });
-    registrando = false;
+    $(this).data('busy', false);
   })
+  // ── RESTABLECER ─────────────────────────────────────────────────────────────
   .on('click.wi', '#Recuperar', async function () {
+    const emailVal = val('recEmail');
+    if (!emailVal) return wiTip(this, 'Ingresa tu email o usuario', 'error', 2500);
     await accion(this, 'Enviando', async () => {
-      await sendPasswordResetEmail(auth, await correo(val('recEmail')));
+      const { email } = await fetchUser(emailVal);
+      await sendPasswordResetEmail(auth, email);
       Mensaje('<i class="fa-solid fa-check-circle"></i> Email enviado, revisa tu bandeja', 'success');
       setTimeout(() => swap('login'), 2000);
     });
@@ -215,15 +236,14 @@ $(document)
         await setDoc(doc(db, cfg.db, wi.usuario), { tema: t, actualizado: serverTimestamp() }, { merge: true });
         savels('wiSmile', { ...wi, tema: t }, 7);
         Mensaje(`Tema ${t.split('|')[0]} guardado <i class="fas fa-check-circle"></i>`, 'success');
-      } catch (e) { console.error('<i class="fa-solid fa-times-circle"></i> tema:', e); }
+      } catch (e) { console.error('tema:', e); }
     }, 0);
   });
 
-// ==================== AUTH MODAL ====================
+// ── AUTH MODAL ───────────────────────────────────────────────────────────────
 export const abrirLogin = (tipo = 'login') => {
   if (modal === 'si') {
-    const vista = tipo === 'registrar' && registrar === 'si' ? 'registrar' : 'login';
-    inyectarModal(vista);
+    inyectarModal(tipo === 'registrar' && registrar === 'si' ? 'registrar' : 'login');
   } else {
     rutas.navigate('/login');
   }

@@ -10,7 +10,6 @@
 }
 
 
-
 /* ==================== 2. CARD ==================== */
 .wilg_card {
   position: relative;
@@ -145,8 +144,8 @@
   transition: all var(--tr_f); position: relative; overflow: hidden;
   animation: liFadeUp .35s ease .32s backwards;
 }
-.wilg_btn:hover   { transform: translateY(-.35vh) scale(1.02); box-shadow: 0 1.2vh 3vh var(--bg5);  }
-.wilg_btn.inactivo, .wilg_btn:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+.wilg_btn:hover                        { transform: translateY(-.35vh) scale(1.02); box-shadow: 0 1.2vh 3vh var(--bg5); }
+.wilg_btn.inactivo, .wilg_btn:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: none; pointer-events: none; }
 
 /* LINKS */
 .wilg_links {
@@ -158,10 +157,12 @@
   color: var(--mco); font-size: var(--fz_m1); font-weight: 500;
   cursor: pointer; padding: .6vh .8vw; border-radius: .6vh;
   transition: all var(--tr_f); position: relative; white-space: nowrap;
+  user-select: none;
 }
 .wilg_links span::after { content:''; position:absolute; bottom:.2vh; left:50%; width:0; height:2px; background:var(--mco); transform:translateX(-50%); transition:width var(--tr_f); border-radius:1px; }
 .wilg_links span:hover  { color: var(--hva); background: var(--bg4); transform: translateY(-.2vh); }
 .wilg_links span:hover::after { width: 75%; }
+.wilg_rec i { margin-right: .3vh; font-size: var(--fz_s4); }
 
 /* ==================== 6. MODAL OVERLAY ==================== */
 .wilg_mod .modalBody {
