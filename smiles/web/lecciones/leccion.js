@@ -68,7 +68,7 @@ export const render = () => {
 
 
       <!-- PROGRESS -->
-      <div class="lc_prog_track"><div class="lc_prog_fill" id="lc_pr_fill" style="background:${col}"></div></div>
+      <div class="lc_prog_track"><div class="lc_prog_fill" id="lc_pr_fill"></div></div>
 
 
       <!-- TEXT AREA -->
@@ -84,6 +84,10 @@ export const render = () => {
           <div id="lc_teclado"></div>
         </div>
         <div class="lc_side_panel">
+          <div class="lc_sp_header">
+            <div class="lc_sp_title"><i class="fas fa-sliders-h"></i> Resultados y Ajustes</div>
+            <button class="wk_sound_btn" id="wk_sound_toggle" title="Sonido del teclado"><i class="fas fa-volume-up"></i></button>
+          </div>
           <div class="lc_sp_info" style="text-align:center; margin-bottom:1vh; background:var(--bg4); border:1px solid var(--brd); border-radius:1.2vh; padding:1.2vh;">
             <div style="font-size:var(--fz_s4); color:var(--tx3); text-transform:uppercase; font-weight:800; letter-spacing:.1em; margin-bottom:.4vh;">Lección ${num}</div>
             <div style="font-size:var(--fz_m2); font-weight:800; color:var(--tx1); line-height:1.2;">${titulo}</div>
@@ -104,6 +108,7 @@ export const render = () => {
           <div class="lc_sp_mini">
             <span class="lcm ok" ${wiTip('Aciertos')}><i class="fas fa-check"></i> <b id="lc_cnt_ok">0</b></span>
             <span class="lcm er" ${wiTip('Errores')}><i class="fas fa-xmark"></i> <b id="lc_cnt_err">0</b></span>
+            <span class="lcm wrn" ${wiTip('Corregidos')}><i class="fas fa-rotate-left"></i> <b id="lc_cnt_warn">0</b></span>
           </div>
           <div class="lc_sp_sep"></div>
           <div class="lc_sp_sel" style="display:flex;justify-content:center;cursor:default;">
@@ -225,7 +230,7 @@ function _reset() {
   $('#lc_total').text(_data.texto.length);
   $('#lc_results_ui').remove();
   $('.lc_sp_info').show();
-  _updateBar({ok:0,err:0});
+  _updateBar({ok:0,err:0,warn:0});
   _renderChars(_data.texto);
 
   wiTeclado.clear();
@@ -340,28 +345,32 @@ function _backspace() {
 
 // ── CÁLCULOS ─────────────────────────────────────────────────────────
 function _counts() {
-  let ok=0,err=0;
+  let ok=0,err=0,warn=0;
   E.chars.forEach(c => {
-    if      (c.state===ST.OK) ok++;
+    if      (c.state===ST.OK) {
+      if (c.hadErr) warn++;
+      else ok++;
+    }
     else if (c.state===ST.ERR) err++;
   });
-  return {ok,err};
+  return {ok,err,warn};
 }
 function _recalc() {
-  const {ok,err} = _counts();
+  const {ok,err,warn} = _counts();
   const t    = E.elapsed;
-  const good = ok;
+  const good = ok + warn; // Both count as typed characters for WPM
   const tot  = good+err;
   const wpm  = t>0 ? Math.round((good/5)/(t/60)) : 0;
-  const prec = tot>0 ? Math.round((good/tot)*100) : 100;
+  const prec = tot>0 ? Math.round((ok/tot)*100) : 100; // Precision penalty for warned? Actually user might want ok / tot or (ok+warn)/tot. Let's keep it (good/tot).
   $('#lc_wpm').text(wpm);
   $('#lc_prec').text(prec);
-  _updateBar({ok,err});
+  _updateBar({ok,err,warn});
 }
 function _updateBar(c=null) {
-  const {ok,err} = c||_counts();
+  const {ok,err,warn} = c||_counts();
   $('#lc_cnt_ok').text(ok);
   $('#lc_cnt_err').text(err);
+  $('#lc_cnt_warn').text(warn);
 }
 
 // ── TERMINAR ─────────────────────────────────────────────────────────

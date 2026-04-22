@@ -184,23 +184,58 @@ export const wiTeclado = (() => {
 
   // Build full keyboard HTML
   const _buildHTML = () => {
-    const rows = WK_ROWS.map(row =>
-      `<div class="wk_row">${row.map(_keyEl).join('')}</div>`
-    ).join('');
-
-    return `
-    <div class="wk_wrap" id="wk_teclado_inner">
-      <div class="wk_header" style="justify-content: center; gap: 2vw;">
-        <div class="wk_header_label">
-          <i class="fas fa-keyboard"></i> Teclado Profesional
-        </div>
-        <button class="wk_sound_btn" id="wk_sound_toggle" title="Activar/desactivar sonido">
-          <i class="fas fa-volume-high"></i> Sonido
-        </button>
-      </div>
-      <div class="wk_keyboard">${rows}</div>
-    </div>`;
+    let html = `
+      <div class="wk_wrap">
+        <div class="wk_keyboard">
+    `;
+    WK_ROWS.forEach(row => {
+      html += `<div class="wk_row">`;
+      row.forEach(key => { html += _keyEl(key); });
+      html += `</div>`;
+    });
+    html += `</div>${_getHandsSVG()}</div>`;
+    return html;
   };
+
+  const _getHandsSVG = () => `
+<svg class="wk_hands" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="wk_hand_l" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Finger outlines -->
+      <g stroke="#c4976d" stroke-width="70" fill="none">
+        <path d="M 150,230 L 130,140" />
+        <path d="M 220,210 L 200,90" />
+        <path d="M 290,200 L 280,70" />
+        <path d="M 360,200 L 350,100" />
+        <path d="M 380,260 L 460,260" />
+      </g>
+      <!-- Finger fills -->
+      <g stroke="#e8c39e" stroke-width="60" fill="none">
+        <path d="M 150,230 L 130,140" />
+        <path d="M 220,210 L 200,90" />
+        <path d="M 290,200 L 280,70" />
+        <path d="M 360,200 L 350,100" />
+        <path d="M 380,260 L 460,260" />
+      </g>
+      
+      <!-- Palm -->
+      <path d="M 110,230 C 200,180 300,180 400,240 C 420,260 420,300 420,300 L 110,300 Z" fill="#e8c39e" stroke="#c4976d" stroke-width="10" />
+      <path d="M 110,230 C 200,180 300,180 400,240 C 420,260 420,300 420,300 L 110,300 Z" fill="#e8c39e" stroke="none" />
+      
+      <!-- Nails -->
+      <g stroke="none" opacity="0.95">
+        <ellipse cx="130" cy="145" rx="14" ry="18" fill="#ef4444" transform="rotate(-10 130 145)" />
+        <ellipse cx="200" cy="95" rx="15" ry="20" fill="#f97316" transform="rotate(-5 200 95)" />
+        <ellipse cx="280" cy="75" rx="16" ry="21" fill="#22c55e" />
+        <ellipse cx="350" cy="105" rx="15" ry="20" fill="#3b82f6" />
+        <ellipse cx="455" cy="260" rx="15" ry="20" fill="#3b82f6" transform="rotate(80 455 260)" />
+      </g>
+    </g>
+  </defs>
+  <use href="#wk_hand_l" x="10" y="20" />
+  <use href="#wk_hand_l" transform="translate(990, 20) scale(-1, 1)" />
+</svg>
+  `;
 
   // Normalize a character to the data-wk key
   const _normalize = (char) => {
