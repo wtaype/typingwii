@@ -100,6 +100,12 @@ export const RUTAS = [
   { path: '/estudiantes', area: 'admin/', roles: ['admin'] },
   { path: '/profesores',  area: 'admin/', roles: ['admin'] },
   { path: '/administrar', area: 'admin/', roles: ['admin'] },
+
+  // LECCIONES — web/lecciones/ (públicas)
+  ...Array.from({ length: 45 }, (_, i) => {
+    const num = String(i + 1).padStart(2, '0');
+    return { path: `/leccion${num}`, area: 'lecciones/' };
+  }),
 ];
 
 // ── GLOB — Vite mapea todos los módulos en build time ─────────────────────────

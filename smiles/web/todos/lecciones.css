@@ -220,12 +220,16 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
   transition: all .3s cubic-bezier(.4,0,.2,1);
 }
-.lec_card:not(.lec_locked):hover {
+.lec_card:hover {
   border-color: var(--lc);
-  transform: translateY(-8px);
+  transform: translateY(-7px);
   box-shadow: 0 16px 40px rgba(0,0,0,.1);
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Barra de color superior */
@@ -238,28 +242,8 @@
   transform-origin: left;
   transition: transform .35s cubic-bezier(.4,0,.2,1);
 }
-.lec_card:not(.lec_locked):hover .lec_card_bar { transform: scaleX(1); }
+.lec_card:hover .lec_card_bar { transform: scaleX(1); }
 
-/* Card bloqueada */
-.lec_locked {
-  opacity: .62;
-  cursor: default;
-  filter: saturate(.4);
-}
-.lec_locked::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 6px,
-    color-mix(in srgb, var(--brd) 30%, transparent) 6px,
-    color-mix(in srgb, var(--brd) 30%, transparent) 7px
-  );
-  pointer-events: none;
-  border-radius: inherit;
-}
 
 /* Header de la card */
 .lec_card_head {
@@ -293,14 +277,6 @@
   border-radius: 50px;
   padding: .3vh 1.1vh;
 }
-.lec_tag_lock {
-  font-size: var(--fz_s4);
-  color: var(--tx3);
-  background: var(--bg4);
-  border-radius: 50%;
-  width: 3vh; height: 3vh;
-  display: flex; align-items: center; justify-content: center;
-}
 
 /* Número de lección */
 .lec_card_num {
@@ -330,7 +306,6 @@
   color: var(--tx3);
   line-height: 1.65;
   margin: 0;
-  flex: 1;
 }
 
 /* Teclas */
@@ -356,7 +331,7 @@
   box-shadow: 0 2px 4px rgba(0,0,0,.06);
   transition: border-color .25s, color .25s, transform .2s;
 }
-.lec_card:not(.lec_locked):hover .lec_key {
+.lec_card:hover .lec_key {
   border-color: var(--lc);
   color: var(--lc);
   transform: translateY(-2px);
@@ -386,35 +361,21 @@
 }
 .lec_foot_dur i { color: var(--tx3); }
 
-/* Botón */
-.lec_card_btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .9vh;
-  width: 100%;
-  padding: 1.3vh 0;
+/* Footer go arrow */
+.lec_foot_go {
+  margin-left: auto;
+  width: 3.2vh; height: 3.2vh;
+  border-radius: 50%;
   background: var(--lc);
   color: #fff;
-  border: none;
-  border-radius: 1.2vh;
-  font-size: var(--fz_m2);
-  font-weight: 800;
-  cursor: pointer;
-  transition: all .25s;
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--lc) 30%, transparent);
-  margin-top: .4vh;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1vh;
+  flex-shrink: 0;
+  transition: transform .25s, box-shadow .25s;
 }
-.lec_card_btn:not([disabled]):hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px color-mix(in srgb, var(--lc) 40%, transparent);
-}
-.lec_card_btn[disabled] {
-  background: var(--bg4);
-  color: var(--tx3);
-  box-shadow: none;
-  cursor: default;
+.lec_card:hover .lec_foot_go {
+  transform: translateX(3px);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--lc) 40%, transparent);
 }
 
 /* Filtro show/hide */
