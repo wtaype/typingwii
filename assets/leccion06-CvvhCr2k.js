@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DRmS5DJ5.js";var i={id:6,nivel:2,titulo:`Teclas E e I`,subtitulo:`Dedos medios — fila superior`,teclasPracticar:[`e`,`i`],descripcion:`Dedos medios suben de D y K a E e I.`,texto:`e i e i ei ie ei ie dei kei sei lei dei sei lei fei eid idk ide ike`};r(i);export{e as cleanup,i as data,t as init,n as render};

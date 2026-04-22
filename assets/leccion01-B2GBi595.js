@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DRmS5DJ5.js";var i={id:1,nivel:1,titulo:`Teclas F y J`,subtitulo:`Dedos índices — fila central`,teclasPracticar:[`f`,`j`],descripcion:`Los dedos índices descansan sobre F y J. Siente el punto táctil.`,texto:`fff jjjjj fffjj`};r(i);export{e as cleanup,i as data,t as init,n as render};
