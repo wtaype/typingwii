@@ -18,6 +18,7 @@ function _nuevoE(texto) {
     chars: [], pos: 0,
     iniciado: false, finalizado: false,
     timerID: null, elapsed: 0,
+    lastTime: null,
   };
 }
 
@@ -222,6 +223,8 @@ function _reset() {
   $('#lc_pr_fill').css('width', '0%');
   $('#lc_pos').text(0);
   $('#lc_total').text(_data.texto.length);
+  $('#lc_results_ui').remove();
+  $('.lc_sp_info').show();
   _updateBar({ok:0,err:0});
   _renderChars(_data.texto);
 
@@ -263,6 +266,7 @@ function _setCur(pos) {
 function _arrancar() {
   if (E.iniciado || E.finalizado) return;
   E.iniciado = true;
+  E.lastTime = performance.now();
 
   E.timerID = setInterval(() => {
     E.elapsed++;
@@ -286,17 +290,23 @@ function _onKey(e) {
   if (e.key === 'Backspace') { _backspace(); return; }
   if (E.pos >= E.chars.length) return;
 
+  const now = performance.now();
+  const dt = E.lastTime ? now - E.lastTime : 0;
+  E.lastTime = now;
+
   const c   = E.chars[E.pos];
+  c.dt      = dt;
   const key = c.char === '\n' ? 'Enter' : c.char;
   const ok  = e.key === key;
 
   // Keyboard feedback + sound
   wiTeclado.press(key, ok);
 
-  c.$s.removeClass('lc_ch_cur lc_ch_ok lc_ch_err lc_ch_shake');
+  c.$s.removeClass('lc_ch_cur lc_ch_ok lc_ch_warn lc_ch_err lc_ch_shake');
   if (ok) {
     c.state = ST.OK;
-    c.$s.addClass('lc_ch_ok');
+    if (c.hadErr) c.$s.addClass('lc_ch_warn');
+    else c.$s.addClass('lc_ch_ok');
   } else {
     c.state = ST.ERR; c.hadErr = true;
     c.$s.addClass('lc_ch_err lc_ch_shake');
@@ -320,7 +330,7 @@ function _backspace() {
   if (E.pos <= 0) return;
   E.pos--;
   const c = E.chars[E.pos];
-  c.$s.removeClass('lc_ch_cur lc_ch_ok lc_ch_err');
+  c.$s.removeClass('lc_ch_cur lc_ch_ok lc_ch_warn lc_ch_err');
   c.state = ST.NEUTRAL;
   _setCur(E.pos);
   $('#lc_pr_fill').css('width', `${(E.pos / E.chars.length) * 100}%`);
@@ -362,7 +372,9 @@ function _terminar() {
   const {ok,err} = _counts();
   const t    = E.elapsed;
   const good = ok;
+  const tot  = good + err;
   const wpm  = t>0 ? Math.round((good/5)/(t/60)) : good;
+  const prec = tot>0 ? Math.round((good/tot)*100) : 100;
 
   wiTeclado.clear();
 
@@ -370,14 +382,70 @@ function _terminar() {
   const failed = [...new Set(E.chars.filter(c => c.hadErr && c.char !== ' ' && c.char !== '\n').map(c => c.char))];
   if (failed.length > 0) wiTeclado.markErrors(failed);
 
+  // Calcular Estrellas (1 a 5)
+  let stars = 1;
+  if (wpm >= 50 && prec >= 95) stars = 5;
+  else if (wpm >= 40 && prec >= 90) stars = 4;
+  else if (wpm >= 30 && prec >= 85) stars = 3;
+  else if (wpm >= 20 && prec >= 80) stars = 2;
+
+  // Confetti para buen puntaje
+  if (stars >= 4) _fireConfetti();
+
+  // Mostrar Panel de Resultados
+  _renderResults(wpm, prec, stars);
+
   // Mensaje dinámico de resultado
   let msg = '';
-  if (wpm >= 60) msg = `¡Increíble! ${wpm} WPM en ${t}s. ¡Eres un maestro! 🚀`;
-  else if (wpm >= 40) msg = `¡Muy bien! ${wpm} WPM en ${t}s. ¡Sigue así! 👏`;
-  else if (wpm >= 20) msg = `¡Buen esfuerzo! ${wpm} WPM en ${t}s. ¡Tú puedes! 💪`;
-  else msg = `Completado: ${wpm} WPM en ${t}s. ¡A practicar más! 🐢`;
+  if (stars === 5) msg = `¡Perfecto! ${wpm} WPM. ¡Eres un maestro! 🚀`;
+  else if (stars >= 3) msg = `¡Muy bien! ${wpm} WPM. ¡Sigue así! 👏`;
+  else msg = `Completado: ${wpm} WPM. ¡A practicar más! 🐢`;
 
-  Notificacion(msg, wpm >= 40 ? 'success' : (wpm >= 20 ? 'info' : 'warning'), 5000);
+  Notificacion(msg, stars >= 4 ? 'success' : (stars >= 3 ? 'info' : 'warning'), 5000);
+}
+
+function _renderResults(wpm, prec, stars) {
+  const stHtml = [1,2,3,4,5].map(i => `<i class="fas fa-star ${i<=stars ? 'lc_star_on' : 'lc_star_off'}"></i>`).join('');
+  
+  const html = `
+    <div class="lc_res_panel" id="lc_results_ui">
+      <div class="lc_stars">${stHtml}</div>
+    </div>
+  `;
+  $('#lc_results_ui').remove();
+  $('.lc_sp_info').hide();
+  $('.lc_side_panel').prepend(html);
+}
+
+function _fireConfetti() {
+  if (document.getElementById('wi_confetti')) return;
+  const $c = $('<canvas id="wi_confetti" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;"></canvas>').appendTo('body');
+  const ctx = $c[0].getContext('2d');
+  $c[0].width = window.innerWidth; $c[0].height = window.innerHeight;
+  
+  const particles = Array.from({length: 120}, () => ({
+    x: window.innerWidth/2, y: window.innerHeight/2 + 50,
+    vx: (Math.random()-0.5)*25, vy: (Math.random()-1)*25 - 5,
+    size: Math.random()*8+5, color: ['#f59e0b','#10b981','#3b82f6','#f97316','#a855f7','#ec4899'][Math.floor(Math.random()*6)],
+    rot: Math.random()*360, rotS: (Math.random()-0.5)*15
+  }));
+  
+  let req;
+  const draw = () => {
+    ctx.clearRect(0,0,$c[0].width,$c[0].height);
+    let active = false;
+    particles.forEach(p => {
+      p.vy += 0.5; p.x += p.vx; p.y += p.vy; p.rot += p.rotS;
+      if (p.y < $c[0].height + 50) active = true;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle = p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+      ctx.restore();
+    });
+    if (active) req = requestAnimationFrame(draw);
+    else $c.remove();
+  };
+  req = requestAnimationFrame(draw);
+  setTimeout(() => { cancelAnimationFrame(req); $c.remove(); }, 5000);
 }
 
 // ── HELPERS ───────────────────────────────────────────────────────────
