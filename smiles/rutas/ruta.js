@@ -116,9 +116,9 @@ export const RUTAS = [
 
   // ADMIN — web/admin/
   { path: '/admin',    area: 'admin/', roles: ['admin'] },
-  { path: '/usuarios', area: 'admin/', roles: ['admin'], mod: 'personas' },
-  { path: '/permisos', area: 'admin/', roles: ['admin'], mod: 'roles' },
-  { path: '/sistema',  area: 'admin/', roles: ['admin'], mod: 'subir' },
+  { path: '/usuarios', area: 'admin/', roles: ['admin'] },
+  { path: '/permisos', area: 'admin/', roles: ['admin'] },
+  { path: '/sistema',  area: 'admin/', roles: ['admin'] },
 
   // LECCIONES — web/lecciones/ (públicas)
   ...Array.from({ length: 45 }, (_, i) => {
