@@ -16,7 +16,13 @@ let tiempoSel=60, E=null;
 function _newE(t){ return {texto:t,chars:[],pos:0,iniciado:false,finalizado:false,timerID:null,segundos:tiempoSel,elapsed:0}; }
 
 const nivelOpts = () => TEXTOS.map(t=>`<option value="${t.id}">${t.nivel}</option>`).join('');
-const tiempoOpts = () => TIEMPOS.map(t=>`<option value="${t.id}"${t.id===tiempoSel?' selected':''}>${t.lbl}</option>`).join('');
+const tiempoOpts = () => TIEMPOS.map(t=>`<option value="${t.id}"${t.id===tiempoSel?' selected':''}>${t.lbl.replace(' seg','s').replace(' min','m').replace(' Sin límite','∞')}</option>`).join('');
+
+function _formatT(s) {
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return `${m}:${String(r).padStart(2, '0')}`;
+}
 
 export const render = () => `
 <div class="lc_page">
@@ -47,6 +53,12 @@ export const render = () => `
             <button class="wk_sound_btn" id="wk_sound_toggle" title="Sonido del teclado"><i class="fas fa-volume-up"></i></button>
           </div>
 
+          <!-- Nivel info box -->
+          <div class="lc_sp_info">
+            <div class="lc_sp_info_sub">Práctica Libre</div>
+            <div class="lc_sp_info_title" id="cz_nivel_label">—</div>
+          </div>
+
           <!-- Stats 2-col: WPM | % -->
           <div class="lc_sp_row2">
             <div class="lc_sp_block lc_sp_wpm">
@@ -58,9 +70,16 @@ export const render = () => `
               <div class="lc_sp_l"><i class="fas fa-bullseye"></i> %</div>
             </div>
           </div>
-          <div class="lc_sp_block lc_sp_time" id="lc_timer_box">
-            <div class="lc_sp_n" id="lc_secs">—</div>
-            <div class="lc_sp_l"><i class="fas fa-stopwatch"></i> seg</div>
+
+          <!-- Time 2-col: Timer | Select -->
+          <div class="lc_sp_timer_row">
+            <div class="lc_sp_block lc_sp_time" id="lc_timer_box" ${wiTip('Tiempo')}>
+              <div class="lc_sp_n" id="lc_secs">1:00</div>
+              <div class="lc_sp_l"><i class="fas fa-stopwatch"></i> TIEMPO</div>
+            </div>
+            <label class="lc_sp_sel" style="flex:1;" ${wiTip('Establecer límite')}>
+              <select id="lc_sel_tiempo" class="lc_sel">${tiempoOpts()}</select>
+            </label>
           </div>
 
           <div class="lc_sp_sep"></div>
@@ -72,17 +91,7 @@ export const render = () => `
             <span class="czm wrn" title="Corregidos"><i class="fas fa-rotate-left"></i> <b id="lc_warn">0</b></span>
           </div>
 
-          <div class="lc_sp_sep"></div>
 
-          <!-- Tiempo select -->
-          <label class="lc_sp_sel"><i class="fas fa-clock"></i>
-            <select id="lc_sel_tiempo" class="lc_sel">${tiempoOpts()}</select>
-          </label>
-
-          <!-- Nivel select -->
-          <label class="lc_sp_sel"><i class="fas fa-layer-group"></i>
-            <select id="lc_sel_nivel" class="lc_sel">${nivelOpts()}</select>
-          </label>
 
           <!-- Buttons -->
           <div class="lc_sp_btns">
@@ -108,10 +117,7 @@ export const init = () => {
     if(E.iniciado) return;
     tiempoSel=+$(this).val(); _reset(E.texto);
   });
-  $(document).on('change.lck','#lc_sel_nivel', function(){
-    const t = TEXTOS.find(x => x.id === +$(this).val()) || TEXTOS[0];
-    _reset(t);
-  });
+
   const _resetRandomText = () => {
     const others = TEXTOS.filter(t => !E || t.id !== E.texto.id);
     const next = others[Math.floor(Math.random() * others.length)] || TEXTOS[0];
@@ -145,15 +151,14 @@ function _reset(t) {
   $('#lc_wpm').text(0); $('#lc_prec').text(100);
   $('#lc_ok').text(0); $('#lc_err').text(0); $('#lc_warn').text(0);
   $('#lc_timer_box').removeClass('lc_warn');
-  _timerHUD();
+  _timerHUD(tiempoSel);
   _renderChars(t.texto);
   wiTeclado.clear();
   const f=t.texto[0]; if(f) wiTeclado.hint(f);
   setTimeout(()=>$('#lc_texto_display').trigger('focus'),60);
 }
-function _timerHUD(e=null){
-  if(tiempoSel===0){$('#lc_secs').text(e??0);}
-  else{$('#lc_secs').text(e??tiempoSel);}
+function _timerHUD(s){
+  $('#lc_secs').text(_formatT(s??0));
 }
 function _renderChars(txt){
   const $in=$('#lc_texto_inner').empty(); E.chars=[];
@@ -241,10 +246,43 @@ function _recalc(){
 }
 function _terminar(){
   if(E.finalizado)return; E.finalizado=true; _clearTimer();
-  const{ok,cor,err}=_counts(), t=tiempoSel===0?E.elapsed:(tiempoSel-E.segundos), g=ok+cor, tot=g+err;
-  const wpm=t>0?Math.round((g/5)/(t/60)):g, prec=tot>0?Math.round((g/tot)*100):100;
+  const{ok,warn,err}=_counts(), t=tiempoSel===0?E.elapsed:(tiempoSel-E.segundos), g=ok+warn, tot=g+err;
+  const wpm=t>0?Math.round((g/5)/(t/60)):g, prec=tot>0?Math.round((ok/tot)*100):100;
+  
   wiTeclado.clear();
-  if(wpm>=40)Notificacion(`¡${wpm} WPM! 🚀`,'success',3000);
+
+  // Calcular Estrellas (1 a 5)
+  let stars = 1;
+  if (wpm >= 50 && prec >= 95) stars = 5;
+  else if (wpm >= 40 && prec >= 90) stars = 4;
+  else if (wpm >= 30 && prec >= 85) stars = 3;
+  else if (wpm >= 20 && prec >= 80) stars = 2;
+
+  // Mostrar Panel de Resultados
+  _renderResults(stars);
+
+  // Mensaje dinámico de resultado
+  let msg = '';
+  if (stars === 5) msg = `¡Perfecto! ${wpm} WPM. ¡Eres un maestro de la velocidad! 🚀`;
+  else if (stars >= 4) msg = `¡Excelente! ${wpm} WPM. ¡Tu técnica es asombrosa! 🔥`;
+  else if (stars >= 3) msg = `¡Muy bien! ${wpm} WPM. ¡Estás progresando rápido! 👏`;
+  else if (stars >= 2) msg = `¡Bien hecho! ${wpm} WPM. ¡Sigue practicando! 💪`;
+  else msg = `Completado: ${wpm} WPM. ¡La constancia es la clave! 🐢`;
+
+  Notificacion(msg, stars >= 4 ? 'success' : (stars >= 3 ? 'info' : 'warning'), 5000);
+}
+
+function _renderResults(stars) {
+  const stHtml = [1,2,3,4,5].map(i => `<i class="fas fa-star ${i<=stars ? 'lc_star_on' : 'lc_star_off'}"></i>`).join('');
+  
+  const html = `
+    <div class="lc_res_panel" id="lc_results_ui">
+      <div class="lc_stars">${stHtml}</div>
+    </div>
+  `;
+  $('#lc_results_ui').remove();
+  $('.lc_sp_info').hide();
+  $('.lc_side_panel').prepend(html);
 }
 function _clearTimer(){if(E?.timerID){clearInterval(E.timerID);E.timerID=null;}}
 function _scrollCur(){
