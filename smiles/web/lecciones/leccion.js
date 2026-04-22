@@ -4,10 +4,12 @@
 // ════════════════════════════════════════════════════════════════════
 import './leccion.css';
 import $ from 'jquery';
-import { wiTip, Notificacion } from '../../widev.js';
+import { wiTip, Notificacion, getls, savels } from '../../widev.js';
 import { app } from '../../wii.js';
 import { wiTeclado } from './teclado.js';
 import { adLeft, adRight } from './wiad.js';
+import { db } from '../firebase.js';
+import { doc, setDoc, updateDoc, arrayUnion, serverTimestamp } from 'firebase/firestore';
 // ── ESTADO INTERNO ─────────────────────────────────────────────────
 const ST = { NEUTRAL: 0, OK: 1, ERR: 3 };
 const TIEMPOS = [{id:0,lbl:'∞'},{id:30,lbl:'30s'},{id:60,lbl:'1m'},{id:120,lbl:'2m'},{id:300,lbl:'5m'}];
@@ -448,6 +450,9 @@ function _terminar() {
   else msg = `Completado: ${wpm} WPM. ¡A practicar más! 🐢`;
 
   Notificacion(msg, stars >= 4 ? 'success' : (stars >= 3 ? 'info' : 'warning'), 5000);
+
+  // ── GUARDAR PROGRESO ──────────────────────────────────────────────
+  _guardarPractica(wpm, prec, stars);
 }
 
 function _renderResults(wpm, prec, stars) {
@@ -493,6 +498,63 @@ function _fireConfetti() {
   req = requestAnimationFrame(draw);
   setTimeout(() => { cancelAnimationFrame(req); $c.remove(); }, 5000);
 }
+
+// ── GUARDAR PRÁCTICA EN FIRESTORE ─────────────────────────────────
+async function _guardarPractica(wpm, prec, stars) {
+  const u = getls('wiSmile');
+  if (!u?.usuario) return; // no logueado → skip silencioso
+
+  const id     = _data.id;
+  const titulo = _data.titulo;
+  const nivel  = _data.nivel || 1;
+  const fecha  = serverTimestamp();
+
+  const prev     = getls(`wiPrac_${id}`) || {};
+  const esMejor  = wpm > (prev.wpm || 0);
+  const intentos = (prev.intentos || 0) + 1;
+
+  const prog    = getls('wiProgreso') || {};
+  const lecsOk  = prog.leccionesOk || [];
+  const yaOk    = lecsOk.includes(id);
+  const newWpm  = Math.max(prog.wpmRecord || 0, wpm);
+  const newPrec = lecsOk.length > 0
+    ? Math.round(((prog.precisionPct || prec) * lecsOk.length + prec) / (lecsOk.length + (yaOk ? 0 : 1)))
+    : prec;
+
+  try {
+    // ── 1) Resumen en lecciones/{usuario} ─────────────────────────────
+    //    Un doc por estudiante — progreso general + vinculo a clase
+    await setDoc(doc(db, 'lecciones', u.usuario), {
+      email:        u.email    || '',
+      nombre:       u.nombre   || u.usuario,
+      rol:          u.rol      || 'smile',
+      claseId:      u.claseId  || null,
+      gestorId:     u.gestorId || null,
+      completadas:  arrayUnion(id),
+      wpmMax:       newWpm,
+      precision:    newPrec,
+      ultPractica:  fecha,
+    }, { merge: true });
+
+    // ── 2) Detalle en lecciones/{usuario}/detalle/{leccionId} ─────────
+    //    Solo sobreescribe wpm si mejoro el record del alumno
+    await setDoc(doc(db, 'lecciones', u.usuario, 'detalle', String(id)), {
+      leccionId: id, titulo, nivel,
+      precision: prec, estrellas: stars, intentos, fecha,
+      ...(esMejor ? { wpm } : {}),
+    }, { merge: true });
+
+    // ── 3) Cache local — sin esperar reads adicionales ─────────────────
+    const nuevasLecs = yaOk ? lecsOk : [...lecsOk, id];
+    savels('wiProgreso', { ...prog, leccionesOk: nuevasLecs, wpmRecord: newWpm, precisionPct: newPrec }, 24);
+    savels(`wiPrac_${id}`, { wpm: esMejor ? wpm : (prev.wpm || wpm), precision: prec, estrellas: stars, intentos }, 24 * 30);
+
+    console.log(`✅ [leccion] ${id} → lecciones/${u.usuario} — ${wpm} WPM · ${prec}%`);
+  } catch (err) {
+    console.error('[leccion] Error guardando practica:', err);
+  }
+}
+
 
 // ── HELPERS ───────────────────────────────────────────────────────────
 function _clearTimer() {

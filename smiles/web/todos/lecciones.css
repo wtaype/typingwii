@@ -390,10 +390,60 @@
   to   { opacity: 1; transform: scale(1); }
 }
 
+/* ── ESTADOS DE PROGRESO ─────────────────────────────────── */
+
+/* Card completada */
+.lec_card.lec_done {
+  border-color: color-mix(in srgb, #22c55e 35%, var(--brd));
+}
+.lec_card.lec_done .lec_card_bar {
+  transform: scaleX(1);
+  background: #22c55e;
+}
+.lec_card.lec_done:hover {
+  border-color: #22c55e;
+  box-shadow: 0 16px 40px color-mix(in srgb, #22c55e 15%, transparent);
+}
+
+/* Card bloqueada */
+.lec_card.lec_bloqueada {
+  opacity: .5;
+  cursor: not-allowed;
+  filter: grayscale(.5);
+}
+.lec_card.lec_bloqueada:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--brd);
+}
+.lec_card.lec_bloqueada .lec_card_ico {
+  background: var(--bg4);
+  color: var(--tx3);
+}
+
+/* Badge de estado (✓ WPM / 🔒) */
+.lec_estado {
+  font-size: var(--fz_s4);
+  font-weight: 700;
+  border-radius: 50px;
+  padding: .25vh .8vh;
+  display: inline-flex;
+  align-items: center;
+  gap: .35vh;
+  white-space: nowrap;
+}
+.lec_ok   { background: color-mix(in srgb,#22c55e 14%,transparent); color: #22c55e; }
+.lec_lock { background: var(--bg4); color: var(--tx3); }
+
+/* Estrellas dentro de la card */
+.lec_stars { display: flex; gap: .3vh; }
+.lec_stars i { font-size: var(--fz_s4); color: var(--bg4); }
+.lec_stars i.lec_son { color: #f59e0b; }
+
+
 /* ════════════════════════════════════════════════════════
    CTA FINAL
 ════════════════════════════════════════════════════════ */
-.lec_cta_wrap { }
 .lec_cta_card {
   background: var(--mco);
   border-radius: 2.5vh;

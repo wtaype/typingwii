@@ -1,6 +1,6 @@
 import './lecciones.css';
 import $ from 'jquery';
-import { wiVista, wiTip } from '../../widev.js';
+import { wiVista, wiTip, getls } from '../../widev.js';
 import { app } from '../../wii.js';
 
 // ── 45 LECCIONES — datos del catálogo ─────────────────────────────
@@ -147,7 +147,7 @@ export const render = () => `
 
   <!-- ══ GRID DE LECCIONES ══ -->
   <div class="lec_grid" id="lec_grid">
-    ${LECCIONES.map(l => _cardHTML(l)).join('')}
+    ${LECCIONES.map(l => _cardHTML(l, [], false)).join('')}
   </div>
 
   <!-- ══ CTA ══ -->
@@ -175,26 +175,47 @@ export const render = () => `
 </div>`;
 
 // ── CARD HTML ─────────────────────────────────────────────────────
-function _cardHTML(l) {
-  const num  = String(l.id).padStart(2, '0');
-  const href = `/leccion${num}`;
-  const page = `leccion${num}`;
-  const nInfo = NIVELES_INFO.find(n => n.n === l.nivel) || {};
+// lecsOk  : IDs completados (cache) — cero reads
+// isAuth  : true si hay sesión activa
+function _cardHTML(l, lecsOk = [], isAuth = false) {
+  const num      = String(l.id).padStart(2, '0');
+  const href     = `/leccion${num}`;
+  const page     = `leccion${num}`;
+  const nInfo    = NIVELES_INFO.find(n => n.n === l.nivel) || {};
+
+  // Completada y desbloqueada solo aplica si hay auth
+  const completada   = isAuth && lecsOk.includes(l.id);
+  const desbloqueada = !isAuth || l.id === 1 || lecsOk.includes(l.id - 1) || completada;
+  const prac         = completada ? (getls(`wiPrac_${l.id}`) || {}) : {};
+
+  // Badge de estado
+  const badge = completada
+    ? `<span class="lec_estado lec_ok"><i class="fas fa-check"></i> ${prac.wpm || ''}${prac.wpm ? ' WPM' : 'Hecha'}</span>`
+    : (!desbloqueada
+      ? `<span class="lec_estado lec_lock"><i class="fas fa-lock"></i></span>`
+      : '');
+
+  // Estrellas si completada
+  const stars = completada && prac.estrellas
+    ? `<div class="lec_stars">${[1,2,3,4,5].map(s => `<i class="fas fa-star ${s<=prac.estrellas?'lec_son':''}"></i>`).join('')}</div>`
+    : '';
 
   return `
-    <a class="lec_card wi_fadeUp" href="${href}" data-page="${page}"
-      style="--lc:${l.color}" data-nv="${l.nivel}" data-id="${l.id}">
+    <a class="lec_card wi_fadeUp ${completada ? 'lec_done' : ''} ${!desbloqueada ? 'lec_bloqueada' : ''}" href="${href}" data-page="${page}"
+      style="--lc:${l.color}" data-nv="${l.nivel}" data-id="${l.id}"
+      ${!desbloqueada ? 'title="Completa la lección anterior primero"' : ''}>
 
       <!-- Barra superior de color -->
       <div class="lec_card_bar"></div>
 
       <!-- Header -->
       <div class="lec_card_head">
-        <div class="lec_card_ico"><i class="fas ${l.ico}"></i></div>
+        <div class="lec_card_ico"><i class="fas ${!desbloqueada ? 'fa-lock' : l.ico}"></i></div>
         <div class="lec_card_tags">
           <span class="lec_tag" style="color:${l.color};border-color:${l.color}">
             N${l.nivel} · ${nInfo.lbl || ''}
           </span>
+          ${badge}
         </div>
       </div>
 
@@ -204,6 +225,8 @@ function _cardHTML(l) {
       <!-- Contenido -->
       <h3 class="lec_card_titulo">${l.titulo}</h3>
       <div class="lec_card_sub">${l.sub}</div>
+
+      ${stars}
 
       <!-- Teclas destacadas -->
       <div class="lec_keys_row">
@@ -222,7 +245,7 @@ function _cardHTML(l) {
           <span>${l.dur}</span>
         </div>
         <div class="lec_foot_go">
-          <i class="fas fa-arrow-right"></i>
+          <i class="fas ${completada ? 'fa-redo' : 'fa-arrow-right'}"></i>
         </div>
       </div>
     </a>`;
@@ -232,6 +255,23 @@ function _cardHTML(l) {
 let _obs = null;
 
 export const init = () => {
+  // ── Auth check (cache only) ─────────────────────────────────────
+  const wi     = getls('wiSmile');
+  const isAuth = !!wi?.usuario;
+  const prog   = isAuth ? (getls('wiProgreso') || {}) : {};
+  const lecsOk = prog.leccionesOk || [];
+  const pct    = Math.round((lecsOk.length / 45) * 100);
+
+  // Renderizar grid con estado correcto
+  $('#lec_grid').html(LECCIONES.map(l => _cardHTML(l, lecsOk, isAuth)).join(''));
+
+  // Actualizar hero solo si hay sesion con avances
+  if (isAuth && lecsOk.length > 0) {
+    $('#lec_hp_fill').css('width', `${pct}%`);
+    $('#lec_global_pct').text(`${lecsOk.length} / 45`);
+    $('.lec_hp_info span:first').html(`<i class="fas fa-check-circle" style="color:var(--success)"></i> ${lecsOk.length} completadas`);
+  }
+
   // Animaciones scroll
   _obs = wiVista('.lec_card', null, { anim: 'wi_fadeUp', stagger: 45 });
   wiVista('.lec_cta_wrap', null, { anim: 'wi_fadeUp' });
@@ -246,14 +286,15 @@ export const init = () => {
     _filtrar(nv);
   });
 
-  // Click en card — navegar via router
+  // Click en card — bloquear si no desbloqueada, navegar si ok
   $(document).on('click.lec', '.lec_card', function (e) {
     e.preventDefault();
+    if ($(this).hasClass('lec_bloqueada')) return;
     const page = $(this).data('page');
     import('../../rutas/ruta.js').then(({ rutas }) => rutas.navigate(`/${page}`));
   });
 
-  console.log(`📚 ${app} — ${LECCIONES.length} lecciones cargadas`);
+  console.log(`📚 ${app} — ${LECCIONES.length} lecciones · ${lecsOk.length} completadas (cache)`);
 };
 
 export const cleanup = () => {

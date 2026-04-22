@@ -12,7 +12,7 @@ export const data = {
     "j"
   ],
   "descripcion": "Los dedos índices descansan sobre F y J. Siente el punto táctil.",
-  "texto": "fj fj fj fjfj jfj ffjfj fjfjf jjjjj fffjf fjfj jfjf fffff fjfj jfjfff jfjfjf fff jjjj jfjfjf jfjf"
+  "texto": "fff jjjjj fffjj"
 };
 
 setData(data);
