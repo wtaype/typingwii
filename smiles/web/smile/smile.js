@@ -1,141 +1,141 @@
+// ════════════════════════════════════════════════════════════════════
+// smile.js — TypingWii · Dashboard del Estudiante
+// Jesús es mi Señor 🙏
+// ════════════════════════════════════════════════════════════════════
 import './smile.css';
 import $ from 'jquery';
-import {
-  getls, savels, Saludar, fechaHoy, calcMeses, avatar, Mensaje
-} from '../../widev.js';
+import { getls, savels, Saludar, fechaHoy, avatar } from '../../widev.js';
 import { app } from '../../wii.js';
 
 const wi = () => getls('wiSmile');
 
-// ── FRASES MOTIVACIONALES ─────────────────────────────────────────
+// ── FRASES MOTIVACIONALES ─────────────────────────────────────────────────────
 const FRASES = [
   { ico: 'fa-keyboard',   txt: '¡Cada tecla que practicas te acerca a la maestría! ⌨️' },
-  { ico: 'fa-bolt',       txt: '¡La velocidad viene con la constancia. ¡Sigue tecleando! ⚡' },
-  { ico: 'fa-trophy',     txt: '¡Los mejores mecanógrafos no nacen, se practican! 🏆' },
-  { ico: 'fa-fire',       txt: '¡Tus dedos son más rápidos de lo que crees. ¡Demuéstralo!' },
+  { ico: 'fa-bolt',       txt: 'La velocidad viene con la constancia. ¡Sigue tecleando! ⚡' },
+  { ico: 'fa-trophy',     txt: 'Los mejores mecanógrafos no nacen, se practican. 🏆' },
+  { ico: 'fa-fire',       txt: '¡Tus dedos son más rápidos de lo que crees. Demuéstralo!' },
   { ico: 'fa-star',       txt: '¡Hoy es un gran día para romper tu récord de WPM! 🌟' },
-  { ico: 'fa-rocket',     txt: '¡De 30 a 80 WPM: es solo cuestión de práctica diaria! 🚀' },
+  { ico: 'fa-rocket',     txt: 'De 30 a 80 WPM: es solo cuestión de práctica diaria. 🚀' },
   { ico: 'fa-brain',      txt: '¡Tu cerebro y tus dedos son el equipo perfecto! 🧠' },
-  { ico: 'fa-chart-line', txt: '¡Cada sesión de hoy es el progreso de mañana!' },
-  { ico: 'fa-infinity',   txt: '¡Sin límites para quien practica con determinación!' },
-  { ico: 'fa-bullseye',   txt: '¡Precisión primero, velocidad después. Así se domina! 🎯' },
+  { ico: 'fa-chart-line', txt: 'Cada sesión de hoy es el progreso de mañana.' },
+  { ico: 'fa-bullseye',   txt: 'Precisión primero, velocidad después. Así se domina. 🎯' },
+  { ico: 'fa-infinity',   txt: 'Sin límites para quien practica con determinación.' },
 ];
 
-// ── ACCESOS RÁPIDOS (de acuerdo al menu de smiles) ────────────────
-const ACCESOS = [
-  {
-    href: '/lecciones', page: 'lecciones',
-    ico: 'fa-graduation-cap', color: 'var(--mco)',
-    title: 'Mis Lecciones',
-    sub: 'Practica y avanza en mecanografía',
-  },
-  {
-    href: '/progreso', page: 'progreso',
-    ico: 'fa-chart-line', color: '#28a745',
-    title: 'Mi Progreso',
-    sub: 'WPM, precisión y racha diaria',
-  },
-  {
-    href: '/certificado', page: 'certificado',
-    ico: 'fa-certificate', color: '#fd7e14',
-    title: 'Certificado',
-    sub: 'Descarga tu logro de mecanografía',
-  },
-  {
-    href: '/contacto', page: 'contacto',
-    ico: 'fa-envelope', color: '#37a1dd',
-    title: 'Contacto',
-    sub: 'Escribe a tu instructor',
-  },
+// ── TIPS DEL DÍA ──────────────────────────────────────────────────────────────
+const TIPS = [
+  'Ubica tus dedos índices en <strong>F</strong> y <strong>J</strong> — allí están los relieves de guía.',
+  'Practica <strong>sin mirar el teclado</strong> desde el primer día. La memoria muscular se construye así.',
+  'La velocidad es consecuencia de la <strong>precisión</strong>. Primero escribe sin errores.',
+  'Toma descansos de <strong>5 min cada 25 min</strong>. Tus manos y ojos te lo agradecerán.',
+  'Mantén la <strong>espalda recta</strong>, codos a 90° y muñecas levemente elevadas.',
+  '<strong>40 WPM</strong> es el promedio de un principiante; <strong>80+ WPM</strong> ya es nivel profesional.',
+  'Practica textos variados: números, puntuación y letras especiales mejoran tu polivalencia.',
 ];
 
-// ── RENDER ────────────────────────────────────────────────────────
+// IDs de lecciones para leer actividad reciente del cache
+const ALL_IDS = Array.from({ length: 45 }, (_, i) => i + 1);
+const LEC_NOMBRES = {
+  1:'Teclas F y J',2:'Teclas D y K',3:'Teclas S y L',4:'Fila Central Completa',5:'Primeras Palabras',
+  6:'Teclas E e I',7:'Teclas R y U',8:'Teclas T e Y',9:'Teclas W y O',10:'Fila Superior + Central',
+  11:'Teclas V y B',12:'Teclas N y M',13:'Teclas C y coma',14:'Teclas Z y X',15:'Todas las filas',
+  16:'Frases Simples',17:'Números 1 al 5',18:'Números 6 al 0',19:'Todos los números',20:'Texto Real',
+  21:'Puntuación Básica',22:'Mayúsculas con Shift',23:'Palabras Comunes',24:'Palabras Comunes II',25:'Frases del Día',
+  26:'Párrafo Corto I',27:'Párrafo Corto II',28:'Números en Contexto',29:'Email Profesional',30:'Velocidad Inicial',
+  31:'Texto Técnico I',32:'Texto Técnico II',33:'Párrafo Largo I',34:'Acentos y Tilde',35:'Puntuación Avanzada',
+  36:'Objetivo: 40 WPM',37:'Objetivo: 50 WPM',38:'Objetivo: 60 WPM',39:'Texto Académico',40:'Texto Jurídico',
+  41:'Código de Programación',42:'Objetivo: 70 WPM',43:'Velocidad: 80 WPM',44:'Texto Mixto',45:'Párrafo de Maestría',
+};
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
 export const render = () => {
   const u = wi();
-  if (!u) return `
-    <div class="sm_wrap">
-      <div class="sm_empty">
-        <i class="fas fa-lock"></i>
-        <p>Sin sesión activa.</p>
-      </div>
-    </div>`;
+  if (!u) return `<div class="sm_bv_wrap"><div class="sm_empty">
+    <i class="fas fa-lock"></i><p>Sin sesión activa.</p></div></div>`;
 
-  const nombre    = `${u.nombre || ''} ${u.apellidos || ''}`.trim() || u.usuario || '—';
-  const ini       = avatar(nombre);
-  const foto      = u.foto || `${import.meta.env.BASE_URL}smile.avif`;
-  const [tema]    = (u.tema || 'Cielo|#0EBEFF').split('|');
-  const frase     = FRASES[Math.floor(Math.random() * FRASES.length)];
+  const nombre   = `${u.nombre || ''} ${u.apellidos || ''}`.trim() || u.usuario || '—';
+  const ini      = avatar(nombre);
+  const foto     = u.foto || `${import.meta.env.BASE_URL}smile.avif`;
+  const tema     = (u.tema || 'Cielo|#0EBEFF').split('|')[0];
+  const frase    = FRASES[Math.floor(Math.random() * FRASES.length)];
 
-  // Stats del cache de progreso
+  // Stats del cache
   const prog   = getls('wiProgreso') || {};
-  const wpm    = prog.wpmRecord   || '—';
-  const prec   = prog.precisionPct != null ? `${prog.precisionPct}%` : '—';
-  const racha  = prog.rachaDias   != null ? prog.rachaDias : '—';
-  const lecs   = prog.leccionesOk != null ? prog.leccionesOk : '—';
+  const lecsOk = prog.leccionesOk || [];
+  const wpm    = prog.wpmRecord    || 0;
+  const prec   = prog.precisionPct != null ? prog.precisionPct : null;
+  const pct    = Math.round((lecsOk.length / 45) * 100);
+
+  // Clase actual
+  const claseId     = u.claseId || null;
+  const claseChip   = claseId
+    ? `<span class="sm_clase_chip sm_clase_ok"><i class="fas fa-users"></i> Clase: <b>${claseId}</b></span>`
+    : `<span class="sm_clase_chip sm_clase_no"><i class="fas fa-user"></i> Sin clase asignada</span>`;
+
+  // Próxima lección
+  const siguienteId = lecsOk.length < 45 ? (lecsOk.length + 1) : null;
+
+  // Actividad reciente (últimas 4 completadas, orden inverso)
+  const recientes = [...lecsOk].reverse().slice(0, 4);
 
   return `
   <div class="sm_bv_wrap">
 
-    <!-- ── HERO BIENVENIDA ────────────────────────────── -->
-    <div class="sm_hero_wrap">
-      <div class="sm_hero_card_main">
-
-        <div class="sm_hero_avatar_wrap">
-          <div class="sm_hero_ring"></div>
-          <div class="sm_hero_avatar">
-            <img src="${foto}" alt="${nombre}"
-              onerror="this.parentElement.innerHTML='${ini}'">
-          </div>
+    <!-- ══ HERO ══ -->
+    <div class="sm_hero_card_main">
+      <div class="sm_hero_glow"></div>
+      <div class="sm_hero_avatar_wrap">
+        <div class="sm_hero_ring"></div>
+        <div class="sm_hero_avatar">
+          <img src="${foto}" alt="${nombre}" onerror="this.parentElement.innerHTML='${ini}'">
         </div>
-
-        <div class="sm_hero_info">
-          <p class="sm_hero_saludo">${Saludar()}</p>
-          <h1 class="sm_hero_nombre">${nombre}</h1>
-          <div class="sm_hero_tags">
-            <span class="sm_hero_tag sm_tag_tema" style="--tc: var(--${tema}, #0EBEFF)">
-              <i class="fas fa-circle"></i> ${tema}
-            </span>
-            <span class="sm_hero_tag">
-              <i class="fas fa-at"></i> ${u.usuario || '—'}
-            </span>
-            <span class="sm_hero_tag sm_tag_role">
-              <i class="fas fa-graduation-cap"></i> Estudiante
-            </span>
-          </div>
+      </div>
+      <div class="sm_hero_info">
+        <p class="sm_hero_saludo">${Saludar()}</p>
+        <h1 class="sm_hero_nombre">${nombre.split(' ')[0]}</h1>
+        <div class="sm_hero_tags">
+          <span class="sm_hero_tag sm_tag_role"><i class="fas fa-graduation-cap"></i> Estudiante</span>
+          <span class="sm_hero_tag"><i class="fas fa-at"></i> ${u.usuario || '—'}</span>
+          ${claseChip}
         </div>
-
-        <div class="sm_hero_right">
-          <div class="sm_date_pill">
-            <i class="fas fa-calendar-day"></i>
-            <span>${fechaHoy()}</span>
-          </div>
-          <div class="sm_app_pill">
-            <i class="fas fa-keyboard"></i>
-            <span>${app}</span>
-          </div>
-        </div>
-
+      </div>
+      <div class="sm_hero_right">
+        <div class="sm_date_pill"><i class="fas fa-calendar-day"></i><span>${fechaHoy()}</span></div>
+        <div class="sm_app_pill"><i class="fas fa-keyboard"></i><span>${app}</span></div>
       </div>
     </div>
 
-    <!-- ── STATS ─────────────────────────────────────── -->
+    <!-- ══ PROGRESO GLOBAL ══ -->
+    <div class="sm_prog_card">
+      <div class="sm_prog_head">
+        <div class="sm_prog_label">
+          <i class="fas fa-chart-line" style="color:var(--mco)"></i>
+          Progreso general
+        </div>
+        <div class="sm_prog_pct">${lecsOk.length} <span>/ 45 lecciones · ${pct}%</span></div>
+      </div>
+      <div class="sm_prog_track">
+        <div class="sm_prog_fill" id="sm_prog_fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- ══ KPI STATS ══ -->
     <div class="sm_stats_grid">
       ${[
-        { ico: 'fa-keyboard',   lbl: 'Lecciones',    val: lecs, id: 'sm_stat_lec',   col: 'var(--mco)'  },
-        { ico: 'fa-bolt',       lbl: 'WPM Récord',   val: wpm,  id: 'sm_stat_wpm',   col: '#fd7e14'     },
-        { ico: 'fa-bullseye',   lbl: 'Precisión',    val: prec, id: 'sm_stat_prec',  col: '#28a745'     },
-        { ico: 'fa-fire',       lbl: 'Racha (días)', val: racha,id: 'sm_stat_racha', col: '#FFD101'     },
+        { ico:'fa-graduation-cap', lbl:'Lecciones',   val: lecsOk.length,              col:'var(--mco)',  id:'sm_k_lec'  },
+        { ico:'fa-bolt',           lbl:'WPM Récord',  val: wpm  || '—',                col:'#f59e0b',     id:'sm_k_wpm'  },
+        { ico:'fa-bullseye',       lbl:'Precisión',   val: prec != null ? `${prec}%` : '—', col:'#22c55e', id:'sm_k_prec' },
+        { ico:'fa-fire',           lbl:'Racha días',  val: prog.rachaDias || 0,         col:'#ef4444',     id:'sm_k_dia'  },
       ].map(s => `
-        <div class="sm_stat_card">
-          <div class="sm_stat_ico" style="color: ${s.col}">
-            <i class="fas ${s.ico}"></i>
-          </div>
+        <div class="sm_stat_card" id="${s.id}_wrap">
+          <div class="sm_stat_ico" style="color:${s.col}"><i class="fas ${s.ico}"></i></div>
           <div class="sm_stat_val" id="${s.id}">${s.val}</div>
           <div class="sm_stat_lbl">${s.lbl}</div>
         </div>`).join('')}
     </div>
 
-    <!-- ── MOTIVACIÓN ────────────────────────────────── -->
+    <!-- ══ MOTIVACIÓN ══ -->
     <div class="sm_mot_card" id="sm_motivacion">
       <div class="sm_mot_ico"><i class="fas ${frase.ico}"></i></div>
       <div class="sm_mot_body">
@@ -144,7 +144,7 @@ export const render = () => {
       </div>
       <div class="sm_mot_actions">
         <a href="/lecciones" class="sm_btn_primary nv_item" data-page="lecciones">
-          <i class="fas fa-keyboard"></i> Practicar ahora
+          <i class="fas fa-keyboard"></i> Practicar
         </a>
         <button class="sm_btn_icon" id="sm_btn_frase" title="Nueva frase">
           <i class="fas fa-arrows-rotate"></i>
@@ -152,16 +152,115 @@ export const render = () => {
       </div>
     </div>
 
-    <!-- ── ACCESOS RÁPIDOS ───────────────────────────── -->
+    <!-- ══ DOS COLUMNAS: próxima lección + clase ══ -->
+    <div class="sm_two_col">
+
+      <!-- Próxima lección -->
+      <div class="sm_next_card">
+        <div class="sm_section_hdr">
+          <div class="sm_section_ico"><i class="fas fa-play"></i></div>
+          <span>Próxima lección</span>
+        </div>
+        ${siguienteId ? `
+          <a class="sm_next_lec nv_item" data-page="leccion${String(siguienteId).padStart(2,'0')}"
+            href="/leccion${String(siguienteId).padStart(2,'0')}">
+            <div class="sm_next_num">Lección ${String(siguienteId).padStart(2,'0')}</div>
+            <div class="sm_next_name">${LEC_NOMBRES[siguienteId] || `Lección ${siguienteId}`}</div>
+            <div class="sm_next_btn"><i class="fas fa-arrow-right"></i></div>
+          </a>
+        ` : `
+          <div class="sm_next_done">
+            <i class="fas fa-award" style="color:#f59e0b"></i>
+            <span>¡Completaste las 45 lecciones! 🏆</span>
+          </div>
+        `}
+      </div>
+
+      <!-- Clase chip -->
+      <div class="sm_clase_card">
+        <div class="sm_section_hdr">
+          <div class="sm_section_ico"><i class="fas fa-users"></i></div>
+          <span>Mi Clase</span>
+        </div>
+        ${claseId ? `
+          <div class="sm_clase_info">
+            <div class="sm_clase_ico ok"><i class="fas fa-chalkboard-teacher"></i></div>
+            <div class="sm_clase_body">
+              <div class="sm_clase_cod"><b>Código: ${claseId}</b></div>
+              <div class="sm_clase_sub">Clase activa · Ver detalles</div>
+            </div>
+            <a class="sm_btn_mini nv_item" data-page="miclase" href="/miclase">
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        ` : `
+          <div class="sm_clase_info">
+            <div class="sm_clase_ico no"><i class="fas fa-user"></i></div>
+            <div class="sm_clase_body">
+              <div class="sm_clase_cod">Sin clase asignada</div>
+              <div class="sm_clase_sub">Únete con un código de instructor</div>
+            </div>
+            <a class="sm_btn_mini nv_item" data-page="miclase" href="/miclase">
+              <i class="fas fa-plus"></i>
+            </a>
+          </div>
+        `}
+      </div>
+
+    </div>
+
+    <!-- ══ ACTIVIDAD RECIENTE ══ -->
+    <div class="sm_section_hdr">
+      <div class="sm_section_ico"><i class="fas fa-clock-rotate-left"></i></div>
+      <span>Actividad reciente</span>
+      <a href="/progreso" class="sm_see_all nv_item" data-page="progreso">Ver todo <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="sm_actividad_wrap" id="sm_actividad">
+      ${recientes.length > 0 ? `
+        <div class="sm_actividad_grid">
+          ${recientes.map(id => {
+            const prac = getls(`wiPrac_${id}`) || {};
+            const num  = String(id).padStart(2, '0');
+            return `
+              <div class="sm_act_card nv_item" data-page="leccion${num}">
+                <div class="sm_act_num">Lec. ${num}</div>
+                <div class="sm_act_name">${LEC_NOMBRES[id] || `Lección ${num}`}</div>
+                <div class="sm_act_foot">
+                  ${prac.wpm ? `<span class="sm_act_wpm"><i class="fas fa-bolt"></i> ${prac.wpm}</span>` : ''}
+                  ${prac.estrellas ? `<span class="sm_act_stars">${'★'.repeat(prac.estrellas)}</span>` : ''}
+                  <i class="fas fa-check-circle sm_act_ok"></i>
+                </div>
+              </div>`;
+          }).join('')}
+        </div>
+      ` : `
+        <div class="sm_actividad_empty">
+          <i class="fas fa-keyboard"></i>
+          <p>Aún no tienes actividad. ¡Comienza tu primera lección!</p>
+          <a href="/lecciones" class="sm_btn_primary nv_item" data-page="lecciones" style="font-size:var(--fz_m1);padding:.9vh 2vh">
+            <i class="fas fa-play"></i> Empezar ahora
+          </a>
+        </div>
+      `}
+    </div>
+
+    <!-- ══ ACCESOS RÁPIDOS ══ -->
     <div class="sm_section_hdr">
       <div class="sm_section_ico"><i class="fas fa-grid-2"></i></div>
       <span>Accesos rápidos</span>
     </div>
-
     <div class="sm_accesos_grid">
-      ${ACCESOS.map(a => `
-        <a href="${a.href}" class="sm_acceso_card nv_item" data-page="${a.page}">
-          <div class="sm_acceso_ico" style="color: ${a.color}; background: ${a.color}22">
+      ${[
+        { page:'lecciones',  ico:'fa-graduation-cap', color:'var(--mco)',   title:'Lecciones',    sub:'Practica las 45 lecciones progresivas'  },
+        { page:'progreso',   ico:'fa-chart-line',     color:'#22c55e',      title:'Mi Progreso',  sub:'WPM récord, precisión y racha'           },
+        { page:'certificado',ico:'fa-certificate',    color:'#f59e0b',      title:'Certificado',  sub:'Descarga tu logro al llegar a 80 WPM'   },
+        { page:'miclase',    ico:'fa-users',          color:'#a855f7',      title:'Mi Clase',     sub:'Lecciones asignadas y avisos'            },
+        { page:'perfil',     ico:'fa-user',           color:'#0ea5e9',      title:'Mi Perfil',    sub:'Edita tu nombre, foto y tema'            },
+        { page:'mensajes',   ico:'fa-comments',       color:'#ec4899',      title:'Mensajes',     sub:'Comunicación con tu instructor'          },
+      ].map(a => `
+        <a href="/${a.page}" class="sm_acceso_card nv_item" data-page="${a.page}">
+          <div class="sm_acceso_ico" style="color:${a.color};background:${a.color}22">
             <i class="fas ${a.ico}"></i>
           </div>
           <div class="sm_acceso_info">
@@ -172,32 +271,13 @@ export const render = () => {
         </a>`).join('')}
     </div>
 
-    <!-- ── PROGRESO SEMANAL (placeholder animado) ─────── -->
-    <div class="sm_section_hdr">
-      <div class="sm_section_ico"><i class="fas fa-chart-line"></i></div>
-      <span>Actividad reciente</span>
-      <a href="/progreso" class="sm_see_all nv_item" data-page="progreso">
-        Ver todo <i class="fas fa-arrow-right"></i>
-      </a>
-    </div>
-
-    <div class="sm_actividad_wrap" id="sm_actividad">
-      <div class="sm_actividad_empty">
-        <i class="fas fa-chart-bar"></i>
-        <p>Aún no hay actividad registrada.</p>
-        <a href="/lecciones" class="sm_btn_primary nv_item" data-page="lecciones" style="font-size: var(--fz_m1); padding: 1vh 2vh;">
-          <i class="fas fa-play"></i> Comenzar primera lección
-        </a>
-      </div>
-    </div>
-
-    <!-- ── TIP DEL DÍA ──────────────────────────────── -->
+    <!-- ══ TIP DEL DÍA ══ -->
     <div class="sm_tip_card">
       <div class="sm_tip_ico"><i class="fas fa-lightbulb"></i></div>
       <div class="sm_tip_body">
         <div class="sm_tip_label">Consejo del día ⌨️</div>
         <div class="sm_tip_txt" id="sm_tip_txt">
-          Usa los dedos correctos para cada tecla. La postura QWERTY ubica tus dedos índices en <strong>F</strong> y <strong>J</strong> como punto de partida.
+          Ubica tus dedos índices en <strong>F</strong> y <strong>J</strong> — allí están los relieves de guía.
         </div>
       </div>
     </div>
@@ -205,23 +285,21 @@ export const render = () => {
   </div>`;
 };
 
-// ── TIPS ROTATIVOS ────────────────────────────────────────────────
-const TIPS = [
-  'Usa los dedos correctos para cada tecla. La postura QWERTY ubica tus dedos índices en <strong>F</strong> y <strong>J</strong> como punto de partida.',
-  'Practica sin mirar el teclado desde el primer día. El mecanógrafo experto nunca mira las teclas.',
-  'La velocidad es consecuencia de la precisión. Primero escribe sin errores, la velocidad vendrá sola.',
-  'Toma descansos de 5 minutos cada 25 minutos de práctica. Tus manos y ojos te lo agradecerán.',
-  'Mantén una postura correcta: espalda recta, codos a 90°, muñecas levemente elevadas.',
-  '¡40 WPM es el promedio de un mecanógrafo principiante; 80+ WPM ya te hace profesional!',
-  'Practica textos variados: números, puntuación y letras especiales. La variedad entrena mejor.',
-];
-
-// ── INIT ──────────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────────────────────
 export const init = () => {
   const u = wi();
   if (!u) return;
 
   $(document).off('.sm_dash');
+
+  // Animar barra de progreso
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      const prog = getls('wiProgreso') || {};
+      const pct  = Math.round(((prog.leccionesOk?.length || 0) / 45) * 100);
+      $('#sm_prog_fill').css('width', `${pct}%`);
+    }, 80);
+  });
 
   // Tip del día rotativo
   const tipIdx = new Date().getDate() % TIPS.length;
@@ -229,8 +307,8 @@ export const init = () => {
 
   // Nueva frase motivacional
   $(document).on('click.sm_dash', '#sm_btn_frase', function () {
-    const nueva  = FRASES[Math.floor(Math.random() * FRASES.length)];
-    const $card  = $('#sm_motivacion');
+    const nueva = FRASES[Math.floor(Math.random() * FRASES.length)];
+    const $card = $('#sm_motivacion');
     $card.addClass('sm_mot_out');
     setTimeout(() => {
       $('#sm_frase_txt').text(nueva.txt);
@@ -240,20 +318,15 @@ export const init = () => {
     }, 240);
   });
 
-  // Cargar stats de progreso desde cache
-  _actualizarStats();
+  // Click en links navegables (accesos, actividad, próxima lección)
+  $(document).on('click.sm_dash', '.nv_item', function (e) {
+    e.preventDefault();
+    const page = $(this).data('page');
+    if (!page) return;
+    import('../../rutas/ruta.js').then(({ rutas }) => rutas.navigate(`/${page}`));
+  });
 };
 
 export const cleanup = () => {
   $(document).off('.sm_dash');
 };
-
-// ── HELPERS ───────────────────────────────────────────────────────
-function _actualizarStats() {
-  const prog = getls('wiProgreso');
-  if (!prog) return;
-  if (prog.leccionesOk != null) $('#sm_stat_lec').text(prog.leccionesOk);
-  if (prog.wpmRecord)           $('#sm_stat_wpm').text(prog.wpmRecord);
-  if (prog.precisionPct != null)$('#sm_stat_prec').text(`${prog.precisionPct}%`);
-  if (prog.rachaDias != null)   $('#sm_stat_racha').text(prog.rachaDias);
-}
