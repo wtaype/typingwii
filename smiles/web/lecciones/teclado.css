@@ -109,3 +109,15 @@
   .wk_wrap{--wk-u:clamp(16px,4.2vw,28px);--wk-h:clamp(22px,3vh,30px);padding:1vh .5vw 1.5vh;}
   .wk_key{font-size:clamp(7px,1vh,10px);}
 }
+
+/* ── FINGER COLORS (IMAGE MATCH) ─────────────────────────────────── */
+.wk_f_wh { background: #ffffff; border-color: #d1d5db; color: #111827; }
+.wk_f_lp { background: #ef4444; border-color: #dc2626; color: #000; }
+.wk_f_lr { background: #f97316; border-color: #ea580c; color: #000; }
+.wk_f_lm { background: #22c55e; border-color: #16a34a; color: #000; }
+.wk_f_li { background: #3b82f6; border-color: #2563eb; color: #000; }
+.wk_f_ri { background: #a855f7; border-color: #9333ea; color: #000; }
+.wk_f_rm { background: #22c55e; border-color: #16a34a; color: #000; }
+.wk_f_rr { background: #f97316; border-color: #ea580c; color: #000; }
+.wk_f_rp { background: #ef4444; border-color: #dc2626; color: #000; }
+.wk_f_th { background: #3b82f6; border-color: #2563eb; color: #000; }
