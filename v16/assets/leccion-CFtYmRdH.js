@@ -1,0 +1,90 @@
+import{t as e}from"./vendor-BDh6mtVu.js";import{S as t,i as n,v as r}from"./widev-wm2uL2fS.js";/* empty css                */import{n as i}from"./teclado-Dy0XPorW.js";import{n as a,t as o}from"./wiad-D8n49tPF.js";var s=(e,t,n)=>{let r=t.lastIndexOf(`?`),i=e[r===-1||r<t.lastIndexOf(`/`)?t:t.slice(0,r)];return i?typeof i==`function`?i():Promise.resolve(i):new Promise((e,r)=>{(typeof queueMicrotask==`function`?queueMicrotask:setTimeout)(r.bind(null,Error(`Unknown variable dynamic import: `+t+(t.split(`/`).length===n?``:`. Note that variables only represent file names one level deep.`))))})},c={NEUTRAL:0,OK:1,ERR:3},l=[{id:0,lbl:`∞`},{id:30,lbl:`30s`},{id:60,lbl:`1m`},{id:120,lbl:`2m`},{id:300,lbl:`5m`}],u=60,d=null,f=null;function p(e){return{chars:[],pos:0,iniciado:!1,finalizado:!1,timerID:null,elapsed:0,segundos:u,lastTime:null}}var m=e=>String(e).padStart(2,`0`),h=()=>l.map(e=>`<option value="${e.id}" ${e.id===u?`selected`:``}>${e.lbl}</option>`).join(``),g={1:`#22c55e`,2:`#16a34a`,3:`#0ea5e9`,4:`#0284c7`,5:`#f97316`,6:`#ea580c`,7:`#a855f7`,8:`#9333ea`,9:`#ef4444`,10:`#dc2626`},_={1:`Principiante`,2:`Principiante+`,3:`Elemental`,4:`Elemental+`,5:`Intermedio`,6:`Intermedio+`,7:`Avanzado`,8:`Avanzado+`,9:`Experto`,10:`Maestro`},v=()=>{if(!f)return`<div class="ad_empty"><i class="fas fa-book-open"></i><p>Lección no encontrada.</p></div>`;let{id:e,titulo:t,subtitulo:n=``,nivel:i=1,teclasPracticar:s=[],descripcion:c=``}=f,l=m(e);g[i]||g[1],_[i];let u=e<100?e+1:null;return`
+<div class="lc_page">
+
+  <!-- LAYOUT: AD | CONTENT | AD -->
+  <div class="lc_layout">
+    ${o}
+
+    <div class="lc_content">
+
+
+      <!-- PROGRESS -->
+      <div class="lc_prog_track"><div class="lc_prog_fill" id="lc_pr_fill"></div></div>
+
+
+      <!-- TEXT AREA -->
+      <div class="lc_texto_area" id="lc_texto_display" tabindex="0">
+
+        <!-- Texto -->
+        <div class="lc_texto_inner" id="lc_texto_inner"></div>
+      </div>
+
+      <!-- BOTTOM: KEYBOARD + STATS -->
+      <div class="lc_bottom">
+        <div class="lc_kbd_col">
+          <div id="lc_teclado"></div>
+        </div>
+        <div class="lc_side_panel">
+          <div class="lc_sp_header">
+            <div class="lc_sp_title"><i class="fas fa-sliders-h"></i> Resultados y Ajustes</div>
+            <button class="wk_sound_btn" id="wk_sound_toggle" title="Sonido del teclado"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="lc_sp_info">
+            <div class="lc_sp_info_sub">Lección ${l}</div>
+            <div class="lc_sp_info_title">${t}</div>
+          </div>
+          <!-- Stats 2-col: WPM | % -->
+          <div class="lc_sp_row2">
+            <div class="lc_sp_block lc_sp_wpm" ${r(`Palabras por minuto`)}>
+              <div class="lc_sp_n" id="lc_wpm">0</div>
+              <div class="lc_sp_l"><i class="fas fa-bolt"></i> WPM</div>
+            </div>
+            <div class="lc_sp_block lc_sp_prec" ${r(`Precisión`)}>
+              <div class="lc_sp_n" id="lc_prec">100</div>
+              <div class="lc_sp_l"><i class="fas fa-bullseye"></i> %</div>
+            </div>
+          </div>
+          <div class="lc_sp_timer_row">
+            <div class="lc_sp_block lc_sp_time" id="lc_timer_box" ${r(`Tiempo`)}>
+              <div class="lc_sp_n" id="lc_secs">1:00</div>
+              <div class="lc_sp_l"><i class="fas fa-stopwatch"></i> TIEMPO</div>
+            </div>
+            <label class="lc_sp_sel" style="flex:1;" ${r(`Establecer límite`)}>
+              <select id="lc_sel_tiempo" class="lc_sel">${h()}</select>
+            </label>
+          </div>
+          <div class="lc_sp_sep"></div>
+          <!-- Mini counters -->
+          <div class="lc_sp_mini">
+            <span class="lcm ok" ${r(`Aciertos`)}><i class="fas fa-check"></i> <b id="lc_cnt_ok">0</b></span>
+            <span class="lcm er" ${r(`Errores`)}><i class="fas fa-xmark"></i> <b id="lc_cnt_err">0</b></span>
+            <span class="lcm wrn" ${r(`Corregidos`)}><i class="fas fa-rotate-left"></i> <b id="lc_cnt_warn">0</b></span>
+          </div>
+          <div class="lc_sp_sep"></div>
+          <!-- Chars counter -->
+          <div class="lc_sp_chars">
+             <span id="lc_pos">0</span><span class="lc_sp_chars_sep">/</span><span id="lc_total">0</span><small>chars</small>
+          </div>
+          <div class="lc_sp_btns">
+             <button class="lc_sp_btn lc_btn_ghost" id="lc_btn_ant" ${e<=1?`disabled`:``}><i class="fas fa-chevron-left"></i></button>
+             <button class="lc_sp_btn lc_btn_wide" id="lc_btn_restart"><i class="fas fa-rotate-right"></i> Reiniciar</button>
+             <button class="lc_sp_btn lc_btn_ghost" id="lc_btn_sig" ${u?``:`disabled`}><i class="fas fa-chevron-right"></i></button>
+          </div>
+          <button class="lc_sp_btn lc_btn_ghost lc_mt_s" id="lc_btn_volver"><i class="fas fa-th-list"></i> Todas las lecciones</button>
+        </div>
+      </div>
+    </div>
+
+    ${a}
+  </div>
+
+</div>
+`},y=()=>{if(!f)return;let r=g[f.nivel]||g[1];i.render(`#lc_teclado`),f.teclasPracticar?.length&&setTimeout(()=>{f.teclasPracticar.forEach(e=>{document.querySelectorAll(`[data-wk="${e.toLowerCase()}"]`).forEach(e=>e.style.cssText+=`;outline:2px solid var(--mco);outline-offset:1px;`)})},200),S(),e(document).off(`.lck`),e(document).on(`change.lck`,`#lc_sel_tiempo`,function(){d.iniciado||(u=+e(this).val(),S())}),e(document).on(`click.lck`,`#lc_btn_restart, #lc_btn_reintentar`,()=>S()),e(document).on(`click.lck`,`#lc_btn_sig`,()=>{let e=String(f.id+1).padStart(2,`0`);s(Object.assign({"./leccion01.js":()=>t(()=>import(`./leccion01-Sp8t0Msz.js`),[]),"./leccion02.js":()=>t(()=>import(`./leccion02-DazUVZ8B.js`),[]),"./leccion03.js":()=>t(()=>import(`./leccion03-DdCTZo46.js`),[]),"./leccion04.js":()=>t(()=>import(`./leccion04-BgrKzjIr.js`),[]),"./leccion05.js":()=>t(()=>import(`./leccion05-Quv6F7Uu.js`),[]),"./leccion06.js":()=>t(()=>import(`./leccion06-Dq3kNyhO.js`),[]),"./leccion07.js":()=>t(()=>import(`./leccion07-DDkbRz3m.js`),[]),"./leccion08.js":()=>t(()=>import(`./leccion08-BKbwBUgd.js`),[]),"./leccion09.js":()=>t(()=>import(`./leccion09-nhAQuWtC.js`),[]),"./leccion10.js":()=>t(()=>import(`./leccion10-Cpan1X1g.js`),[]),"./leccion11.js":()=>t(()=>import(`./leccion11-BnlCtZ0p.js`),[]),"./leccion12.js":()=>t(()=>import(`./leccion12-DIpwHltQ.js`),[]),"./leccion13.js":()=>t(()=>import(`./leccion13-BO58Efak.js`),[]),"./leccion14.js":()=>t(()=>import(`./leccion14-KxgOuZej.js`),[]),"./leccion15.js":()=>t(()=>import(`./leccion15-CSQ7GwMz.js`),[]),"./leccion16.js":()=>t(()=>import(`./leccion16-RF-yWc3T.js`),[]),"./leccion17.js":()=>t(()=>import(`./leccion17-DFAHorlH.js`),[]),"./leccion18.js":()=>t(()=>import(`./leccion18-D9i1jPw5.js`),[]),"./leccion19.js":()=>t(()=>import(`./leccion19-CQJ-GjFO.js`),[]),"./leccion20.js":()=>t(()=>import(`./leccion20-BDbW7pNs.js`),[]),"./leccion21.js":()=>t(()=>import(`./leccion21-BY1VJ0DM.js`),[]),"./leccion22.js":()=>t(()=>import(`./leccion22-B2gvA0RJ.js`),[]),"./leccion23.js":()=>t(()=>import(`./leccion23-DRLgSXsC.js`),[]),"./leccion24.js":()=>t(()=>import(`./leccion24-DMTAf9wg.js`),[]),"./leccion25.js":()=>t(()=>import(`./leccion25-D1rMoXu-.js`),[]),"./leccion26.js":()=>t(()=>import(`./leccion26-DXmp4WLh.js`),[]),"./leccion27.js":()=>t(()=>import(`./leccion27-CovtiHtp.js`),[]),"./leccion28.js":()=>t(()=>import(`./leccion28-BDwRXio1.js`),[]),"./leccion29.js":()=>t(()=>import(`./leccion29-BkppeunQ.js`),[]),"./leccion30.js":()=>t(()=>import(`./leccion30-D9P9Zc-n.js`),[]),"./leccion31.js":()=>t(()=>import(`./leccion31-FJlVtjhl.js`),[]),"./leccion32.js":()=>t(()=>import(`./leccion32-D6ss9uM8.js`),[]),"./leccion33.js":()=>t(()=>import(`./leccion33-DLl_DeVa.js`),[]),"./leccion34.js":()=>t(()=>import(`./leccion34-CbnGG7D7.js`),[]),"./leccion35.js":()=>t(()=>import(`./leccion35-BNJslN_9.js`),[]),"./leccion36.js":()=>t(()=>import(`./leccion36-KFNG4s9J.js`),[]),"./leccion37.js":()=>t(()=>import(`./leccion37-D_9SZTml.js`),[]),"./leccion38.js":()=>t(()=>import(`./leccion38-DQB3tolW.js`),[]),"./leccion39.js":()=>t(()=>import(`./leccion39-3IBilsle.js`),[]),"./leccion40.js":()=>t(()=>import(`./leccion40-DvF-m-Dz.js`),[]),"./leccion41.js":()=>t(()=>import(`./leccion41-f6kj6N7W.js`),[]),"./leccion42.js":()=>t(()=>import(`./leccion42-Bj8WXWHB.js`),[]),"./leccion43.js":()=>t(()=>import(`./leccion43-CO7bhX7D.js`),[]),"./leccion44.js":()=>t(()=>import(`./leccion44-DytTTaYk.js`),[]),"./leccion45.js":()=>t(()=>import(`./leccion45-dXvo5c7b.js`),[])}),`./leccion${e}.js`,2).then(e=>{f=e.data,x()}).catch(()=>n(`Lección no disponible aún`,`info`))}),e(document).on(`click.lck`,`#lc_btn_ant`,()=>{if(f.id<=1)return;let e=String(f.id-1).padStart(2,`0`);s(Object.assign({"./leccion01.js":()=>t(()=>import(`./leccion01-Sp8t0Msz.js`),[]),"./leccion02.js":()=>t(()=>import(`./leccion02-DazUVZ8B.js`),[]),"./leccion03.js":()=>t(()=>import(`./leccion03-DdCTZo46.js`),[]),"./leccion04.js":()=>t(()=>import(`./leccion04-BgrKzjIr.js`),[]),"./leccion05.js":()=>t(()=>import(`./leccion05-Quv6F7Uu.js`),[]),"./leccion06.js":()=>t(()=>import(`./leccion06-Dq3kNyhO.js`),[]),"./leccion07.js":()=>t(()=>import(`./leccion07-DDkbRz3m.js`),[]),"./leccion08.js":()=>t(()=>import(`./leccion08-BKbwBUgd.js`),[]),"./leccion09.js":()=>t(()=>import(`./leccion09-nhAQuWtC.js`),[]),"./leccion10.js":()=>t(()=>import(`./leccion10-Cpan1X1g.js`),[]),"./leccion11.js":()=>t(()=>import(`./leccion11-BnlCtZ0p.js`),[]),"./leccion12.js":()=>t(()=>import(`./leccion12-DIpwHltQ.js`),[]),"./leccion13.js":()=>t(()=>import(`./leccion13-BO58Efak.js`),[]),"./leccion14.js":()=>t(()=>import(`./leccion14-KxgOuZej.js`),[]),"./leccion15.js":()=>t(()=>import(`./leccion15-CSQ7GwMz.js`),[]),"./leccion16.js":()=>t(()=>import(`./leccion16-RF-yWc3T.js`),[]),"./leccion17.js":()=>t(()=>import(`./leccion17-DFAHorlH.js`),[]),"./leccion18.js":()=>t(()=>import(`./leccion18-D9i1jPw5.js`),[]),"./leccion19.js":()=>t(()=>import(`./leccion19-CQJ-GjFO.js`),[]),"./leccion20.js":()=>t(()=>import(`./leccion20-BDbW7pNs.js`),[]),"./leccion21.js":()=>t(()=>import(`./leccion21-BY1VJ0DM.js`),[]),"./leccion22.js":()=>t(()=>import(`./leccion22-B2gvA0RJ.js`),[]),"./leccion23.js":()=>t(()=>import(`./leccion23-DRLgSXsC.js`),[]),"./leccion24.js":()=>t(()=>import(`./leccion24-DMTAf9wg.js`),[]),"./leccion25.js":()=>t(()=>import(`./leccion25-D1rMoXu-.js`),[]),"./leccion26.js":()=>t(()=>import(`./leccion26-DXmp4WLh.js`),[]),"./leccion27.js":()=>t(()=>import(`./leccion27-CovtiHtp.js`),[]),"./leccion28.js":()=>t(()=>import(`./leccion28-BDwRXio1.js`),[]),"./leccion29.js":()=>t(()=>import(`./leccion29-BkppeunQ.js`),[]),"./leccion30.js":()=>t(()=>import(`./leccion30-D9P9Zc-n.js`),[]),"./leccion31.js":()=>t(()=>import(`./leccion31-FJlVtjhl.js`),[]),"./leccion32.js":()=>t(()=>import(`./leccion32-D6ss9uM8.js`),[]),"./leccion33.js":()=>t(()=>import(`./leccion33-DLl_DeVa.js`),[]),"./leccion34.js":()=>t(()=>import(`./leccion34-CbnGG7D7.js`),[]),"./leccion35.js":()=>t(()=>import(`./leccion35-BNJslN_9.js`),[]),"./leccion36.js":()=>t(()=>import(`./leccion36-KFNG4s9J.js`),[]),"./leccion37.js":()=>t(()=>import(`./leccion37-D_9SZTml.js`),[]),"./leccion38.js":()=>t(()=>import(`./leccion38-DQB3tolW.js`),[]),"./leccion39.js":()=>t(()=>import(`./leccion39-3IBilsle.js`),[]),"./leccion40.js":()=>t(()=>import(`./leccion40-DvF-m-Dz.js`),[]),"./leccion41.js":()=>t(()=>import(`./leccion41-f6kj6N7W.js`),[]),"./leccion42.js":()=>t(()=>import(`./leccion42-Bj8WXWHB.js`),[]),"./leccion43.js":()=>t(()=>import(`./leccion43-CO7bhX7D.js`),[]),"./leccion44.js":()=>t(()=>import(`./leccion44-DytTTaYk.js`),[]),"./leccion45.js":()=>t(()=>import(`./leccion45-dXvo5c7b.js`),[])}),`./leccion${e}.js`,2).then(e=>{f=e.data,x()}).catch(()=>n(`Lección no disponible`,`warning`))}),e(document).on(`click.lck`,`#lc_btn_volver`,()=>{t(async()=>{let{rutas:e}=await import(`./ruta-QlTjaNZx.js`).then(e=>e.n);return{rutas:e}},[]).then(({rutas:e})=>e.navigate(`/lecciones`))}),e(document).on(`click.lck`,`#lc_texto_display`,()=>{e(`#lc_texto_display`).trigger(`focus`),!d.iniciado&&!d.finalizado&&D()}),e(document).on(`keydown.lck`,e=>{e.key===`Escape`&&(e.preventDefault(),S())}),e(document).on(`keydown.lck`,`#lc_texto_display`,k),e(`#lc_pr_fill`).css(`background`,r)},b=()=>{L(),i.clear(),e(document).off(`.lck`),d=null};function x(){b();let e=v();t(async()=>{let{wiFade:e}=await import(`./rutadev-CtOwolz9.js`).then(e=>e.t);return{wiFade:e}},[]).then(({wiFade:t})=>{t(`#wimain`,e).then(()=>{y();let e=m(f.id);document.title=`Lección ${e} — ${f.titulo} · TypingWii`,history.pushState({ruta:`/leccion${e}`},``,`/leccion${e}`)})})}function S(){L(),d=p(f.texto),d.segundos=u,e(`#lc_wpm`).text(0),e(`#lc_prec`).text(100),C(u),e(`#lc_timer_box`).removeClass(`lc_warn`),e(`#lc_pr_fill`).css(`width`,`0%`),e(`#lc_pos`).text(0),e(`#lc_total`).text(f.texto.length),e(`#lc_results_ui`).remove(),e(`.lc_sp_info`).show(),N({ok:0,err:0,warn:0}),T(f.texto),i.clear();let t=f.texto[0];t&&i.hint(t===`
+`?`Enter`:t),setTimeout(()=>e(`#lc_texto_display`).trigger(`focus`),60)}function C(t){e(`#lc_secs`).text(w(t))}function w(e){let t=Math.floor(e/60),n=e%60;return`${t}:${String(n).padStart(2,`0`)}`}function T(t){let n=e(`#lc_texto_inner`).empty();d.chars=[];let r=t.split(/( )/),i=null;r.forEach(t=>{if(t===` `){let t=e(`<span class="lc_ch lc_space"> </span>`);n.append(t),d.chars.push({char:` `,$s:t,state:c.NEUTRAL,hadErr:!1}),i=null}else t.length>0&&(i=e(`<span class="lc_word"></span>`),[...t].forEach(t=>{let n=e(`<span class="lc_ch">${t}</span>`);i.append(n),d.chars.push({char:t,$s:n,state:c.NEUTRAL,hadErr:!1})}),n.append(i))}),E(0)}function E(e){d.chars.forEach(e=>e.$s.removeClass(`lc_ch_cur`)),e<d.chars.length&&d.chars[e].$s.addClass(`lc_ch_cur`)}function D(){d.iniciado||d.finalizado||(d.iniciado=!0,d.lastTime=performance.now(),d.timerID=setInterval(()=>{d.elapsed++,u===0?C(d.elapsed):(d.segundos--,C(d.segundos),d.segundos<=10&&e(`#lc_timer_box`).addClass(`lc_warn`),d.segundos<=0&&P()),M()},1e3))}var O=new Set(`Shift.CapsLock.Tab.ArrowLeft.ArrowRight.ArrowUp.ArrowDown.Home.End.PageUp.PageDown.Insert.Delete.ContextMenu.F1.F2.F3.F4.F5.F6.F7.F8.F9.F10.F11.F12`.split(`.`));function k(t){if(d.finalizado||O.has(t.key)||t.ctrlKey||t.altKey||t.metaKey)return;if(t.preventDefault(),d.iniciado||D(),t.key===`Backspace`){A();return}if(d.pos>=d.chars.length)return;let n=performance.now(),r=d.lastTime?n-d.lastTime:0;d.lastTime=n;let a=d.chars[d.pos];a.dt=r;let o=a.char===`
+`?`Enter`:a.char,s=t.key===o;if(i.press(o,s),a.$s.removeClass(`lc_ch_cur lc_ch_ok lc_ch_warn lc_ch_err lc_ch_shake`),s?(a.state=c.OK,a.hadErr?a.$s.addClass(`lc_ch_warn`):a.$s.addClass(`lc_ch_ok`)):(a.state=c.ERR,a.hadErr=!0,a.$s.addClass(`lc_ch_err lc_ch_shake`),setTimeout(()=>a.$s.removeClass(`lc_ch_shake`),300)),d.pos++,E(d.pos),d.pos<d.chars.length){R();let e=d.chars[d.pos]?.char;e&&i.hint(e===`
+`?`Enter`:e)}e(`#lc_pr_fill`).css(`width`,`${d.pos/d.chars.length*100}%`),e(`#lc_pos`).text(d.pos),M(),d.pos>=d.chars.length&&P()}function A(){if(d.pos<=0)return;d.pos--;let t=d.chars[d.pos];t.$s.removeClass(`lc_ch_cur lc_ch_ok lc_ch_warn lc_ch_err`),t.state=c.NEUTRAL,E(d.pos),e(`#lc_pr_fill`).css(`width`,`${d.pos/d.chars.length*100}%`),e(`#lc_pos`).text(d.pos),M()}function j(){let e=0,t=0,n=0;return d.chars.forEach(r=>{r.state===c.OK?r.hadErr?n++:e++:r.state===c.ERR&&t++}),{ok:e,err:t,warn:n}}function M(){let{ok:t,err:n,warn:r}=j(),i=u===0?d.elapsed:u-d.segundos,a=t+r,o=a+n,s=i>0?Math.round(a/5/(i/60)):0,c=o>0?Math.round(t/o*100):100;e(`#lc_wpm`).text(s),e(`#lc_prec`).text(c),N({ok:t,err:n,warn:r})}function N(t=null){let{ok:n,err:r,warn:i}=t||j();e(`#lc_cnt_ok`).text(n),e(`#lc_cnt_err`).text(r),e(`#lc_cnt_warn`).text(i)}function P(){if(d.finalizado)return;d.finalizado=!0,L();let{ok:e,err:t}=j(),r=d.elapsed,a=e,o=a+t,s=r>0?Math.round(a/5/(r/60)):a,c=o>0?Math.round(a/o*100):100;i.clear();let l=[...new Set(d.chars.filter(e=>e.hadErr&&e.char!==` `&&e.char!==`
+`).map(e=>e.char))];l.length>0&&i.markErrors(l);let u=1;s>=50&&c>=95?u=5:s>=40&&c>=90?u=4:s>=30&&c>=85?u=3:s>=20&&c>=80&&(u=2),u>=4&&I(),F(s,c,u);let f=``;f=u===5?`¡Perfecto! ${s} WPM. ¡Eres un maestro! 🚀`:u>=3?`¡Muy bien! ${s} WPM. ¡Sigue así! 👏`:`Completado: ${s} WPM. ¡A practicar más! 🐢`,n(f,u>=4?`success`:u>=3?`info`:`warning`,5e3)}function F(t,n,r){let i=`
+    <div class="lc_res_panel" id="lc_results_ui">
+      <div class="lc_stars">${[1,2,3,4,5].map(e=>`<i class="fas fa-star ${e<=r?`lc_star_on`:`lc_star_off`}"></i>`).join(``)}</div>
+    </div>
+  `;e(`#lc_results_ui`).remove(),e(`.lc_sp_info`).hide(),e(`.lc_side_panel`).prepend(i)}function I(){if(document.getElementById(`wi_confetti`))return;let t=e(`<canvas id="wi_confetti" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;"></canvas>`).appendTo(`body`),n=t[0].getContext(`2d`);t[0].width=window.innerWidth,t[0].height=window.innerHeight;let r=Array.from({length:120},()=>({x:window.innerWidth/2,y:window.innerHeight/2+50,vx:(Math.random()-.5)*25,vy:(Math.random()-1)*25-5,size:Math.random()*8+5,color:[`#f59e0b`,`#10b981`,`#3b82f6`,`#f97316`,`#a855f7`,`#ec4899`][Math.floor(Math.random()*6)],rot:Math.random()*360,rotS:(Math.random()-.5)*15})),i,a=()=>{n.clearRect(0,0,t[0].width,t[0].height);let e=!1;r.forEach(r=>{r.vy+=.5,r.x+=r.vx,r.y+=r.vy,r.rot+=r.rotS,r.y<t[0].height+50&&(e=!0),n.save(),n.translate(r.x,r.y),n.rotate(r.rot*Math.PI/180),n.fillStyle=r.color,n.fillRect(-r.size/2,-r.size/2,r.size,r.size),n.restore()}),e?i=requestAnimationFrame(a):t.remove()};i=requestAnimationFrame(a),setTimeout(()=>{cancelAnimationFrame(i),t.remove()},5e3)}function L(){d?.timerID&&(clearInterval(d.timerID),d.timerID=null)}function R(){let e=document.getElementById(`lc_texto_display`),t=e?.querySelector(`.lc_ch_cur`);if(!e||!t)return;let n=e.getBoundingClientRect(),r=t.getBoundingClientRect();r.bottom>n.bottom-20&&(e.scrollTop+=r.bottom-n.bottom+40)}var z=e=>{f=e};export{b as cleanup,y as init,v as render,z as setData};
