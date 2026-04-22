@@ -10,6 +10,8 @@ import { wiTeclado } from './teclado.js';
 import { adLeft, adRight } from './wiad.js';
 // ── ESTADO INTERNO ─────────────────────────────────────────────────
 const ST = { NEUTRAL: 0, OK: 1, ERR: 3 };
+const TIEMPOS = [{id:0,lbl:'∞'},{id:30,lbl:'30s'},{id:60,lbl:'1m'},{id:120,lbl:'2m'},{id:300,lbl:'5m'}];
+let tiempoSel = 60;
 let E = null;
 let _data = null;
 
@@ -17,13 +19,14 @@ function _nuevoE(texto) {
   return {
     chars: [], pos: 0,
     iniciado: false, finalizado: false,
-    timerID: null, elapsed: 0,
+    timerID: null, elapsed: 0, segundos: tiempoSel,
     lastTime: null,
   };
 }
 
 // ── HELPERS ─────────────────────────────────────────────────────────
 const _getLecNum = (id) => String(id).padStart(2, '0');
+const tiempoOpts = () => TIEMPOS.map(t => `<option value="${t.id}" ${t.id === tiempoSel ? 'selected' : ''}>${t.lbl}</option>`).join('');
 
 // Colores por nivel (1-10)
 const NIVEL_COLORS = {
@@ -103,9 +106,14 @@ export const render = () => {
               <div class="lc_sp_l"><i class="fas fa-bullseye"></i> %</div>
             </div>
           </div>
-          <div class="lc_sp_block lc_sp_time" id="lc_timer_box" ${wiTip('Tiempo transcurrido')}>
-            <div class="lc_sp_n" id="lc_secs">0</div>
-            <div class="lc_sp_l"><i class="fas fa-stopwatch"></i> seg</div>
+          <div class="lc_sp_timer_row">
+            <div class="lc_sp_block lc_sp_time" id="lc_timer_box" ${wiTip('Tiempo')}>
+              <div class="lc_sp_n" id="lc_secs">1:00</div>
+              <div class="lc_sp_l"><i class="fas fa-stopwatch"></i> TIEMPO</div>
+            </div>
+            <label class="lc_sp_sel" style="flex:1;" ${wiTip('Establecer límite')}>
+              <select id="lc_sel_tiempo" class="lc_sel">${tiempoOpts()}</select>
+            </label>
           </div>
           <div class="lc_sp_sep"></div>
           <!-- Mini counters -->
@@ -124,7 +132,7 @@ export const render = () => {
              <button class="lc_sp_btn lc_btn_wide" id="lc_btn_restart"><i class="fas fa-rotate-right"></i> Reiniciar</button>
              <button class="lc_sp_btn lc_btn_ghost" id="lc_btn_sig" ${!total ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>
           </div>
-          <button class="lc_sp_btn lc_btn_ghost" id="lc_btn_volver" style="margin-top:.5vh;"><i class="fas fa-th-list"></i> Todas las lecciones</button>
+          <button class="lc_sp_btn lc_btn_ghost lc_mt_s" id="lc_btn_volver"><i class="fas fa-th-list"></i> Todas las lecciones</button>
         </div>
       </div>
     </div>
@@ -156,6 +164,12 @@ export const init = () => {
 
   _reset();
   $(document).off('.lck');
+
+  $(document).on('change.lck', '#lc_sel_tiempo', function() {
+    if (E.iniciado) return;
+    tiempoSel = +$(this).val();
+    _reset();
+  });
 
   // Restart btn
   $(document).on('click.lck', '#lc_btn_restart, #lc_btn_reintentar', () => _reset());
@@ -226,9 +240,10 @@ function _cambiarLeccion() {
 function _reset() {
   _clearTimer();
   E = _nuevoE(_data.texto);
+  E.segundos = tiempoSel;
   $('#lc_wpm').text(0);
   $('#lc_prec').text(100);
-  $('#lc_secs').text(0);
+  _timerHUD(tiempoSel);
   $('#lc_timer_box').removeClass('lc_warn');
   $('#lc_pr_fill').css('width', '0%');
   $('#lc_pos').text(0);
@@ -243,6 +258,16 @@ function _reset() {
   const first = _data.texto[0];
   if (first) wiTeclado.hint(first === '\n' ? 'Enter' : first);
   setTimeout(() => $('#lc_texto_display').trigger('focus'), 60);
+}
+
+function _timerHUD(s) {
+  if (tiempoSel === 0) $('#lc_secs').text(_formatT(s));
+  else $('#lc_secs').text(_formatT(s));
+}
+function _formatT(s) {
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return `${m}:${String(r).padStart(2, '0')}`;
 }
 
 // ── RENDER CHARS ─────────────────────────────────────────────────────
@@ -280,7 +305,14 @@ function _arrancar() {
 
   E.timerID = setInterval(() => {
     E.elapsed++;
-    $('#lc_secs').text(E.elapsed);
+    if (tiempoSel === 0) {
+      _timerHUD(E.elapsed);
+    } else {
+      E.segundos--;
+      _timerHUD(E.segundos);
+      if (E.segundos <= 10) $('#lc_timer_box').addClass('lc_warn');
+      if (E.segundos <= 0) _terminar();
+    }
     _recalc();
   }, 1000);
 }
@@ -362,11 +394,11 @@ function _counts() {
 }
 function _recalc() {
   const {ok,err,warn} = _counts();
-  const t    = E.elapsed;
-  const good = ok + warn; // Both count as typed characters for WPM
+  const t    = tiempoSel === 0 ? E.elapsed : (tiempoSel - E.segundos);
+  const good = ok + warn;
   const tot  = good+err;
   const wpm  = t>0 ? Math.round((good/5)/(t/60)) : 0;
-  const prec = tot>0 ? Math.round((ok/tot)*100) : 100; // Precision penalty for warned? Actually user might want ok / tot or (ok+warn)/tot. Let's keep it (good/tot).
+  const prec = tot>0 ? Math.round((ok/tot)*100) : 100;
   $('#lc_wpm').text(wpm);
   $('#lc_prec').text(prec);
   _updateBar({ok,err,warn});
