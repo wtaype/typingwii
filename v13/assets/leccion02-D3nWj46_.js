@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-BMjSeyRm.js";var i={id:2,nivel:1,titulo:`Teclas D y K`,subtitulo:`Dedos medios — fila central`,teclasPracticar:[`d`,`k`],descripcion:`Dedos medios sobre D y K, índices en F y J.`,texto:`d k d k d k k d k d dk kd dk kd ddk kkd dkdk kdkd fdjk kjdf dfkj`};r(i);export{e as cleanup,i as data,t as init,n as render};
