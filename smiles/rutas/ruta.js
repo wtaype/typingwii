@@ -38,12 +38,11 @@ export const NAV = {
   },
   gestor: {
     winav: [
-      { href: '/gestor',          page: 'gestor',          ico: 'fa-home',              txt: 'Bienvenido'      },
-      { href: '/estudiantes',     page: 'estudiantes',     ico: 'fa-user-graduate',     txt: 'Estudiantes'     },
-      { href: '/clases',          page: 'clases',          ico: 'fa-book',              txt: 'Clases'          },
-      { href: '/calificaciones',  page: 'calificaciones',  ico: 'fa-search',            txt: 'Calificaciones'  },
-      { href: '/tareas',          page: 'tareas',          ico: 'fa-chart-line',        txt: 'Tareas'          },
-      { href: '/contacto',        page: 'contacto',        ico: 'fa-envelope',          txt: 'Contacto'        },
+      { href: '/gestor',         page: 'gestor',         ico: 'fa-house',              txt: 'Inicio'         },
+      { href: '/misclases',      page: 'misclases',      ico: 'fa-chalkboard-teacher', txt: 'Mis Clases'     },
+      { href: '/alumnos',        page: 'alumnos',        ico: 'fa-user-graduate',      txt: 'Alumnos'        },
+      { href: '/calificaciones', page: 'calificaciones', ico: 'fa-chart-bar',          txt: 'Calificaciones' },
+      { href: '/buscar',         page: 'buscar',         ico: 'fa-search',             txt: 'Buscar'         },
     ],
     nvrig: [
       { href: '/mensajes', page: 'mensajes', ico: 'fa-comments', txt: 'Mensajes' },
@@ -102,11 +101,11 @@ export const RUTAS = [
   { path: '/miclase',     area: 'smile/', roles: ['smile'] },
 
   // GESTOR — web/gestor/
-  { path: '/gestor',          area: 'gestor/', roles: ['gestor','admin'], mod: 'gestor' },
-  { path: '/estudiantes',     area: 'gestor/', roles: ['gestor','admin'] },
-  { path: '/clases',          area: 'gestor/', roles: ['gestor','admin'] },
-  { path: '/calificaciones',  area: 'gestor/', roles: ['gestor','admin'] },
-  { path: '/tareas',          area: 'gestor/', roles: ['gestor','admin'] },
+  { path: '/gestor',         area: 'gestor/', roles: ['gestor','admin'], mod: 'gestor' },
+  { path: '/misclases',      area: 'gestor/', roles: ['gestor','admin'] },
+  { path: '/alumnos',        area: 'gestor/', roles: ['gestor','admin'] },
+  { path: '/calificaciones', area: 'gestor/', roles: ['gestor','admin'] },
+  { path: '/buscar',         area: 'gestor/', roles: ['gestor','admin'] },
 
   // EMPRESA — web/empresa/
   { path: '/empresa',      area: 'empresa/', roles: ['empresa','admin'], mod: 'empresa' },

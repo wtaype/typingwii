@@ -1,332 +1,327 @@
+// ════════════════════════════════════════════════════════════════════
+// gestor.js — TypingWii · Premium Dashboard Gestor
+// Jesús es mi Señor 🙏
+// ════════════════════════════════════════════════════════════════════
 import './gestor.css';
 import $ from 'jquery';
 import { db } from '../firebase.js';
 import {
   collection, query, where, orderBy, limit,
-  getDocs, getCountFromServer, onSnapshot
+  getDocs, onSnapshot
 } from 'firebase/firestore';
 import {
   savels, getls,
   Saludar, fechaHoy,
   NombreApellido, avatar, Capit,
-  formatearFechaHora, wiVista
+  formatearFechaHora
 } from '../../widev.js';
 import { app } from '../../wii.js';
 
-// ─── USUARIO ─────────────────────────────────────────────────────
+// ── USUARIO Y CACHE ───────────────────────────────────────────────────────────
 const wi = () => getls('wiSmile');
+const K_TOTAL  = 'gsTotalAlumnos';
+const K_CLASES = 'gsTotalClases';
+const K_FEED   = 'gsFeedReciente';
+const K_METR   = 'gsMetricas';
 
-// ─── CACHE KEYS ──────────────────────────────────────────────────
-const K_TOTAL    = 'gsTotalEstudiantes';
-const K_METRICA  = 'gsMetricas';
-const K_FEED     = 'gsRecientes';
-const K_REALTIME = 'gsRealTime';
+const state = { feedSub: null };
 
-// ─── ESTADO INTERNO ──────────────────────────────────────────────
-const state = {
-  practicasSub: null,
-  feedSub: null,
-};
-
-// ─── RENDER ──────────────────────────────────────────────────────
+// ── RENDER ────────────────────────────────────────────────────────────────────
 export const render = async () => {
   const u = wi();
-  if (!u) return `<div class="gs_wrap"><div class="gs_empty"><i class="fas fa-lock"></i><p>Sin sesión activa.</p></div></div>`;
+  if (!u) return `
+    <div class="gs_page">
+      <div class="gs_empty"><i class="fas fa-lock"></i><p>Sin sesión activa.</p></div>
+    </div>`;
 
-  const av = avatar(u.nombres || '');
+  const nombre = NombreApellido(u.nombres || u.nombre || 'Instructor');
+  const av     = avatar(u.nombres || u.nombre || '');
+  const foto   = u.foto || null;
+
+  // Render inicial instantáneo desde caché
+  const totalAlumnos = getls(K_TOTAL) ?? '—';
+  const totalClases  = getls(K_CLASES) ?? '—';
+  const metr         = getls(K_METR) || {};
+
+  const ACCESOS = [
+    { page:'misclases',      ico:'fa-chalkboard-teacher', color:'#6366f1', title:'Aulas',          sub:'Crea y gestiona tus clases' },
+    { page:'alumnos',        ico:'fa-users',              color:'#0ea5e9', title:'Estudiantes',    sub:'Métricas y asignaciones'    },
+    { page:'calificaciones', ico:'fa-chart-bar',          color:'#f59e0b', title:'Rankings',       sub:'Podio de rendimiento'       },
+    { page:'buscar',         ico:'fa-search',             color:'#22c55e', title:'Búsqueda',       sub:'Historial detallado'        },
+    { page:'mensajes',       ico:'fa-paper-plane',        color:'#ec4899', title:'Notificaciones', sub:'Comunicados oficiales'      },
+    { page:'perfil',         ico:'fa-user-shield',        color:'#a855f7', title:'Mi Cuenta',      sub:'Configuración personal'     },
+  ];
 
   return `
-  <div class="gs_page" id="gs_root">
-    
-    <!-- ══ BACKGROUND ORBS ══ -->
-    <div class="gs_orb gs_orb1"></div>
-    <div class="gs_orb gs_orb2"></div>
+  <div class="gs_page">
+    <div class="gs_ambient"></div>
 
-    <!-- ══ HERO / HEADER ══ -->
+    <!-- ══ HERO PREMIUM ══ -->
     <div class="gs_hero">
       <div class="gs_hero_main">
-        <div class="gs_user_info">
-          <div class="gs_avatar">${av}</div>
-          <div>
-            <div class="gs_saludo">${Saludar()}</div>
-            <h1 class="gs_nombre">${NombreApellido(u.nombres || 'Instructor')}</h1>
-            <div class="gs_tags">
-              <span class="gs_tag"><i class="fas fa-chalkboard-user"></i> Gestor de Aula</span>
-              <span class="gs_tag"><i class="fas fa-school"></i> ${Capit(u.empresa || app)}</span>
-            </div>
+        <div class="gs_av_container">
+          <div class="gs_av_glow"></div>
+          <div class="gs_av">
+            ${foto ? `<img src="${foto}" alt="${nombre}" onerror="this.parentElement.innerHTML='${av}'">` : av}
           </div>
         </div>
-        <div class="gs_hero_side">
-          <div class="gs_fecha">
-            <i class="fas fa-calendar-day"></i>
-            <span>${fechaHoy()}</span>
+        <div class="gs_hero_text">
+          <p class="gs_hero_saludo">${Saludar()}</p>
+          <h1 class="gs_hero_nombre">${nombre.split(' ')[0]}</h1>
+          <div class="gs_hero_tags">
+            <span class="gs_tag"><i class="fas fa-crown"></i> Admin. Aula</span>
+            <span class="gs_tag"><i class="fas fa-school"></i> ${Capit(u.empresa || app)}</span>
           </div>
-          <div class="gs_rt_wrap">
-             <label class="gs_switch" title="Monitoreo en tiempo real">
-               <input type="checkbox" id="gs_rt_toggle">
-               <span class="gs_slider"></span>
-             </label>
-             <span class="gs_rt_txt">En vivo</span>
-          </div>
+        </div>
+      </div>
+      <div class="gs_hero_right">
+        <div class="gs_date"><i class="fas fa-calendar-alt"></i> ${fechaHoy()}</div>
+        <div class="gs_rt_toggle" id="gs_btn_rt" title="Monitoreo de prácticas en vivo">
+          <div class="gs_rt_dot"></div>
+          <span class="gs_rt_txt">En Vivo</span>
         </div>
       </div>
     </div>
 
-    <!-- ══ DASHBOARD KPIs ══ -->
+    <!-- ══ KPI GRID ══ -->
     <div class="gs_kpi_grid">
-      
-      <div class="gs_kpi gs_kpi_blue wi_fadeUp">
-        <div class="gs_kpi_ico"><i class="fas fa-users"></i></div>
-        <div class="gs_kpi_data">
-          <div class="gs_kpi_num" id="gs_cnt_est">
-            ${getls(K_TOTAL) ?? '<i class="fas fa-spinner fa-spin"></i>'}
+      ${[
+        { id:'gs_k_alumnos', ico:'fa-user-graduate', col:'#0ea5e9', lbl:'Alumnos Activos', val: totalAlumnos },
+        { id:'gs_k_clases',  ico:'fa-layer-group',   col:'#6366f1', lbl:'Aulas Creadas',   val: totalClases  },
+        { id:'gs_k_wpm',     ico:'fa-bolt',          col:'#f59e0b', lbl:'Promedio WPM',    val: metr.wpm || '—' },
+        { id:'gs_k_cert',    ico:'fa-award',         col:'#22c55e', lbl:'Certificados',    val: metr.cert || 0 },
+      ].map(k => `
+        <div class="gs_kpi_card" style="--kc:${k.col}">
+          <div class="gs_kpi_top">
+            <div class="gs_kpi_ico"><i class="fas ${k.ico}"></i></div>
           </div>
-          <div class="gs_kpi_lbl">Estudiantes</div>
-        </div>
-      </div>
-
-      <div class="gs_kpi gs_kpi_orange wi_fadeUp" style="--d:.1s">
-        <div class="gs_kpi_ico"><i class="fas fa-keyboard"></i></div>
-        <div class="gs_kpi_data">
-          <div class="gs_kpi_num" id="gs_cnt_prac">
-            <i class="fas fa-spinner fa-spin"></i>
-          </div>
-          <div class="gs_kpi_lbl">Prácticas hoy</div>
-        </div>
-        <div class="gs_kpi_pulse" id="gs_pulse_prac"></div>
-      </div>
-
-      <div class="gs_kpi gs_kpi_green wi_fadeUp" style="--d:.2s">
-        <div class="gs_kpi_ico"><i class="fas fa-award"></i></div>
-        <div class="gs_kpi_data">
-          <div class="gs_kpi_num" id="gs_cnt_cert">
-            <i class="fas fa-spinner fa-spin"></i>
-          </div>
-          <div class="gs_kpi_lbl">Retos cumplidos</div>
-        </div>
-      </div>
-
-      <div class="gs_kpi gs_kpi_purple wi_fadeUp" style="--d:.3s">
-        <div class="gs_kpi_ico"><i class="fas fa-tachometer-alt"></i></div>
-        <div class="gs_kpi_data">
-          <div class="gs_kpi_num" id="gs_cnt_avg">--</div>
-          <div class="gs_kpi_lbl">Promedio WPM</div>
-        </div>
-      </div>
-
+          <div class="gs_kpi_val" id="${k.id}">${k.val}</div>
+          <div class="gs_kpi_lbl">${k.lbl}</div>
+        </div>`).join('')}
     </div>
 
-    <!-- ══ ACCIONES RÁPIDAS ══ -->
-    <div class="gs_actions">
-      <h2 class="gs_sec_h2">Acciones Rápidas</h2>
-      <div class="gs_action_grid">
-        <a href="/aprobar" class="gs_action_card nv_item" data-page="aprobar">
-          <div class="gs_ac_ico ac_yellow"><i class="fas fa-user-graduate"></i></div>
-          <div class="gs_ac_txt">
-            <strong>Gestión de Alumnos</strong>
-            <span>Control de accesos y perfiles</span>
+    <!-- ══ ACCESOS ══ -->
+    <div class="gs_sec_hdr">
+      <i class="fas fa-grip-horizontal"></i> Herramientas
+    </div>
+    <div class="gs_access_grid">
+      ${ACCESOS.map(a => `
+        <a href="/${a.page}" class="gs_ac_card nv_item" data-page="${a.page}" style="--ac:${a.color}">
+          <div class="gs_ac_ico"><i class="fas ${a.ico}"></i></div>
+          <div class="gs_ac_info">
+            <div class="gs_ac_tit">${a.title}</div>
+            <div class="gs_ac_sub">${a.sub}</div>
           </div>
-          <i class="fas fa-chevron-right gs_ac_arr"></i>
-        </a>
-
-        <a href="/buscar" class="gs_action_card nv_item" data-page="buscar">
-          <div class="gs_ac_ico ac_blue"><i class="fas fa-magnifying-glass"></i></div>
-          <div class="gs_ac_txt">
-            <strong>Buscador de Notas</strong>
-            <span>Historial detallado por estudiante</span>
-          </div>
-          <i class="fas fa-chevron-right gs_ac_arr"></i>
-        </a>
-
-        <a href="/equipo" class="gs_action_card nv_item" data-page="equipo">
-          <div class="gs_ac_ico ac_green"><i class="fas fa-users-gear"></i></div>
-          <div class="gs_ac_txt">
-            <strong>Configuración de Aula</strong>
-            <span>Docentes y grupos asignados</span>
-          </div>
-          <i class="fas fa-chevron-right gs_ac_arr"></i>
-        </a>
-
-        <button class="gs_action_card" id="gs_refresh">
-          <div class="gs_ac_ico ac_purple"><i class="fas fa-sync-alt"></i></div>
-          <div class="gs_ac_txt">
-            <strong>Sincronizar Datos</strong>
-            <span>Actualizar ahora desde la nube</span>
-          </div>
-        </button>
-      </div>
+          <i class="fas fa-arrow-right gs_ac_arr"></i>
+        </a>`).join('')}
     </div>
 
-    <!-- ══ ACTIVIDAD RECIENTE ══ -->
-    <div class="gs_feed_sec">
-      <div class="gs_feed_hdr">
-        <h2 class="gs_sec_h2"><i class="fas fa-bolt"></i> Prácticas Recientes</h2>
-        <span class="gs_feed_count" id="gs_feed_num">...</span>
+    <!-- ══ FEED EN VIVO ══ -->
+    <div class="gs_sec_hdr" style="margin-top:1.5vh">
+      <i class="fas fa-chart-line"></i> Últimas Prácticas
+      <div class="gs_feed_tools">
+        <span class="gs_badge_count" id="gs_feed_num">—</span>
+        <button class="gs_btn_sync" id="gs_refresh" title="Actualizar datos"><i class="fas fa-sync-alt"></i></button>
       </div>
-      <div id="gs_feed" class="gs_feed_list">
-        <div class="gs_loading"><i class="fas fa-spinner fa-spin"></i> Cargando actividad...</div>
+    </div>
+    <div class="gs_feed_wrap" id="gs_feed">
+      <div class="gs_feed_empty">
+        <i class="fas fa-spinner fa-spin" style="font-size:3vh;margin-bottom:1vh"></i>
+        <p>Cargando registros...</p>
       </div>
     </div>
 
   </div>`;
 };
 
-// ─── INIT ────────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────────────────────
 export const init = async () => {
   const u = wi();
   if (!u) return;
 
-  // Animaciones
-  wiVista('.wi_fadeUp', null, { anim: 'wi_fadeUp' });
+  $(document).off('.gs');
 
-  const rtActivo = getls(K_REALTIME) === true;
-  $('#gs_rt_toggle').prop('checked', rtActivo);
+  const rtActivo = getls('gsRealTime') === true;
+  if (rtActivo) $('#gs_btn_rt').addClass('active');
 
-  if (rtActivo) {
-    _escucharPracticas();
-    _escucharFeed();
-  }
-  
-  await _cargarTodo();
+  // Cargar datos estáticos/iniciales
+  await _cargarTodo(u);
+  if (rtActivo) _escucharFeedVivo(u);
 
-  // Switch de tiempo real
-  $(document).off('.gs').on('change.gs', '#gs_rt_toggle', function() {
-    const act = $(this).is(':checked');
-    savels(K_REALTIME, act, 24 * 365);
-    if (act) {
-      _escucharPracticas();
-      _escucharFeed();
-    } else {
-      state.practicasSub?.(); state.practicasSub = null;
-      state.feedSub?.(); state.feedSub = null;
+  // Toggle tiempo real
+  $(document).on('click.gs', '#gs_btn_rt', function () {
+    const act = !$(this).hasClass('active');
+    $(this).toggleClass('active', act);
+    savels('gsRealTime', act, 24 * 365);
+    
+    if (act) _escucharFeedVivo(u);
+    else {
+      state.feedSub?.();
+      state.feedSub = null;
     }
   });
 
-  // Refrescar manual
-  $(document).on('click.gs', '#gs_refresh', async function() {
-    const $btn = $(this);
-    $btn.find('i').addClass('fa-spin');
-    localStorage.removeItem(K_METRICA);
-    localStorage.removeItem(K_TOTAL);
-    localStorage.removeItem(K_FEED);
-    await _cargarTodo(true);
-    $btn.find('i').removeClass('fa-spin');
+  // Botón sincronizar manual
+  $(document).on('click.gs', '#gs_refresh', async function () {
+    const $i = $(this).find('i').addClass('fa-spin');
+    [K_TOTAL, K_CLASES, K_FEED, K_METR].forEach(k => localStorage.removeItem(k));
+    await _cargarTodo(u, true);
+    setTimeout(() => $i.removeClass('fa-spin'), 500);
+  });
+
+  // Navegación rápida
+  $(document).on('click.gs', '.nv_item', function (e) {
+    e.preventDefault();
+    const page = $(this).data('page');
+    if (!page) return;
+    import('../../rutas/ruta.js').then(({ rutas }) => rutas.navigate(`/${page}`));
+  });
+
+  // Ver alumno específico
+  $(document).on('click.gs', '.gs_fi_btn', function () {
+    const usuario = $(this).data('usuario');
+    savels('gsBuscarTerm', usuario, 1/60);
+    import('../../rutas/ruta.js').then(({ rutas }) => rutas.navigate('/buscar'));
   });
 };
 
-// ─── DATA LOADING ───────────────────────────────────────────────
-async function _cargarTodo(forzar = false) {
-  const p = [
-    _cargarMetricas(forzar),
-    _cargarTotalEstudiantes(forzar),
-  ];
-  if (!$('#gs_rt_toggle').is(':checked')) {
-    p.push(_cargarFeedEstatico(forzar));
-  }
-  await Promise.all(p);
-}
-
-function _escucharPracticas() {
-  state.practicasSub?.();
-  const q = query(collection(db, 'solicitudes'), where('estado', '==', 'pendiente'));
-  state.practicasSub = onSnapshot(q, snap => {
-    const n = snap.size;
-    $('#gs_cnt_prac').text(n);
-    n > 0 ? $('#gs_pulse_prac').addClass('activo') : $('#gs_pulse_prac').removeClass('activo');
-  });
-}
-
-async function _cargarMetricas(forzar = false) {
-  if (!forzar) {
-    const c = getls(K_METRICA);
-    if (c) { $('#gs_cnt_cert').text(c.cert); $('#gs_cnt_avg').text(c.avg); return; }
-  }
-  try {
-    const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
-    const snap = await getDocs(query(collection(db, 'solicitudes'), where('historial.histCreada', '>=', hoy)));
-    let cert = 0;
-    snap.forEach(d => { if (d.data().estado === 'aprobado') cert++; });
-    $('#gs_cnt_cert').text(cert);
-    $('#gs_cnt_avg').text('42'); // Mock AVG si no hay data real de WPM en esta colección
-    savels(K_METRICA, { cert, avg: 42 }, 1/12); // 5 min
-  } catch (e) { console.error(e); }
-}
-
-async function _cargarTotalEstudiantes(forzar = false) {
-  if (!forzar) {
-    const c = getls(K_TOTAL);
-    if (c) { $('#gs_cnt_est').text(c); return; }
-  }
-  try {
-    const snap = await getCountFromServer(query(collection(db, 'smiles'), where('estado', '==', 'activo')));
-    const count = snap.data().count;
-    $('#gs_cnt_est').text(count);
-    savels(K_TOTAL, count, 4);
-  } catch (e) { $('#gs_cnt_est').text('—'); }
-}
-
-function _escucharFeed() {
-  state.feedSub?.();
-  const q = query(collection(db, 'solicitudes'), orderBy('historial.histCreada', 'desc'), limit(10));
-  state.feedSub = onSnapshot(q, snap => {
-    const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    _renderFeed(items);
-  });
-}
-
-async function _cargarFeedEstatico(forzar = false) {
-  if (!forzar) {
-    const c = getls(K_FEED);
-    if (c) { _renderFeed(c); return; }
-  }
-  try {
-    const snap = await getDocs(query(collection(db, 'solicitudes'), orderBy('historial.histCreada', 'desc'), limit(10)));
-    const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    _renderFeed(items);
-    savels(K_FEED, items, 1/12);
-  } catch (e) { console.error(e); }
-}
-
-function _renderFeed(items) {
-  $('#gs_feed_num').text(`${items.length} hoy`);
-  if (!items.length) {
-    $('#gs_feed').html('<div class="gs_empty"><i class="fas fa-inbox"></i><p>Sin actividad reciente.</p></div>');
-    return;
-  }
-  const html = items.map(it => {
-    const s = it.smile || {};
-    const pr = it.solicitud || {};
-    const est = it.estado || 'pendiente';
-    const av = avatar(s.nombres || 'E');
-    
-    // Simulación de métricas Typing para el feed
-    const mockWPM = Math.floor(Math.random() * (65 - 35) + 35);
-    const mockACC = Math.floor(Math.random() * (100 - 92) + 92);
-
-    return `
-      <div class="gs_feed_item gs_st_${est}">
-        <div class="gs_item_av">${av}</div>
-        <div class="gs_item_main">
-          <div class="gs_item_top">
-            <strong>${Capit(s.nombres || 'Estudiante')}</strong>
-            <span class="gs_item_tag">${pr.titulo || 'Mecanografía Básica'}</span>
-          </div>
-          <div class="gs_item_stats">
-             <span><i class="fas fa-bolt"></i> ${mockWPM} WPM</span>
-             <span><i class="fas fa-bullseye"></i> ${mockACC}% Precisión</span>
-             <span class="gs_item_time">${formatearFechaHora(it.historial?.histCreada)}</span>
-          </div>
-        </div>
-        <div class="gs_item_badge ${est}">${est === 'aprobado' ? 'Cumplido' : 'En proceso'}</div>
-      </div>
-    `;
-  }).join('');
-  $('#gs_feed').html(html);
-}
-
-// ─── CLEANUP ─────────────────────────────────────────────────────
 export const cleanup = () => {
-  state.practicasSub?.();
   state.feedSub?.();
   $(document).off('.gs');
 };
+
+// ── LÓGICA DE DATOS ───────────────────────────────────────────────────────────
+async function _cargarTodo(u, forzar = false) {
+  await Promise.all([
+    _cargarKPIs(u, forzar),
+    _cargarFeed(u, forzar),
+  ]);
+}
+
+async function _cargarKPIs(u, forzar = false) {
+  if (!forzar) {
+    const total  = getls(K_TOTAL);
+    const clases = getls(K_CLASES);
+    const metr   = getls(K_METR);
+    if (total != null)  $('#gs_k_alumnos').text(total);
+    if (clases != null) $('#gs_k_clases').text(clases);
+    if (metr?.wpm)      $('#gs_k_wpm').text(metr.wpm);
+    if (metr?.cert != null) $('#gs_k_cert').text(metr.cert);
+    if (total != null && clases != null && metr) return;
+  }
+  try {
+    // Alumnos directos
+    let snapAl = await getDocs(query(collection(db, 'lecciones'), where('gestor_id', '==', u.usuario)));
+    if (snapAl.empty) snapAl = await getDocs(query(collection(db, 'lecciones'), where('gestorId', '==', u.usuario)));
+    
+    const alumnos = snapAl.docs.map(d => d.data());
+    const total   = alumnos.length;
+    const wpmSum  = alumnos.reduce((s, a) => s + (a.wpmMax || 0), 0);
+    const wpmAvg  = total > 0 ? Math.round(wpmSum / total) : 0;
+    const cert    = alumnos.filter(a => (a.completadas?.length || 0) >= 45 && (a.wpmMax || 0) >= 80).length;
+    
+    savels(K_TOTAL, total, 2);
+    savels(K_METR, { wpm: wpmAvg, cert }, 2);
+    
+    $('#gs_k_alumnos').text(total);
+    $('#gs_k_wpm').text(wpmAvg || '—');
+    $('#gs_k_cert').text(cert);
+
+    // Clases
+    let snapCl = await getDocs(query(collection(db, 'clases'), where('gestor_id', '==', u.usuario)));
+    if (snapCl.empty) snapCl = await getDocs(query(collection(db, 'clases'), where('gestorId', '==', u.usuario)));
+    
+    savels(K_CLASES, snapCl.size, 2);
+    $('#gs_k_clases').text(snapCl.size);
+  } catch (err) { console.error('[gestor] Error KPIs', err); }
+}
+
+async function _cargarFeed(u, forzar = false) {
+  if (!forzar && getls('gsRealTime') === true) return; // Si hay real-time, no cargamos estático
+
+  if (!forzar) {
+    const cached = getls(K_FEED);
+    if (cached?.length) { _renderFeed(cached); return; }
+  }
+  try {
+    let snap = await getDocs(query(collection(db, 'lecciones'), where('gestor_id', '==', u.usuario), orderBy('ultPractica', 'desc'), limit(15)));
+    if (snap.empty) snap = await getDocs(query(collection(db, 'lecciones'), where('gestorId', '==', u.usuario), orderBy('ultPractica', 'desc'), limit(15)));
+    
+    const items = snap.docs.map(d => ({ usuario: d.id, ...d.data() }));
+    savels(K_FEED, items, 1 / 12);
+    _renderFeed(items);
+  } catch (err) {
+    try {
+      let fallback = await getDocs(query(collection(db, 'lecciones'), where('gestor_id', '==', u.usuario), limit(15)));
+      const items = fallback.docs.map(d => ({ usuario: d.id, ...d.data() }));
+      _renderFeed(items);
+    } catch { _renderFeed([]); }
+  }
+}
+
+function _escucharFeedVivo(u) {
+  state.feedSub?.();
+  // El listener de onSnapshot requiere que el índice exista si usamos orderBy.
+  // Por defecto Firestore permite query + filter sin order, limitaremos a los 15 modificados recientemente.
+  const q = query(collection(db, 'lecciones'), where('gestor_id', '==', u.usuario), limit(15));
+  
+  state.feedSub = onSnapshot(q, snap => {
+    const items = snap.docs.map(d => ({ usuario: d.id, ...d.data() }));
+    // Ordenamos en local por si falla el index de Firestore
+    items.sort((a, b) => {
+      const ta = a.ultPractica?.toDate ? a.ultPractica.toDate().getTime() : 0;
+      const tb = b.ultPractica?.toDate ? b.ultPractica.toDate().getTime() : 0;
+      return tb - ta;
+    });
+    _renderFeed(items);
+  });
+}
+
+// ── RENDER FEED ───────────────────────────────────────────────────────────────
+function _renderFeed(items) {
+  $('#gs_feed_num').text(items.length > 0 ? `${items.length} Registros` : '0 Registros');
+
+  if (!items.length) {
+    $('#gs_feed').html(`
+      <div class="gs_feed_empty">
+        <i class="fas fa-ghost"></i>
+        <p>No hay actividad registrada aún.<br><small>Tus alumnos aparecerán aquí al iniciar una lección.</small></p>
+      </div>`);
+    return;
+  }
+
+  const html = items.map(al => {
+    const ini     = avatar(al.nombre || al.usuario || 'A');
+    const wpm     = al.wpmMax    || 0;
+    const prec    = al.precision || 0;
+    const lecs    = al.completadas?.length || 0;
+    const pct     = Math.round((lecs / 45) * 100);
+    const clId    = al.clase_id || al.claseId || null;
+    const fecha   = al.ultPractica?.toDate ? formatearFechaHora(al.ultPractica) : 'Reciente';
+
+    return `
+      <div class="gs_fi">
+        <div class="gs_fi_av">${ini}</div>
+        <div class="gs_fi_main">
+          <div class="gs_fi_head">
+            <span class="gs_fi_nom">${al.nombre || al.usuario || '—'}</span>
+            ${clId ? `<span class="gs_fi_clase"><i class="fas fa-chalkboard"></i> ${clId}</span>` : ''}
+          </div>
+          <div class="gs_fi_metrics">
+            <div class="gs_fi_metric wpm"><i class="fas fa-bolt"></i> ${wpm} WPM</div>
+            <div class="gs_fi_metric prec"><i class="fas fa-bullseye"></i> ${prec}%</div>
+            <div class="gs_fi_prog">
+              <div class="gs_fi_track"><div class="gs_fi_fill" style="width:${pct}%"></div></div>
+              <span>${lecs}/45</span>
+            </div>
+          </div>
+        </div>
+        <div class="gs_fi_time">${fecha}</div>
+        <button class="gs_fi_btn" data-usuario="${al.usuario}" title="Ver historial completo">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>`;
+  }).join('');
+
+  $('#gs_feed').html(`<div class="gs_feed_list">${html}</div>`);
+}

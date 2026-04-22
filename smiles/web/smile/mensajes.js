@@ -187,7 +187,7 @@ const _enviar = (email) => {
 
   setDoc(doc(db, 'wiMensajes', id), {
     id, mensaje: nota, email,
-    usuario: u.nombre || u.usuario || email,
+    usuario: u.usuario || email,
     foto:    u.foto   || '',
     fecha:   serverTimestamp()
   })
