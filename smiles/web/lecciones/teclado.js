@@ -280,8 +280,18 @@ export const wiTeclado = (() => {
       if (!char) return;
       const keys = _getKeys(char);
       keys.forEach(el => el.classList.add('wk_hint'));
+    },
 
-
+    // Mark errors on the keyboard for post-lesson feedback
+    markErrors(chars) {
+      if (!chars) return;
+      chars.forEach(char => {
+        _getKeys(char).forEach(el => {
+          el.style.outline = '2px solid var(--error)';
+          el.style.outlineOffset = '1px';
+          el.style.backgroundColor = 'color-mix(in srgb, var(--error) 20%, transparent)';
+        });
+      });
     },
 
     // Remove all active states
@@ -292,6 +302,10 @@ export const wiTeclado = (() => {
 
       _pressed.forEach(clearTimeout);
       _pressed = [];
+      document.querySelectorAll('.wk_key').forEach(el => {
+        el.style.outline = '';
+        el.style.backgroundColor = '';
+      });
     },
 
     // Sound control

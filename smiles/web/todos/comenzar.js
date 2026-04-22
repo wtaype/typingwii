@@ -2,6 +2,7 @@ import '../lecciones/leccion.css';
 import $ from 'jquery';
 import { Notificacion, wiTip } from '../../widev.js';
 import { wiTeclado } from '../lecciones/teclado.js';
+import { adLeft, adRight } from '../lecciones/wiad.js';
 
 const TEXTOS = [
   { id:1, nivel:'Fácil',   color:'#22c55e', texto:`El sol sale por las mañanas y nos da mucha alegria. Es un dia muy bonito para caminar por el campo y ver las flores de colores. Los pajaros cantan en los arboles mientras el viento sopla suave.` },
@@ -22,9 +23,7 @@ export const render = () => `
 
   <!-- LAYOUT: AD | CONTENT | AD -->
   <div class="lc_layout">
-    <div class="lc_ad_side lc_ad_l">
-      <div class="lc_ad_box"><i class="fas fa-rectangle-ad"></i><span>Publicidad</span><small>160×600</small></div>
-    </div>
+    ${adLeft}
 
     <div class="lc_content">
       <!-- PROGRESS -->
@@ -62,13 +61,12 @@ export const render = () => `
             <select id="lc_sel_tiempo" class="lc_sel">${tiempoOpts()}</select>
           </label>
           <button class="lc_sp_btn" id="lc_btn_next"><i class="fas fa-forward"></i> Siguiente</button>
+          <button class="lc_sp_btn" id="lc_btn_reintentar" style="margin-top: 5px;"><i class="fas fa-redo"></i> Reiniciar</button>
         </div>
       </div>
     </div>
 
-    <div class="lc_ad_side lc_ad_r">
-      <div class="lc_ad_box"><i class="fas fa-rectangle-ad"></i><span>Publicidad</span><small>160×600</small></div>
-    </div>
+    ${adRight}
   </div>
 
 </div>

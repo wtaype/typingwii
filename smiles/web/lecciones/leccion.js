@@ -7,7 +7,7 @@ import $ from 'jquery';
 import { wiTip, Notificacion } from '../../widev.js';
 import { app } from '../../wii.js';
 import { wiTeclado } from './teclado.js';
-
+import { adLeft, adRight } from './wiad.js';
 // ── ESTADO INTERNO ─────────────────────────────────────────────────
 const ST = { NEUTRAL: 0, OK: 1, ERR: 3 };
 let E = null;
@@ -61,9 +61,7 @@ export const render = () => {
 
   <!-- LAYOUT: AD | CONTENT | AD -->
   <div class="lc_layout">
-    <div class="lc_ad_side lc_ad_l">
-      <div class="lc_ad_box"><i class="fas fa-rectangle-ad"></i><span>Publicidad</span><small>160×600</small></div>
-    </div>
+    ${adLeft}
 
     <div class="lc_content">
 
@@ -120,9 +118,7 @@ export const render = () => {
       </div>
     </div>
 
-    <div class="lc_ad_side lc_ad_r">
-      <div class="lc_ad_box"><i class="fas fa-rectangle-ad"></i><span>Publicidad</span><small>160×600</small></div>
-    </div>
+    ${adRight}
   </div>
 
 </div>
@@ -155,7 +151,7 @@ export const init = () => {
 
   $(document).on('click.lck', '#lc_btn_sig', () => {
     const sig = String(_data.id + 1).padStart(2, '0');
-    import('./leccion' + sig + '.js').then(m => {
+    import(`./leccion${sig}.js`).then(m => {
       _data = m.data;
       _cambiarLeccion();
     }).catch(() => Notificacion('Lección no disponible aún', 'info'));
@@ -165,7 +161,7 @@ export const init = () => {
   $(document).on('click.lck', '#lc_btn_ant', () => {
     if (_data.id <= 1) return;
     const ant = String(_data.id - 1).padStart(2, '0');
-    import('./leccion' + ant + '.js').then(m => {
+    import(`./leccion${ant}.js`).then(m => {
       _data = m.data;
       _cambiarLeccion();
     }).catch(() => Notificacion('Lección no disponible', 'warning'));
@@ -366,12 +362,22 @@ function _terminar() {
   const {ok,err} = _counts();
   const t    = E.elapsed;
   const good = ok;
-  const tot  = good+err;
   const wpm  = t>0 ? Math.round((good/5)/(t/60)) : good;
 
   wiTeclado.clear();
 
-  if (wpm >= 40) Notificacion(`¡${wpm} WPM! 🚀 ¡Lección superada!`, 'success', 3000);
+  // Resaltar teclas fallidas en el teclado
+  const failed = [...new Set(E.chars.filter(c => c.hadErr && c.char !== ' ' && c.char !== '\n').map(c => c.char))];
+  if (failed.length > 0) wiTeclado.markErrors(failed);
+
+  // Mensaje dinámico de resultado
+  let msg = '';
+  if (wpm >= 60) msg = `¡Increíble! ${wpm} WPM en ${t}s. ¡Eres un maestro! 🚀`;
+  else if (wpm >= 40) msg = `¡Muy bien! ${wpm} WPM en ${t}s. ¡Sigue así! 👏`;
+  else if (wpm >= 20) msg = `¡Buen esfuerzo! ${wpm} WPM en ${t}s. ¡Tú puedes! 💪`;
+  else msg = `Completado: ${wpm} WPM en ${t}s. ¡A practicar más! 🐢`;
+
+  Notificacion(msg, wpm >= 40 ? 'success' : (wpm >= 20 ? 'info' : 'warning'), 5000);
 }
 
 // ── HELPERS ───────────────────────────────────────────────────────────
