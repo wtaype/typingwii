@@ -1,0 +1,153 @@
+/* ═══════════════════════════════════════════════════════════
+   REPORTES.CSS — TypingWii · Empresa · Analítica
+═══════════════════════════════════════════════════════════ */
+.rp_page {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+  animation: rpFade .4s cubic-bezier(.2, .8, .2, 1);
+  position: relative;
+  max-width: 100%;
+}
+@keyframes rpFade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HERO ────────────────────────────────────────────────── */
+.rp_hero {
+  background: var(--mbg, var(--mco));
+  border-radius: 2vh;
+  padding: 4vh 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3vh;
+  box-shadow: 0 1.5vh 4vh var(--bg5);
+  position: relative;
+  overflow: hidden;
+  color: var(--txa);
+}
+.rp_hero::before {
+  content: ''; position: absolute; right: -5vh; top: -5vh;
+  width: 30vh; height: 30vh; background: rgba(255,255,255,0.08);
+  border-radius: 50%; pointer-events: none;
+}
+.rp_hero::after {
+  content: '📈'; position: absolute; right: 2vw; bottom: -2vh;
+  font-size: 20vh; opacity: 0.05; transform: rotate(10deg);
+  pointer-events: none;
+}
+.rp_hero_left {
+  display: flex; align-items: center; gap: 2.5vh; position: relative; z-index: 1; flex: 1;
+}
+.rp_hero_icon {
+  width: 8vh; height: 8vh; border-radius: 2vh;
+  background: rgba(255,255,255,0.18); display: flex; align-items: center;
+  justify-content: center; font-size: 3.5vh; color: var(--txa); flex-shrink: 0;
+  box-shadow: 0 1vh 2vh rgba(0,0,0,0.1);
+}
+.rp_hero_txt { flex: 1; display: flex; flex-direction: column; gap: 0.5vh; }
+.rp_badge {
+  display: inline-flex; align-items: center; gap: 0.6vh;
+  padding: 0.4vh 1.2vh; border-radius: 1vh; align-self: flex-start;
+  background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
+  font-size: var(--fz_s4); font-weight: 800; color: var(--txa); text-transform: uppercase;
+  letter-spacing: 0.05em; margin-bottom: 0.5vh;
+}
+.rp_hero_title { font-family: var(--ff_G); font-size: var(--fz_l2); font-weight: 800; margin: 0; line-height: 1.1; }
+.rp_hero_sub { font-size: var(--fz_m1); opacity: 0.85; margin: 0; font-weight: 500; }
+
+.rp_hero_actions {
+  position: relative; z-index: 1; display: flex; flex-direction: column; gap: 1.5vh; flex-shrink: 0;
+}
+.rp_btn_export {
+  display: flex; align-items: center; justify-content: center; gap: 1vh;
+  background: var(--txa); color: var(--mco); border: none; border-radius: 1.2vh;
+  padding: 1.5vh 3vh; font-size: var(--fz_m1); font-weight: 800; cursor: pointer;
+  transition: all 0.2s; box-shadow: 0 1vh 2vh rgba(0,0,0,0.15);
+}
+.rp_btn_export:hover { transform: translateY(-0.3vh); box-shadow: 0 1.5vh 3vh rgba(0,0,0,0.2); }
+
+/* ── KPI GRID ────────────────────────────────────────────── */
+.rp_kpi_grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(20vh, 1fr)); gap: 2.5vh; }
+.rp_kpi_card {
+  background: var(--wb); border: 1px solid var(--brd); border-radius: 2vh;
+  padding: 3vh 2.5vh; display: flex; flex-direction: column; position: relative; overflow: hidden;
+  box-shadow: 0 1vh 2vh var(--bg5); transition: all 0.3s;
+}
+.rp_kpi_card:hover { transform: translateY(-0.4vh); box-shadow: 0 1.5vh 3vh var(--bg5); }
+.rp_kpi_card::before {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 0.8vh;
+  background: var(--kc); opacity: 0.9;
+}
+.rp_kpi_icon {
+  width: 5.5vh; height: 5.5vh; border-radius: 1.2vh;
+  background: color-mix(in srgb, var(--kc) 15%, transparent); color: var(--kc);
+  display: flex; align-items: center; justify-content: center; font-size: 2.2vh; margin-bottom: 1.5vh;
+}
+.rp_kpi_val { font-family: var(--ff_G); font-size: var(--fz_l3); font-weight: 900; color: var(--tx); line-height: 1; }
+.rp_kpi_lbl { font-size: var(--fz_s4); font-weight: 700; color: var(--tx3); text-transform: uppercase; margin-top: 1vh; letter-spacing: 0.05em; }
+
+/* ── CHARTS Y RANKING GRID ───────────────────────────────── */
+.rp_dash_grid {
+  display: grid; grid-template-columns: 2fr 1fr; gap: 3vh; align-items: flex-start;
+}
+.rp_panel {
+  background: var(--wb); border: 1px solid var(--brd); border-radius: 2vh;
+  padding: 3.5vh; box-shadow: 0 1vh 3vh var(--bg5);
+}
+.rp_panel_hdr {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 3vh;
+}
+.rp_panel_title { font-size: var(--fz_m3); font-weight: 800; color: var(--tx); margin: 0; display: flex; align-items: center; gap: 1vh; }
+.rp_panel_title i { color: var(--mco); }
+
+/* Barras Horizontales CSS (Simulando Chart) */
+.rp_bars { display: flex; flex-direction: column; gap: 2.5vh; }
+.rp_bar_row { display: flex; flex-direction: column; gap: 0.8vh; }
+.rp_bar_info { display: flex; justify-content: space-between; font-size: var(--fz_m1); font-weight: 700; color: var(--tx); }
+.rp_bar_val { color: var(--mco); }
+.rp_bar_track { width: 100%; height: 1.5vh; background: var(--bg4); border-radius: 10vh; overflow: hidden; }
+.rp_bar_fill { height: 100%; border-radius: 10vh; transition: width 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+/* Lista Ranking Compacta */
+.rp_rank_list { display: flex; flex-direction: column; gap: 1.5vh; }
+.rp_rank_item {
+  display: flex; align-items: center; gap: 1.5vh; padding: 1.5vh;
+  background: var(--bg4); border-radius: 1.5vh; border: 1px solid transparent;
+  transition: all 0.2s;
+}
+.rp_rank_item:hover { border-color: var(--brd); background: var(--wb); box-shadow: 0 0.5vh 1.5vh var(--bg5); transform: translateX(0.5vh); }
+.rp_rank_pos {
+  width: 4vh; height: 4vh; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: var(--fz_m1); font-weight: 900; background: var(--wb); border: 1px solid var(--brd);
+}
+.rp_rank_pos.gold { background: #fef08a; color: #a16207; border-color: #fde047; }
+.rp_rank_pos.silver { background: #e2e8f0; color: #475569; border-color: #cbd5e1; }
+.rp_rank_pos.bronze { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+
+.rp_rank_info { flex: 1; min-width: 0; }
+.rp_rank_nom { font-size: var(--fz_m1); font-weight: 800; color: var(--tx); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rp_rank_meta { font-size: var(--fz_s4); font-weight: 600; color: var(--tx3); }
+.rp_rank_stat { font-size: var(--fz_m2); font-weight: 900; color: var(--mco); }
+
+/* ── EMPTY / LOADING ─────────────────────────────────────── */
+.rp_empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8vh 2vh; color: var(--tx3); text-align: center; gap: 2vh; }
+.rp_empty i { font-size: 6vh; color: var(--mco); opacity: 0.3; }
+.rp_empty p { font-size: var(--fz_m2); font-weight: 600; margin: 0; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .rp_dash_grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 900px) {
+  .rp_hero { flex-direction: column; align-items: flex-start; }
+  .rp_hero_actions { width: 100%; flex-direction: row; }
+  .rp_btn_export { flex: 1; }
+}
+@media (max-width: 600px) {
+  .rp_kpi_grid { grid-template-columns: 1fr 1fr; }
+  .rp_hero_left { flex-direction: column; text-align: center; }
+  .rp_badge { align-self: center; }
+}

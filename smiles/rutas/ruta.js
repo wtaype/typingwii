@@ -54,7 +54,7 @@ export const NAV = {
       { href: '/empresa',      page: 'empresa',      ico: 'fa-building',             txt: 'Panel'        },
       { href: '/equipos',      page: 'equipos',      ico: 'fa-users-gear',            txt: 'Equipos'      },
       { href: '/empleados',    page: 'empleados',    ico: 'fa-id-badge',              txt: 'Empleados'    },
-      { href: '/reportes',     page: 'reportes',     ico: 'fa-file-chart-column',     txt: 'Reportes'     },
+      { href: '/reportes',     page: 'reportes',     ico: 'fa-chart-column',          txt: 'Reportes'     },
       { href: '/certificados', page: 'certificados', ico: 'fa-certificate',           txt: 'Certificados' },
     ],
     nvrig: [
@@ -64,10 +64,10 @@ export const NAV = {
   },
   admin: {
     winav: [
-      { href: '/admin',        page: 'admin',        ico: 'fa-home',              txt: 'Bienvenido'  },
-      { href: '/estudiantes',  page: 'estudiantes',  ico: 'fa-user-graduate',     txt: 'Estudiantes' },
-      { href: '/profesores',   page: 'profesores',   ico: 'fa-chalkboard-teacher',txt: 'Profesores'  },
-      { href: '/administrar',  page: 'administrar',  ico: 'fa-upload',            txt: 'Administrar' },
+      { href: '/admin',        page: 'admin',        ico: 'fa-globe',             txt: 'Plataforma'  },
+      { href: '/usuarios',     page: 'usuarios',     ico: 'fa-users',             txt: 'Usuarios'    },
+      { href: '/permisos',     page: 'permisos',     ico: 'fa-user-shield',       txt: 'Permisos'    },
+      { href: '/sistema',      page: 'sistema',      ico: 'fa-database',          txt: 'Sistema'     },
     ],
     nvrig: [
       { href: '/mensajes', page: 'mensajes', ico: 'fa-comments', txt: 'Mensajes' },
@@ -98,27 +98,27 @@ export const RUTAS = [
   { path: '/certificado',  area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
   { path: '/perfil',       area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
   { path: '/mensajes',     area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
-  { path: '/miclase',     area: 'smile/', roles: ['smile'] },
+  { path: '/miclase',     area: 'smile/',  roles: ['smile'] },
 
   // GESTOR — web/gestor/
-  { path: '/gestor',         area: 'gestor/', roles: ['gestor','admin'], mod: 'gestor' },
-  { path: '/misclases',      area: 'gestor/', roles: ['gestor','admin'] },
-  { path: '/alumnos',        area: 'gestor/', roles: ['gestor','admin'] },
-  { path: '/calificaciones', area: 'gestor/', roles: ['gestor','admin'] },
-  { path: '/buscar',         area: 'gestor/', roles: ['gestor','admin'] },
+  { path: '/gestor',         area: 'gestor/', roles: ['gestor','admin', 'empresa'] },
+  { path: '/misclases',      area: 'gestor/', roles: ['gestor','admin', 'empresa'] },
+  { path: '/alumnos',        area: 'gestor/', roles: ['gestor','admin', 'empresa'] },
+  { path: '/calificaciones', area: 'gestor/', roles: ['gestor','admin', 'empresa'] },
+  { path: '/buscar',         area: 'gestor/', roles: ['gestor','admin', 'empresa'] },
 
   // EMPRESA — web/empresa/
-  { path: '/empresa',      area: 'empresa/', roles: ['empresa','admin'], mod: 'empresa' },
+  { path: '/empresa',      area: 'empresa/', roles: ['empresa','admin'] },
   { path: '/equipos',      area: 'empresa/', roles: ['empresa','admin'] },
   { path: '/empleados',    area: 'empresa/', roles: ['empresa','admin'] },
   { path: '/reportes',     area: 'empresa/', roles: ['empresa','admin'] },
   { path: '/certificados', area: 'empresa/', roles: ['empresa','admin'] },
 
   // ADMIN — web/admin/
-  { path: '/admin',       area: 'admin/', roles: ['admin'] },
-  { path: '/estudiantes', area: 'admin/', roles: ['admin'] },
-  { path: '/profesores',  area: 'admin/', roles: ['admin'] },
-  { path: '/administrar', area: 'admin/', roles: ['admin'] },
+  { path: '/admin',    area: 'admin/', roles: ['admin'] },
+  { path: '/usuarios', area: 'admin/', roles: ['admin'], mod: 'personas' },
+  { path: '/permisos', area: 'admin/', roles: ['admin'], mod: 'roles' },
+  { path: '/sistema',  area: 'admin/', roles: ['admin'], mod: 'subir' },
 
   // LECCIONES — web/lecciones/ (públicas)
   ...Array.from({ length: 45 }, (_, i) => {
