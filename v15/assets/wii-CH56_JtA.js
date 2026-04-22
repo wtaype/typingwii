@@ -1,0 +1,1 @@
+import{t as e}from"./rolldown-runtime-lhHHWwHU.js";var t=e({app:()=>r,by:()=>o,desc:()=>i,id:()=>n,ipdev:()=>void 0,lanzamiento:()=>a,linkme:()=>s,version:()=>`v15`}),n=`typingwii`,r=`TypingWii`,i=`Juego para practicar mecanografía`,a=2026,o=`@wilder.taype`,s=`https://wtaype.github.io/`;export{a,n as i,o as n,s as o,i as r,t as s,r as t};
