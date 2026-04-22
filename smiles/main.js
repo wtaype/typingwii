@@ -8,9 +8,10 @@ rutas.register('/', (isPre = false) => {
   const u = getls('wiSmile');
   if (!u) return import('./web/todos/inicio.js');
   const map = {
-    smile:  { r: '/smile',  m: () => import('./web/smile/smile.js') },
-    gestor: { r: '/gestor', m: () => import('./web/gestor/gestor.js') },
-    admin:  { r: '/admin',  m: () => import('./web/admin/admin.js') }
+    smile:   { r: '/smile',   m: () => import('./web/smile/smile.js')     },
+    gestor:  { r: '/gestor',  m: () => import('./web/gestor/gestor.js')   },
+    empresa: { r: '/empresa', m: () => import('./web/empresa/empresa.js') },
+    admin:   { r: '/admin',   m: () => import('./web/admin/admin.js')     }
   };
   const t = map[u.rol] || map.smile;
   if (!isPre && t.r !== '/') { rutas.navigate(t.r); return t.m(); }

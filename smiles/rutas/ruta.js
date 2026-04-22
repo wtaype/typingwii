@@ -50,6 +50,19 @@ export const NAV = {
       { isPerfil: true }, { isSalir: true }
     ]
   },
+  empresa: {
+    winav: [
+      { href: '/empresa',      page: 'empresa',      ico: 'fa-building',             txt: 'Panel'        },
+      { href: '/equipos',      page: 'equipos',      ico: 'fa-users-gear',            txt: 'Equipos'      },
+      { href: '/empleados',    page: 'empleados',    ico: 'fa-id-badge',              txt: 'Empleados'    },
+      { href: '/reportes',     page: 'reportes',     ico: 'fa-file-chart-column',     txt: 'Reportes'     },
+      { href: '/certificados', page: 'certificados', ico: 'fa-certificate',           txt: 'Certificados' },
+    ],
+    nvrig: [
+      { href: '/mensajes', page: 'mensajes', ico: 'fa-comments', txt: 'Mensajes' },
+      { isPerfil: true }, { isSalir: true }
+    ]
+  },
   admin: {
     winav: [
       { href: '/admin',        page: 'admin',        ico: 'fa-home',              txt: 'Bienvenido'  },
@@ -94,6 +107,13 @@ export const RUTAS = [
   { path: '/clases',          area: 'gestor/', roles: ['gestor','admin'] },
   { path: '/calificaciones',  area: 'gestor/', roles: ['gestor','admin'] },
   { path: '/tareas',          area: 'gestor/', roles: ['gestor','admin'] },
+
+  // EMPRESA — web/empresa/
+  { path: '/empresa',      area: 'empresa/', roles: ['empresa','admin'], mod: 'empresa' },
+  { path: '/equipos',      area: 'empresa/', roles: ['empresa','admin'] },
+  { path: '/empleados',    area: 'empresa/', roles: ['empresa','admin'] },
+  { path: '/reportes',     area: 'empresa/', roles: ['empresa','admin'] },
+  { path: '/certificados', area: 'empresa/', roles: ['empresa','admin'] },
 
   // ADMIN — web/admin/
   { path: '/admin',       area: 'admin/', roles: ['admin'] },

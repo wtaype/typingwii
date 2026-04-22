@@ -10,12 +10,11 @@ import { rutas } from '../../rutas/ruta.js';
 export { auth, signOut };
 
 // ── CONFIG ───────────────────────────────────────────────────────────────────
-const cfg = { db: 'smiles', rol: 'smile', pagina: 'rol' };
-// Flags de control: 'si' | 'no'
+const cfg = { db: 'smiles', pagina: 'rol' };
 let modal = 'si', link = 'si', restablecer = 'si', login = 'si', registrar = 'si';
 
-// Ruta por rol: admin → /admin, gestor → /gestor, smile → /smile
-const ROL_PATH = { smile: '/smile', gestor: '/gestor', admin: '/admin' };
+// Ruta por rol
+const ROL_PATH = { smile: '/smile', gestor: '/gestor', empresa: '/empresa', admin: '/admin' };
 
 const err = {
   'auth/email-already-in-use':'Email ya registrado', 'auth/weak-password':'Contraseña débil (mín. 6)',
@@ -32,10 +31,64 @@ const reglas = {
   regPassword1: [v => v,                                                 v => v === $('#regPassword').val() || 'No coinciden']
 };
 
-// ── TEMPLATES ────────────────────────────────────────────────────────────────
+// ── HELPERS ──────────────────────────────────────────────────────────────────
 const campo = (ico, tipo, id, place, ojo = false) =>
   `<div class="wilg_grupo"><i class="fas fa-${ico}"></i><input type="${tipo}" id="${id}" placeholder="${place}" autocomplete="off">${ojo ? '<i class="fas fa-eye wilg_ojo"></i>' : ''}</div>`;
 
+// ── ROL SELECTOR ─────────────────────────────────────────────────────────────
+// Retorna el bloque dinámico dependiendo del rol seleccionado
+const rolExtra = (rol = 'smile') => {
+  if (rol === 'smile') return `
+    <div class="wilg_rol_extra" id="rolExtra">
+      <div class="wilg_extra_label"><i class="fas fa-users"></i> ¿Tienes un código de clase?</div>
+      <div class="wilg_extra_opts">
+        <label class="wilg_extra_opt active" data-opt="personal">
+          <input type="radio" name="regExtra" value="personal" checked>
+          <i class="fas fa-user"></i> Personal
+        </label>
+        <label class="wilg_extra_opt" data-opt="clase">
+          <input type="radio" name="regExtra" value="clase">
+          <i class="fas fa-users"></i> Unirme a clase
+        </label>
+      </div>
+      <div class="wilg_extra_field hidden" id="extraField">
+        ${campo('key','text','regCodigo','Código de clase (ej: ABC123)')}
+      </div>
+    </div>`;
+
+  if (rol === 'gestor') return `
+    <div class="wilg_rol_extra" id="rolExtra">
+      <div class="wilg_extra_label"><i class="fas fa-chalkboard-teacher"></i> ¿Cómo quieres empezar?</div>
+      <div class="wilg_extra_opts">
+        <label class="wilg_extra_opt active" data-opt="crear">
+          <input type="radio" name="regExtra" value="crear" checked>
+          <i class="fas fa-plus-circle"></i> Crear mi grupo
+        </label>
+        <label class="wilg_extra_opt" data-opt="unir">
+          <input type="radio" name="regExtra" value="unir">
+          <i class="fas fa-building"></i> Unirme a empresa
+        </label>
+      </div>
+      <div class="wilg_extra_field hidden" id="extraField">
+        ${campo('building','text','regRuc','RUC de la empresa')}
+      </div>
+      <div class="wilg_info_badge"><i class="fas fa-info-circle"></i> Tu cuenta de gestor será activada por el administrador.</div>
+    </div>`;
+
+  if (rol === 'empresa') return `
+    <div class="wilg_rol_extra" id="rolExtra">
+      <div class="wilg_extra_label"><i class="fas fa-building"></i> Datos de tu empresa</div>
+      <div class="wilg_extra_field wilg_extra_2col" id="extraField">
+        ${campo('id-card','text','regRuc','RUC (11 dígitos)')}
+        ${campo('building','text','regEmpresaNombre','Nombre de la empresa')}
+      </div>
+      <div class="wilg_info_badge"><i class="fas fa-info-circle"></i> Tu cuenta empresarial será verificada y activada en 24h.</div>
+    </div>`;
+
+  return '';
+};
+
+// ── TEMPLATES ────────────────────────────────────────────────────────────────
 const tpl = {
   login: () => `
     <div class="wilg_head">
@@ -62,6 +115,28 @@ const tpl = {
       ${campo('lock','password','regPassword','Contraseña',true)}
       ${campo('lock','password','regPassword1','Confirmar contraseña',true)}
     </div>
+
+    <!-- ── SELECTOR DE ROL ─────────────────── -->
+    <div class="wilg_rol_selector">
+      <div class="wilg_rol_label"><i class="fas fa-id-badge"></i> Tipo de cuenta</div>
+      <div class="wilg_rol_tabs">
+        <button type="button" class="wilg_rol_tab active" data-rol="smile">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Estudiante</span>
+        </button>
+        <button type="button" class="wilg_rol_tab" data-rol="gestor">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span>Profesor</span>
+        </button>
+        <button type="button" class="wilg_rol_tab" data-rol="empresa">
+          <i class="fas fa-building"></i>
+          <span>Empresa</span>
+        </button>
+      </div>
+    </div>
+    ${rolExtra('smile')}
+    <!-- ─────────────────────────────────────── -->
+
     <div class="wilg_check">
       <label><input type="checkbox" id="regTerminos">
       <span>Acepto los <a href="/terminos.html" target="_blank">términos y condiciones</a></span></label>
@@ -122,10 +197,10 @@ const accion  = async (btn, txt, fn) => {
   finally { wiSpin(btn, false); }
 };
 
-// Resuelve email desde username — REUTILIZA datos si ya los tiene
+// Resuelve email desde username
 const fetchUser = async input => {
   if (input.includes('@')) return { email: input, wi: null };
-  const snap = await getDoc(doc(db, cfg.db, input));
+  const snap = await getDoc(doc(db, 'smiles', input));
   if (!snap.exists()) throw new Error('Usuario no encontrado');
   return { email: snap.data().email, wi: snap.data() };
 };
@@ -153,7 +228,6 @@ const entrar = wi => {
 
 // ── EVENTOS ──────────────────────────────────────────────────────────────────
 $(document)
-  // Prevenir submit del form en TODOS los casos (evita reload de página)
   .on('submit.wi', '#liForm', e => e.preventDefault())
   .on('click.wi', '.wilg_ojo', function () {
     const $i = $(this).siblings('input');
@@ -176,48 +250,141 @@ $(document)
   .on('blur.wi', '#regUsuario', async function () {
     const u = val('regUsuario'); if (!u || u.length < 3) return;
     if (u.includes('@')) return ($(this).data('ok', false), wiTip(this, 'No puede contener @', 'error', 2500));
-    const libre = !(await getDoc(doc(db, cfg.db, u))).exists();
+    const libre = !(await getDoc(doc(db, 'smiles', u))).exists();
     $(this).data('ok', libre);
     wiTip(this, `Usuario ${libre ? 'disponible <i class="fa-solid fa-check-circle"></i>' : 'no disponible <i class="fa-solid fa-times-circle"></i>'}`, libre ? 'success' : 'error', 3000);
   })
   .on('blur.wi', '#regEmail', async function () {
     const e = val('regEmail'); if (!e || !e.includes('@')) return;
-    const libre = (await getDocs(query(collection(db, cfg.db), where('email','==',e)))).empty;
+    const libre = (await getDocs(query(collection(db, 'smiles'), where('email','==',e)))).empty;
     $(this).data('ok', libre);
     wiTip(this, `Email ${libre ? 'disponible <i class="fa-solid fa-check-circle"></i>' : 'no disponible <i class="fa-solid fa-times-circle"></i>'}`, libre ? 'success' : 'error', 3000);
   })
-  // ── LOGIN: optimizado — username hace solo 1 getDoc que ya trae email + datos ──
+
+  // ── SELECTOR DE ROL — switch dinámico ────────────────────────────
+  .on('click.wi', '.wilg_rol_tab', function () {
+    const rol = $(this).data('rol');
+    $('.wilg_rol_tab').removeClass('active');
+    $(this).addClass('active');
+    $('#rolExtra').replaceWith(rolExtra(rol));
+    // re-bind radio events dentro del nuevo HTML
+    _bindRolExtra();
+  })
+
+  // ── RADIO EXTRA — mostrar/ocultar campo condicional ──────────────
+  .on('change.wi', 'input[name="regExtra"]', function () {
+    const opt = $(this).val();
+    // Marcar la opción activa visualmente
+    $('.wilg_extra_opt').removeClass('active');
+    $(this).closest('.wilg_extra_opt').addClass('active');
+    const $f = $('#extraField');
+    // Mostrar campo solo si no es la opción por defecto (personal / crear)
+    if (opt === 'personal' || opt === 'crear') {
+      $f.addClass('hidden');
+    } else {
+      $f.removeClass('hidden');
+      $f.find('input:first').focus();
+    }
+  })
+
+  // ── LOGIN ────────────────────────────────────────────────────────
   .on('click.wi', '#Login', async function () {
     await accion(this, 'Iniciando', async () => {
       const input = val('email'), pass = val('password');
       const { email, wi: wiPre } = await fetchUser(input);
       await signInWithEmailAndPassword(auth, email, pass);
-      const wi = wiPre ?? (await getDoc(doc(db, cfg.db, auth.currentUser.displayName || input))).data();
+      const wi = wiPre ?? (await getDoc(doc(db, 'smiles', auth.currentUser.displayName || input))).data();
+
+      // Verificar si la cuenta está pendiente de activación
+      if (wi.status === 'pendiente') {
+        await signOut(auth);
+        throw new Error('Tu cuenta está pendiente de activación. Te notificaremos por email.');
+      }
       entrar(wi);
     });
   })
-  // ── REGISTRO ────────────────────────────────────────────────────────────────
+
+  // ── REGISTRO ─────────────────────────────────────────────────────
   .on('click.wi', '#Registrar', async function () {
     if ($(this).data('busy')) return;
+
+    const rolSeleccionado = $('.wilg_rol_tab.active').data('rol') || 'smile';
+    const extraOpt        = $('input[name="regExtra"]:checked').val() || 'personal';
+
     const chk = [
       [!$('#regTerminos').is(':checked'), '#regTerminos', 'Acepta los términos'],
       [!$('#regUsuario').data('ok'),      '#regUsuario',  'Verifica el usuario'],
       [!$('#regEmail').data('ok'),        '#regEmail',    'Verifica el email']
     ];
+
+    // Validar RUC para empresa
+    if (rolSeleccionado === 'empresa') {
+      const ruc = val('regRuc');
+      if (!/^\d{11}$/.test(ruc)) {
+        return wiTip($('#regRuc')[0], 'El RUC debe tener 11 dígitos', 'error', 2500);
+      }
+    }
+
     const fallo = chk.find(([c]) => c);
     if (fallo) return wiTip($(fallo[1])[0], fallo[2], 'error', 2500);
+
     $(this).data('busy', true);
     await accion(this, 'Registrando', async () => {
-      const d = { email: val('regEmail'), usuario: val('regUsuario'), nombre: val('regNombre'), apellidos: val('regApellidos'), password: val('regPassword') };
+      const d = {
+        email:      val('regEmail'),
+        usuario:    val('regUsuario'),
+        nombre:     val('regNombre'),
+        apellidos:  val('regApellidos'),
+        password:   val('regPassword')
+      };
+
       const { user } = await createUserWithEmailAndPassword(auth, d.email, d.password);
       await Promise.all([updateProfile(user, { displayName: d.usuario }), sendEmailVerification(user)]);
-      const wi = { usuario: d.usuario, email: d.email, nombre: d.nombre, apellidos: d.apellidos, rol: cfg.rol, uid: user.uid, terminos: true, tema: localStorage.wiTema };
-      await setDoc(doc(db, cfg.db, d.usuario), { ...wi, creado: serverTimestamp() });
-      entrar(wi); Mensaje('<i class="fa-solid fa-check-circle"></i> Cuenta creada. Verifica tu email', 'success');
+
+      // Determinar rol y status según selección
+      const esPendiente = rolSeleccionado === 'gestor' || rolSeleccionado === 'empresa';
+      const rolFinal    = esPendiente ? rolSeleccionado : 'smile';
+      const status      = esPendiente ? 'pendiente' : 'activo';
+
+      const wi = {
+        usuario:   d.usuario,
+        email:     d.email,
+        nombre:    d.nombre,
+        apellidos: d.apellidos,
+        rol:       rolFinal,
+        status,
+        uid:       user.uid,
+        terminos:  true,
+        tema:      localStorage.wiTema || 'Cielo|#0EBEFF',
+        // Extras por rol
+        ...(rolSeleccionado === 'empresa' && {
+          ruc:          val('regRuc'),
+          empresaNombre:val('regEmpresaNombre'),
+        }),
+        ...(rolSeleccionado === 'gestor' && extraOpt === 'unir' && {
+          empresaRuc: val('regRuc'),
+        }),
+        ...(rolSeleccionado === 'smile' && extraOpt === 'clase' && {
+          claseIdSolicitud: val('regCodigo'), // se procesa al entrar
+        }),
+      };
+
+      await setDoc(doc(db, 'smiles', d.usuario), { ...wi, creado: serverTimestamp() });
+
+      if (esPendiente) {
+        // No hacer login — solo notificar
+        await signOut(auth);
+        Mensaje('<i class="fa-solid fa-clock"></i> Registro enviado. Tu cuenta será activada pronto.', 'success');
+        setTimeout(() => swap('login'), 2500);
+      } else {
+        entrar(wi);
+        Mensaje('<i class="fa-solid fa-check-circle"></i> ¡Cuenta creada! Verifica tu email', 'success');
+      }
     });
     $(this).data('busy', false);
   })
-  // ── RESTABLECER ─────────────────────────────────────────────────────────────
+
+  // ── RESTABLECER ──────────────────────────────────────────────────
   .on('click.wi', '#Recuperar', async function () {
     const emailVal = val('recEmail');
     if (!emailVal) return wiTip(this, 'Ingresa tu email o usuario', 'error', 2500);
@@ -233,12 +400,20 @@ $(document)
     setTimeout(async () => {
       const t = localStorage.wiTema; if (!t) return;
       try {
-        await setDoc(doc(db, cfg.db, wi.usuario), { tema: t, actualizado: serverTimestamp() }, { merge: true });
+        await setDoc(doc(db, 'smiles', wi.usuario), { tema: t, actualizado: serverTimestamp() }, { merge: true });
         savels('wiSmile', { ...wi, tema: t }, 7);
         Mensaje(`Tema ${t.split('|')[0]} guardado <i class="fas fa-check-circle"></i>`, 'success');
       } catch (e) { console.error('tema:', e); }
     }, 0);
   });
+
+// ── RE-BIND radio extra (llamado al cambiar rol) ──────────────────────────────
+function _bindRolExtra() {
+  // Los eventos de radio ya están delegados arriba, solo necesitamos
+  // setear el estado inicial del campo oculto
+  const opt = $('input[name="regExtra"]:checked').val();
+  if (opt === 'personal' || opt === 'crear') $('#extraField').addClass('hidden');
+}
 
 // ── AUTH MODAL ───────────────────────────────────────────────────────────────
 export const abrirLogin = (tipo = 'login') => {
