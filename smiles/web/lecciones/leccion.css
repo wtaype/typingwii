@@ -232,6 +232,44 @@
   margin-top: auto;
 }
 .lc_sp_btn:hover { filter:brightness(1.08); transform:translateY(-2px); }
+.lc_sp_btn.lc_btn_ghost {
+  background: var(--bg4); border: 1px solid var(--brd);
+  color: var(--tx1); box-shadow: none;
+}
+
+/* Side panel info card (leccion) */
+.lc_sp_info {
+  text-align: center;
+  background: var(--bg4);
+  border: 1px solid var(--brd);
+  border-radius: 1.2vh;
+  padding: 1.2vh;
+}
+.lc_sp_info_sub {
+  font-size: var(--fz_s4); color: var(--tx3);
+  text-transform: uppercase; font-weight: 800;
+  letter-spacing: .1em; margin-bottom: .4vh;
+}
+.lc_sp_info_title {
+  font-size: var(--fz_m2); font-weight: 800;
+  color: var(--tx1); line-height: 1.2;
+}
+
+/* 2-col stat row */
+.lc_sp_row2 { display: flex; gap: .6vh; }
+.lc_sp_row2 > .lc_sp_block { flex: 1; }
+
+/* Buttons row at bottom */
+.lc_sp_btns {
+  display: flex; gap: .5vh; margin-top: auto;
+}
+.lc_sp_btns > .lc_sp_btn { flex: 1; padding: 1vh 0; font-size: var(--fz_m1); margin-top: 0; border-radius: 1vh; }
+.lc_sp_btns > .lc_sp_btn.lc_btn_wide { flex: 2; }
+
+/* Char position display */
+.lc_sp_chars { display: flex; justify-content: center; align-items: center; gap: .25vh; cursor: default; }
+.lc_sp_chars_sep { opacity: .4; }
+.lc_sp_chars small { margin-left: 3px; font-size: .85em; color: var(--tx3); }
 
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */

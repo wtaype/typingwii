@@ -40,28 +40,55 @@ export const render = () => `
           <div id="lc_teclado"></div>
         </div>
         <div class="lc_side_panel">
-          <div class="lc_sp_block lc_sp_wpm">
-            <div class="lc_sp_n" id="lc_wpm">0</div>
-            <div class="lc_sp_l"><i class="fas fa-bolt"></i> WPM</div>
+
+          <!-- Header -->
+          <div class="lc_sp_header">
+            <div class="lc_sp_title"><i class="fas fa-sliders-h"></i> Resultados y Ajustes</div>
+            <button class="wk_sound_btn" id="wk_sound_toggle" title="Sonido del teclado"><i class="fas fa-volume-up"></i></button>
           </div>
-          <div class="lc_sp_block lc_sp_prec">
-            <div class="lc_sp_n" id="lc_prec">100</div>
-            <div class="lc_sp_l"><i class="fas fa-bullseye"></i> %</div>
+
+          <!-- Stats 2-col: WPM | % -->
+          <div class="lc_sp_row2">
+            <div class="lc_sp_block lc_sp_wpm">
+              <div class="lc_sp_n" id="lc_wpm">0</div>
+              <div class="lc_sp_l"><i class="fas fa-bolt"></i> WPM</div>
+            </div>
+            <div class="lc_sp_block lc_sp_prec">
+              <div class="lc_sp_n" id="lc_prec">100</div>
+              <div class="lc_sp_l"><i class="fas fa-bullseye"></i> %</div>
+            </div>
           </div>
           <div class="lc_sp_block lc_sp_time" id="lc_timer_box">
             <div class="lc_sp_n" id="lc_secs">—</div>
-            <div class="lc_sp_l"><i class="fas fa-clock"></i> seg</div>
+            <div class="lc_sp_l"><i class="fas fa-stopwatch"></i> seg</div>
           </div>
+
           <div class="lc_sp_sep"></div>
+
+          <!-- Mini counters -->
           <div class="lc_sp_mini">
-            <span class="czm ok"><i class="fas fa-check"></i> <b id="lc_ok">0</b></span>
-            <span class="czm er"><i class="fas fa-xmark"></i> <b id="lc_err">0</b></span>
+            <span class="czm ok" title="Aciertos"><i class="fas fa-check"></i> <b id="lc_ok">0</b></span>
+            <span class="czm er" title="Errores"><i class="fas fa-xmark"></i> <b id="lc_err">0</b></span>
+            <span class="czm wrn" title="Corregidos"><i class="fas fa-rotate-left"></i> <b id="lc_warn">0</b></span>
           </div>
+
+          <div class="lc_sp_sep"></div>
+
+          <!-- Tiempo select -->
           <label class="lc_sp_sel"><i class="fas fa-clock"></i>
             <select id="lc_sel_tiempo" class="lc_sel">${tiempoOpts()}</select>
           </label>
-          <button class="lc_sp_btn" id="lc_btn_next"><i class="fas fa-forward"></i> Siguiente</button>
-          <button class="lc_sp_btn" id="lc_btn_reintentar" style="margin-top: 5px;"><i class="fas fa-redo"></i> Reiniciar</button>
+
+          <!-- Nivel select -->
+          <label class="lc_sp_sel"><i class="fas fa-layer-group"></i>
+            <select id="lc_sel_nivel" class="lc_sel">${nivelOpts()}</select>
+          </label>
+
+          <!-- Buttons -->
+          <div class="lc_sp_btns">
+            <button class="lc_sp_btn" id="lc_btn_reintentar"><i class="fas fa-rotate-right"></i> Reiniciar</button>
+            <button class="lc_sp_btn lc_btn_ghost" id="lc_btn_next"><i class="fas fa-forward"></i> Siguiente</button>
+          </div>
         </div>
       </div>
     </div>
@@ -81,6 +108,10 @@ export const init = () => {
     if(E.iniciado) return;
     tiempoSel=+$(this).val(); _reset(E.texto);
   });
+  $(document).on('change.lck','#lc_sel_nivel', function(){
+    const t = TEXTOS.find(x => x.id === +$(this).val()) || TEXTOS[0];
+    _reset(t);
+  });
   const _resetRandomText = () => {
     const others = TEXTOS.filter(t => !E || t.id !== E.texto.id);
     const next = others[Math.floor(Math.random() * others.length)] || TEXTOS[0];
@@ -88,10 +119,16 @@ export const init = () => {
   };
   $(document).on('click.lck','#lc_btn_next', _resetRandomText);
   $(document).on('click.lck','#lc_btn_reintentar', ()=>_reset(E.texto));
-  $(document).on('click.lck','#lc_btn_siguiente', ()=>{ _resetRandomText(); });
   $(document).on('keydown.lck', e=>{ if(e.key==='Escape'){e.preventDefault();_reset(E.texto);} });
-  // Start typing on ANY keydown (no click needed)
   $(document).on('keydown.lck', _onKey);
+
+  // Sound toggle
+  $(document).on('click.lck','#wk_sound_toggle', () => {
+    const on = wiTeclado.sound.toggle();
+    const $btn = $('#wk_sound_toggle');
+    $btn.toggleClass('wk_muted', !on);
+    $btn.find('i').attr('class', on ? 'fas fa-volume-up' : 'fas fa-volume-xmark');
+  });
 };
 
 export const cleanup = () => { _clearTimer(); wiTeclado.clear(); $(document).off('.lck'); E=null; };
@@ -100,9 +137,13 @@ function _reset(t) {
   _clearTimer();
   E={texto:t,chars:[],pos:0,iniciado:false,finalizado:false,timerID:null,segundos:tiempoSel,elapsed:0};
 
-  $('#lc_prog_fill').css({width:'0%',background:t.color});
+  // Update nivel info in side panel
+  $('#cz_nivel_label').text(t.nivel);
+  $('#lc_sel_nivel').val(t.id);
+
+  $('#lc_prog_fill').css({width:'0%', background:'var(--success)'});
   $('#lc_wpm').text(0); $('#lc_prec').text(100);
-  $('#lc_ok').text(0); $('#lc_err').text(0);
+  $('#lc_ok').text(0); $('#lc_err').text(0); $('#lc_warn').text(0);
   $('#lc_timer_box').removeClass('lc_warn');
   _timerHUD();
   _renderChars(t.texto);
@@ -158,9 +199,16 @@ function _onKey(e){
   if(E.pos>=E.chars.length)return;
   const c=E.chars[E.pos], key=c.char==='\n'?'Enter':c.char, ok=e.key===key;
   wiTeclado.press(key,ok);
-  c.$s.removeClass('lc_ch_cur lc_ch_ok lc_ch_err lc_ch_shake');
-  if(ok){c.state=ST.OK;c.$s.addClass('lc_ch_ok');}
-  else{c.state=ST.ERR;c.hadErr=true;c.$s.addClass('lc_ch_err lc_ch_shake');setTimeout(()=>c.$s.removeClass('lc_ch_shake'),320);}
+  c.$s.removeClass('lc_ch_cur lc_ch_ok lc_ch_warn lc_ch_err lc_ch_shake');
+  if(ok) {
+    c.state=ST.OK;
+    if(c.hadErr) c.$s.addClass('lc_ch_warn');
+    else c.$s.addClass('lc_ch_ok');
+  } else {
+    c.state=ST.ERR; c.hadErr=true;
+    c.$s.addClass('lc_ch_err lc_ch_shake');
+    setTimeout(()=>c.$s.removeClass('lc_ch_shake'),320);
+  }
   E.pos++;
   _setCur(E.pos);
   if(E.pos<E.chars.length){
@@ -177,11 +225,19 @@ function _back(){
   const c=E.chars[E.pos]; c.$s.removeClass('lc_ch_cur lc_ch_ok lc_ch_err'); c.state=ST.N;
   _setCur(E.pos); _recalc();
 }
-function _counts(){let ok=0,cor=0,err=0;E.chars.forEach(c=>{if(c.state===ST.OK)ok++;else if(c.state===ST.ERR)err++;});return{ok,cor,err};}
+function _counts(){
+  let ok=0,warn=0,err=0;
+  E.chars.forEach(c=>{
+    if(c.state===ST.OK){ if(c.hadErr) warn++; else ok++; }
+    else if(c.state===ST.ERR) err++;
+  });
+  return{ok,warn,err};
+}
 function _recalc(){
-  const{ok,cor,err}=_counts(), t=tiempoSel===0?E.elapsed:(tiempoSel-E.segundos), g=ok+cor, tot=g+err;
+  const{ok,warn,err}=_counts(), t=tiempoSel===0?E.elapsed:(tiempoSel-E.segundos), g=ok+warn, tot=g+err;
   const wpm=t>0?Math.round((g/5)/(t/60)):0, prec=tot>0?Math.round((g/tot)*100):100;
-  $('#lc_wpm').text(wpm);$('#lc_prec').text(prec);$('#lc_ok').text(ok);$('#lc_err').text(err);
+  $('#lc_wpm').text(wpm);$('#lc_prec').text(prec);
+  $('#lc_ok').text(ok);$('#lc_err').text(err);$('#lc_warn').text(warn);
 }
 function _terminar(){
   if(E.finalizado)return; E.finalizado=true; _clearTimer();

@@ -88,38 +88,43 @@ export const render = () => {
             <div class="lc_sp_title"><i class="fas fa-sliders-h"></i> Resultados y Ajustes</div>
             <button class="wk_sound_btn" id="wk_sound_toggle" title="Sonido del teclado"><i class="fas fa-volume-up"></i></button>
           </div>
-          <div class="lc_sp_info" style="text-align:center; margin-bottom:1vh; background:var(--bg4); border:1px solid var(--brd); border-radius:1.2vh; padding:1.2vh;">
-            <div style="font-size:var(--fz_s4); color:var(--tx3); text-transform:uppercase; font-weight:800; letter-spacing:.1em; margin-bottom:.4vh;">Lección ${num}</div>
-            <div style="font-size:var(--fz_m2); font-weight:800; color:var(--tx1); line-height:1.2;">${titulo}</div>
+          <div class="lc_sp_info">
+            <div class="lc_sp_info_sub">Lección ${num}</div>
+            <div class="lc_sp_info_title">${titulo}</div>
           </div>
-          <div class="lc_sp_block lc_sp_wpm" ${wiTip('Palabras por minuto')}>
-            <div class="lc_sp_n" id="lc_wpm">0</div>
-            <div class="lc_sp_l"><i class="fas fa-bolt"></i> WPM</div>
-          </div>
-          <div class="lc_sp_block lc_sp_prec" ${wiTip('Precisión')}>
-            <div class="lc_sp_n" id="lc_prec">100</div>
-            <div class="lc_sp_l"><i class="fas fa-bullseye"></i> %</div>
+          <!-- Stats 2-col: WPM | % -->
+          <div class="lc_sp_row2">
+            <div class="lc_sp_block lc_sp_wpm" ${wiTip('Palabras por minuto')}>
+              <div class="lc_sp_n" id="lc_wpm">0</div>
+              <div class="lc_sp_l"><i class="fas fa-bolt"></i> WPM</div>
+            </div>
+            <div class="lc_sp_block lc_sp_prec" ${wiTip('Precisión')}>
+              <div class="lc_sp_n" id="lc_prec">100</div>
+              <div class="lc_sp_l"><i class="fas fa-bullseye"></i> %</div>
+            </div>
           </div>
           <div class="lc_sp_block lc_sp_time" id="lc_timer_box" ${wiTip('Tiempo transcurrido')}>
             <div class="lc_sp_n" id="lc_secs">0</div>
             <div class="lc_sp_l"><i class="fas fa-stopwatch"></i> seg</div>
           </div>
           <div class="lc_sp_sep"></div>
+          <!-- Mini counters -->
           <div class="lc_sp_mini">
             <span class="lcm ok" ${wiTip('Aciertos')}><i class="fas fa-check"></i> <b id="lc_cnt_ok">0</b></span>
             <span class="lcm er" ${wiTip('Errores')}><i class="fas fa-xmark"></i> <b id="lc_cnt_err">0</b></span>
             <span class="lcm wrn" ${wiTip('Corregidos')}><i class="fas fa-rotate-left"></i> <b id="lc_cnt_warn">0</b></span>
           </div>
           <div class="lc_sp_sep"></div>
-          <div class="lc_sp_sel" style="display:flex;justify-content:center;cursor:default;">
-             <span id="lc_pos">0</span><span style="opacity:.4;margin:0 .25vh">/</span><span id="lc_total">0</span><small style="margin-left:5px">chars</small>
+          <!-- Chars counter -->
+          <div class="lc_sp_chars">
+             <span id="lc_pos">0</span><span class="lc_sp_chars_sep">/</span><span id="lc_total">0</span><small>chars</small>
           </div>
-          <div style="display:flex; gap: .5vh; margin-top: auto;">
-             <button class="lc_sp_btn" id="lc_btn_ant" style="flex:1; padding:1vh 0; font-size:var(--fz_m1); margin-top:0; border-radius:1vh; box-shadow:none; background:var(--bg4); border:1px solid var(--brd); color:var(--tx1);" ${id <= 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>
-             <button class="lc_sp_btn" id="lc_btn_restart" style="flex:2; padding:1vh 0; font-size:var(--fz_m1); margin-top:0; border-radius:1vh;"><i class="fas fa-rotate-right"></i> Reiniciar</button>
-             <button class="lc_sp_btn" id="lc_btn_sig" style="flex:1; padding:1vh 0; font-size:var(--fz_m1); margin-top:0; border-radius:1vh; box-shadow:none; background:var(--bg4); border:1px solid var(--brd); color:var(--tx1);" ${!total ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>
+          <div class="lc_sp_btns">
+             <button class="lc_sp_btn lc_btn_ghost" id="lc_btn_ant" ${id <= 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>
+             <button class="lc_sp_btn lc_btn_wide" id="lc_btn_restart"><i class="fas fa-rotate-right"></i> Reiniciar</button>
+             <button class="lc_sp_btn lc_btn_ghost" id="lc_btn_sig" ${!total ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>
           </div>
-          <button class="lc_sp_btn" id="lc_btn_volver" style="background:var(--bg4); border:1px solid var(--brd); color:var(--tx1); box-shadow:none; padding:1vh 0; margin-top:.5vh; font-size:var(--fz_m1); border-radius:1vh;"><i class="fas fa-th-list"></i> Todas las lecciones</button>
+          <button class="lc_sp_btn lc_btn_ghost" id="lc_btn_volver" style="margin-top:.5vh;"><i class="fas fa-th-list"></i> Todas las lecciones</button>
         </div>
       </div>
     </div>
