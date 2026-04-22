@@ -1,0 +1,213 @@
+/* ═══════════════════════════════════════════════════════════
+   CERTIFICADO.CSS — TypingWii · Certificado del Estudiante
+═══════════════════════════════════════════════════════════ */
+
+/* ── WRAP ────────────────────────────────────────────────── */
+.cert_page {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8vh;
+  animation: cert_in .4s cubic-bezier(.4,0,.2,1);
+}
+@keyframes cert_in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HERO ────────────────────────────────────────────────── */
+.cert_hero {
+  background: var(--wb);
+  border: 1px solid var(--brd);
+  border-radius: 2.5vh;
+  padding: 4vh 3.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5vw;
+  position: relative;
+  overflow: hidden;
+}
+.cert_hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, #f59e0b 7%, transparent),
+    transparent 55%);
+  pointer-events: none;
+}
+.cert_hero_orb {
+  position: absolute;
+  width: 40vw; height: 40vw;
+  top: -60%; right: -15%;
+  border-radius: 50%;
+  background: color-mix(in srgb, #f59e0b 5%, transparent);
+  filter: blur(70px);
+  pointer-events: none;
+}
+.cert_hero_left {
+  display: flex; flex-direction: column; gap: .8vh; z-index: 1;
+}
+.cert_hero_badge {
+  display: inline-flex; align-items: center; gap: .6vh;
+  padding: .45vh 1.1vw;
+  background: color-mix(in srgb, #f59e0b 12%, transparent);
+  border: 1px solid color-mix(in srgb, #f59e0b 30%, transparent);
+  border-radius: 10vh; color: #f59e0b;
+  font-size: var(--fz_s4); font-weight: 700;
+}
+.cert_hero_title {
+  font-family: var(--ff_G);
+  font-size: var(--fz_l2); font-weight: 800;
+  color: var(--tx); margin: 0; line-height: 1.15;
+  letter-spacing: -.03em;
+}
+.cert_hero_title span { color: #f59e0b; }
+.cert_hero_sub { font-size: var(--fz_m1); color: var(--tx3); margin: 0; }
+.cert_hero_ico {
+  z-index: 1; flex-shrink: 0;
+  width: 12vh; height: 12vh;
+  border-radius: 50%;
+  background: color-mix(in srgb, #f59e0b 12%, transparent);
+  border: 2px solid color-mix(in srgb, #f59e0b 30%, transparent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5vh; color: #f59e0b;
+  animation: cert_spin 6s linear infinite;
+}
+@keyframes cert_spin {
+  0%,100% { transform: rotate(-5deg) scale(1);   }
+  50%      { transform: rotate( 5deg) scale(1.05); }
+}
+
+/* ── REQUISITOS (cuando no cumple) ──────────────────────── */
+.cert_req_card {
+  background: var(--wb);
+  border: 1.5px solid var(--brd);
+  border-radius: 2vh;
+  padding: 3vh 3vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5vh;
+}
+.cert_req_title {
+  font-size: var(--fz_m3); font-weight: 800; color: var(--tx);
+  display: flex; align-items: center; gap: 1vh;
+}
+.cert_req_title i { color: var(--mco); }
+
+.cert_req_list {
+  display: flex; flex-direction: column; gap: 1.5vh;
+}
+.cert_req_item {
+  display: flex; align-items: center; gap: 1.8vh;
+  background: var(--bg);
+  border: 1px solid var(--brd);
+  border-radius: 1.4vh;
+  padding: 1.8vh 2vw;
+}
+.cert_req_item.ok { border-color: color-mix(in srgb,#22c55e 35%,var(--brd)); }
+.cert_req_item.ok .cert_req_ico { background: color-mix(in srgb,#22c55e 14%,transparent); color: #22c55e; }
+.cert_req_item.no { border-color: color-mix(in srgb,#f59e0b 35%,var(--brd)); }
+.cert_req_item.no .cert_req_ico { background: color-mix(in srgb,#f59e0b 14%,transparent); color: #f59e0b; }
+
+.cert_req_ico {
+  width: 5.5vh; height: 5.5vh; flex-shrink: 0;
+  border-radius: 1.2vh;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2vh;
+}
+.cert_req_body { flex: 1; min-width: 0; }
+.cert_req_lbl { font-size: var(--fz_m2); font-weight: 800; color: var(--tx); }
+.cert_req_sub { font-size: var(--fz_m1); color: var(--tx3); margin-top: .2vh; }
+
+/* Barra de progreso de requisito */
+.cert_req_bar_wrap {
+  margin-top: .8vh;
+  background: var(--bg4); border-radius: 10vh; overflow: hidden; height: .9vh;
+}
+.cert_req_bar_fill {
+  height: 100%; border-radius: 10vh;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+.cert_req_item.ok .cert_req_bar_fill { background: #22c55e; }
+.cert_req_item.no .cert_req_bar_fill { background: #f59e0b; }
+
+.cert_req_val {
+  font-family: var(--ff_G);
+  font-size: var(--fz_l1); font-weight: 900;
+  color: var(--tx); text-align: right; flex-shrink: 0;
+  min-width: 7vw;
+  line-height: 1;
+}
+.cert_req_val small { display: block; font-size: var(--fz_s4); color: var(--tx3); font-weight: 500; }
+
+/* ── MENSAJE MOTIVADOR ───────────────────────────────────── */
+.cert_tip {
+  background: color-mix(in srgb, var(--mco) 8%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--mco) 25%, transparent);
+  border-radius: 1.4vh;
+  padding: 2vh 2.5vw;
+  display: flex; align-items: center; gap: 1.5vh;
+  font-size: var(--fz_m2); color: var(--tx2); font-weight: 600;
+}
+.cert_tip i { color: var(--mco); font-size: var(--fz_m3); flex-shrink: 0; }
+.cert_tip a { color: var(--mco); font-weight: 700; text-decoration: none; }
+.cert_tip a:hover { text-decoration: underline; }
+
+/* ── VISTA PREVIA DEL CERTIFICADO ────────────────────────── */
+.cert_preview_wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5vh;
+}
+.cert_canvas_frame {
+  width: 100%;
+  background: var(--wb);
+  border: 1.5px solid var(--brd);
+  border-radius: 2vh;
+  padding: 2vh;
+  overflow: hidden;
+  box-shadow: 0 1.5vh 5vh rgba(0,0,0,.1);
+  position: relative;
+}
+.cert_canvas_frame canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 1.2vh;
+}
+
+.cert_download_row {
+  display: flex; gap: 1.5vh; flex-wrap: wrap; justify-content: center;
+}
+.cert_dl_btn {
+  display: inline-flex; align-items: center; gap: .8vh;
+  padding: 1.3vh 3vw;
+  border-radius: 1.2vh;
+  font-size: var(--fz_m2); font-weight: 700;
+  cursor: pointer; border: none; text-decoration: none;
+  transition: all var(--tr_f, .22s);
+}
+.cert_dl_btn.primary {
+  background: #f59e0b; color: #fff;
+  box-shadow: 0 .6vh 2vh rgba(245,158,11,.35);
+}
+.cert_dl_btn.primary:hover { filter: brightness(1.08); transform: translateY(-.2vh); }
+.cert_dl_btn.ghost {
+  background: var(--bg4); color: var(--tx2);
+  border: 1.5px solid var(--brd);
+}
+.cert_dl_btn.ghost:hover { border-color: var(--mco); color: var(--mco); }
+
+/* Confetti burst */
+.cert_confetti_wrap {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cert_hero { flex-direction: column; align-items: flex-start; }
+  .cert_hero_ico { display: none; }
+  .cert_req_item { flex-wrap: wrap; }
+  .cert_req_val  { min-width: auto; }
+}

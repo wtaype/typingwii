@@ -95,7 +95,6 @@ export const RUTAS = [
 
   // SMILE — web/smile/
   { path: '/smile',        area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
-  { path: '/lecciones',    area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
   { path: '/progreso',     area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
   { path: '/certificado',  area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
   { path: '/perfil',       area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
