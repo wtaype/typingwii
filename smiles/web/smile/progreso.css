@@ -1,6 +1,5 @@
 /* ── WRAPPER ─────────────────────────────────────────────── */
 .pg_wrap {
-  max-width: 960px;
   margin: 0 auto;
   padding: 3vh 2vw 6vh;
   display: flex;
@@ -20,6 +19,11 @@
   gap: 2vw;
   position: relative;
   overflow: hidden;
+  animation: pg_in .4s cubic-bezier(.4,0,.2,1);
+}
+@keyframes pg_in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .pg_hero::before {
   content: '';
@@ -43,7 +47,7 @@
 }
 .pg_hero_title span { color: var(--mco); }
 .pg_hero_sub { font-size: var(--fz_m1); color: var(--tx3); margin: 0; }
-.pg_hero_right { display: flex; gap: 1.5vw; z-index: 1; flex-shrink: 0; }
+.pg_hero_kpis { display: flex; gap: 1.5vw; z-index: 1; flex-shrink: 0; flex-wrap: wrap; }
 
 /* ── KPI CARD ────────────────────────────────────────────── */
 .pg_kpi {
@@ -114,18 +118,24 @@
   background: var(--wb); border: 1.5px solid var(--brd);
   border-radius: 1.4vh; padding: 1.5vh 1.2vw;
   display: flex; flex-direction: column; gap: .6vh;
-  transition: all var(--tr_f); cursor: default;
+  transition: all var(--tr_f, .22s); cursor: pointer;
   position: relative; overflow: hidden;
 }
 .pg_hist_card::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--hc, var(--mco));
-  border-radius: 2px;
+  background: var(--hc, var(--mco)); border-radius: 2px;
 }
 .pg_hist_card:hover { border-color: var(--hc, var(--mco)); transform: translateY(-.2vh); box-shadow: 0 .6vh 2vh rgba(0,0,0,.1); }
-.pg_hist_card.bloqueada { opacity: .35; cursor: not-allowed; filter: grayscale(.6); }
-.pg_hist_card.bloqueada:hover { transform: none; box-shadow: none; border-color: var(--brd); }
+
+/* Completada */
+.pg_hist_card.pg_done { border-color: color-mix(in srgb,#22c55e 30%,var(--brd)); }
+.pg_hist_card.pg_done::before { background: #22c55e; }
+.pg_hist_card.pg_done:hover { border-color: #22c55e; box-shadow: 0 .6vh 2vh color-mix(in srgb,#22c55e 15%,transparent); }
+
+/* Bloqueada */
+.pg_hist_card.pg_lock { opacity: .4; cursor: not-allowed; filter: grayscale(.5); }
+.pg_hist_card.pg_lock:hover { transform: none; box-shadow: none; border-color: var(--brd); }
 
 .pg_hc_top {
   display: flex; align-items: center;

@@ -25,11 +25,11 @@ export const NAV = {
   },
   smile: {
     winav: [
-      { href: '/smile',       page: 'smile',       ico: 'fa-dashboard',      txt: 'Dashboard'   },
+      { href: '/smile',       page: 'smile',       ico: 'fa-house',          txt: 'Inicio'      },
       { href: '/lecciones',   page: 'lecciones',   ico: 'fa-graduation-cap', txt: 'Lecciones'   },
       { href: '/progreso',    page: 'progreso',    ico: 'fa-chart-line',     txt: 'Progreso'    },
       { href: '/certificado', page: 'certificado', ico: 'fa-certificate',    txt: 'Certificado' },
-      { href: '/contacto',    page: 'contacto',    ico: 'fa-envelope',       txt: 'Contacto'    },
+      { href: '/miclase',     page: 'miclase',     ico: 'fa-users',          txt: 'Mi Clase'    },
     ],
     nvrig: [
       { href: '/mensajes', page: 'mensajes', ico: 'fa-comments', txt: 'Mensajes' },
@@ -93,13 +93,14 @@ export const RUTAS = [
   { path: '/login',       area: 'todos/' },
   { path: '/descubre',    area: 'todos/' },
 
-  // SMILE — web/smile/  → tiene su propio /lecciones autenticado
-  { path: '/smile',        area: 'smile/', roles: ['smile','gestor','admin'] },
-  { path: '/lecciones',    area: 'smile/', roles: ['smile','gestor','admin'] },
-  { path: '/progreso',     area: 'smile/', roles: ['smile','gestor','admin'] },
-  { path: '/certificado',  area: 'smile/', roles: ['smile','gestor','admin'] },
-  { path: '/perfil',       area: 'smile/', roles: ['smile','gestor','admin'] },
-  { path: '/mensajes',     area: 'smile/', roles: ['smile','gestor','admin'] },
+  // SMILE — web/smile/
+  { path: '/smile',        area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
+  { path: '/lecciones',    area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
+  { path: '/progreso',     area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
+  { path: '/certificado',  area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
+  { path: '/perfil',       area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
+  { path: '/mensajes',     area: 'smile/', roles: ['smile','gestor','admin','empresa'] },
+  { path: '/miclase',     area: 'smile/', roles: ['smile'] },
 
   // GESTOR — web/gestor/
   { path: '/gestor',          area: 'gestor/', roles: ['gestor','admin'], mod: 'gestor' },
