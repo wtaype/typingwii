@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DECuqcUr.js";var i={id:7,nivel:2,titulo:`Teclas R y U`,subtitulo:`Dedos índices — fila superior`,teclasPracticar:[`r`,`u`],descripcion:`Los índices suben de F y J a R y U.`,texto:`r u r u ru ur ru ur fur ruf sur rus dru jur kur fru rud iru rudi ful`};r(i);export{e as cleanup,i as data,t as init,n as render};
