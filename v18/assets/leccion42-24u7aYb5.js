@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:42,nivel:2,titulo:`Salto Vertical Índice Der`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`j`],descripcion:`Practica la transición entre estas letras.`,texto:`ju ju ju juju juju ju ju juju ju`};r(i);export{e as cleanup,i as data,t as init,n as render};

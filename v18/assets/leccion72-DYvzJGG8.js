@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:72,nivel:3,titulo:`Palabra: camino`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`c`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`camino camino camino camino`};r(i);export{e as cleanup,i as data,t as init,n as render};

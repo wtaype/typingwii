@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:31,nivel:2,titulo:`Mix Índices`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`f`],descripcion:`Practica la transición entre estas letras.`,texto:`fffff fff ffffff fffffffff fffff fff fffff ffff`};r(i);export{e as cleanup,i as data,t as init,n as render};

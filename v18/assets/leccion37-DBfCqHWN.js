@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:37,nivel:2,titulo:`Extensiones Centro`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`g`],descripcion:`Practica la transición entre estas letras.`,texto:`gh gh gh ghgh ghgh gh gh ghgh gh`};r(i);export{e as cleanup,i as data,t as init,n as render};

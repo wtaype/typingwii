@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:25,nivel:1,titulo:`Tecla X`,subtitulo:`Dedo anular izquierdo (abajo)`,teclasPracticar:[`x`],descripcion:`Baja ligeramente desde la S.`,texto:`xxx xxxxxx xxxxx xxxx xxx xxxx xxxxx`};r(i);export{e as cleanup,i as data,t as init,n as render};

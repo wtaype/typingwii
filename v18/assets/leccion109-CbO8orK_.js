@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:109,nivel:4,titulo:`Uso de: él`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`é`],descripcion:`Concéntrate en la precisión.`,texto:`él él él élél élél él él élél él`};r(i);export{e as cleanup,i as data,t as init,n as render};

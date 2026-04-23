@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:17,nivel:1,titulo:`Tecla W`,subtitulo:`Dedo anular izquierdo (arriba)`,teclasPracticar:[`w`],descripcion:`Sube ligeramente desde la S.`,texto:`wwww wwwww wwwwwww wwwww wwwwww wwwww wwwww`};r(i);export{e as cleanup,i as data,t as init,n as render};

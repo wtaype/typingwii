@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:4,nivel:1,titulo:`Tecla K`,subtitulo:`Dedo medio derecho`,teclasPracticar:[`k`],descripcion:`Mantén el dedo relajado.`,texto:`kkkk kkkkk kkkkkkk kkk kkkk kkkkk kkkk`};r(i);export{e as cleanup,i as data,t as init,n as render};

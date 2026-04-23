@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:43,nivel:2,titulo:`Salto Vertical Índice Izq`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`f`],descripcion:`Practica la transición entre estas letras.`,texto:`fr fr fr frfr frfr fr fr frfr fr`};r(i);export{e as cleanup,i as data,t as init,n as render};

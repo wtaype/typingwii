@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:85,nivel:3,titulo:`Palabra: valle`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`v`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`valle valle valle valle valle valle valle valle valle valle`};r(i);export{e as cleanup,i as data,t as init,n as render};

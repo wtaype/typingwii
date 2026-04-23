@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:80,nivel:3,titulo:`Palabra: viento`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`v`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`viento viento viento viento`};r(i);export{e as cleanup,i as data,t as init,n as render};

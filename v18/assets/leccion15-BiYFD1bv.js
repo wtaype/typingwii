@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:15,nivel:1,titulo:`Tecla T`,subtitulo:`Dedo índice izquierdo (arriba-ext)`,teclasPracticar:[`t`],descripcion:`Sube y estira hacia la derecha desde la F.`,texto:`ttttt tttttt ttttttt ttttt ttttt tttttt ttttt`};r(i);export{e as cleanup,i as data,t as init,n as render};

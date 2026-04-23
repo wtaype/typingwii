@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:58,nivel:2,titulo:`Bigrama Frecuente`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`a`],descripcion:`Practica la transición entre estas letras.`,texto:`al al al alal alal al al alal al`};r(i);export{e as cleanup,i as data,t as init,n as render};

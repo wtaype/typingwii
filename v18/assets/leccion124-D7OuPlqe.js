@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:124,nivel:5,titulo:`Dominio: 4...`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`4`],descripcion:`Velocidad y precisión extrema.`,texto:`4 4 4 44 44 4 4 44 4`};r(i);export{e as cleanup,i as data,t as init,n as render};

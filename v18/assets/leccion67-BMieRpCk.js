@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:67,nivel:3,titulo:`Palabra: flor`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`f`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`flor flor flor flor flor flor flor flor flor flor`};r(i);export{e as cleanup,i as data,t as init,n as render};

@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:23,nivel:1,titulo:`Tecla C`,subtitulo:`Dedo medio izquierdo (abajo)`,teclasPracticar:[`c`],descripcion:`Baja ligeramente desde la D.`,texto:`cccc ccccc ccccccc ccccc ccccc ccccccc ccccc`};r(i);export{e as cleanup,i as data,t as init,n as render};

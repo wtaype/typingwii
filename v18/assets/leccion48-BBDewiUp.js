@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:48,nivel:2,titulo:`Salto Vertical Meñique Der`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`ñ`],descripcion:`Practica la transición entre estas letras.`,texto:`ñp ñp ñp ñpñp ñpñp ñp ñp ñpñp ñp`};r(i);export{e as cleanup,i as data,t as init,n as render};

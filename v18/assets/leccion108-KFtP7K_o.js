@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:108,nivel:4,titulo:`Uso de: sí`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`s`],descripcion:`Concéntrate en la precisión.`,texto:`sí sí sí sísí sísí sí sí sísí sí`};r(i);export{e as cleanup,i as data,t as init,n as render};

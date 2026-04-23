@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-DmQZtRTk.js";var i={id:64,nivel:3,titulo:`Palabra: luz`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`l`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`luz luz luz luz luz luz luz luz luz luz`};r(i);export{e as cleanup,i as data,t as init,n as render};
