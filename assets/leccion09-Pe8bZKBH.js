@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:9,nivel:1,titulo:`Tecla G`,subtitulo:`Dedo índice izquierdo (extensión)`,teclasPracticar:[`g`],descripcion:`Estira el índice hacia la derecha y regresa a la F.`,texto:`gggg ggggg ggggggg ggg gggg ggggg gggg`};r(i);export{e as cleanup,i as data,t as init,n as render};

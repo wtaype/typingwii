@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:45,nivel:2,titulo:`Salto Vertical Anular Izq`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`s`],descripcion:`Practica la transición entre estas letras.`,texto:`sw sw sw swsw swsw sw sw swsw sw`};r(i);export{e as cleanup,i as data,t as init,n as render};

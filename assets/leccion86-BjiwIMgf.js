@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:86,nivel:3,titulo:`Palabra: correr`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`c`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`correr correr correr correr`};r(i);export{e as cleanup,i as data,t as init,n as render};

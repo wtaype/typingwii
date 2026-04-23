@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:26,nivel:1,titulo:`Tecla B`,subtitulo:`Dedo índice izquierdo (abajo-ext)`,teclasPracticar:[`b`],descripcion:`Estira hacia abajo y al centro.`,texto:`bbbbbb bbbb bbbbbb bbbbbbb bbbbbbbbbbb`};r(i);export{e as cleanup,i as data,t as init,n as render};

@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:46,nivel:2,titulo:`Salto Vertical Anular Der`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`l`],descripcion:`Practica la transición entre estas letras.`,texto:`lo lo lo lolo lolo lo lo lolo lo`};r(i);export{e as cleanup,i as data,t as init,n as render};

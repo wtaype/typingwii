@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:5,nivel:1,titulo:`Tecla S`,subtitulo:`Dedo anular izquierdo`,teclasPracticar:[`s`],descripcion:`Un dedo más débil, requiere paciencia.`,texto:`ssss sssss sssssss sss ssss sssss ssss`};r(i);export{e as cleanup,i as data,t as init,n as render};

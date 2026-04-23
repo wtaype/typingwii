@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:16,nivel:1,titulo:`Tecla Y`,subtitulo:`Dedo índice derecho (arriba-ext)`,teclasPracticar:[`y`],descripcion:`Sube y estira hacia la izquierda desde la J.`,texto:`yyyyyyyy yyyyyyyyyy yyyyyy yyyy yyyyyyyyyy yyyyyyyyy`};r(i);export{e as cleanup,i as data,t as init,n as render};

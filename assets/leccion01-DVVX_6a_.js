@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:1,nivel:1,titulo:`Tecla F`,subtitulo:`Dedo índice izquierdo`,teclasPracticar:[`f`],descripcion:`Siente el relieve en la tecla.`,texto:`ffff ffff fffffff fff ffff fffff ffff`};r(i);export{e as cleanup,i as data,t as init,n as render};

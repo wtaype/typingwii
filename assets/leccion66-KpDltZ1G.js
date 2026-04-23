@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:66,nivel:3,titulo:`Palabra: casa`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`c`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`casa casa casa casa casa casa casa casa casa casa`};r(i);export{e as cleanup,i as data,t as init,n as render};

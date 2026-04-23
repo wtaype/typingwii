@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:32,nivel:2,titulo:`Mix Medios`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`d`],descripcion:`Practica la transición entre estas letras.`,texto:`dddkkkk dddkkkkkk kkkkdddd dddddddk ddkkdddkkdkd kkd`};r(i);export{e as cleanup,i as data,t as init,n as render};

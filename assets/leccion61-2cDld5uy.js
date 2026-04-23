@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:61,nivel:3,titulo:`Palabra: sol`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`s`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`sol sol sol sol sol sol sol sol sol sol`};r(i);export{e as cleanup,i as data,t as init,n as render};

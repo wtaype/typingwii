@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:41,nivel:2,titulo:`Salto Vertical Medio Izq`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`d`],descripcion:`Practica la transición entre estas letras.`,texto:`de de de dede dede de de dede de`};r(i);export{e as cleanup,i as data,t as init,n as render};

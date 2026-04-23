@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:63,nivel:3,titulo:`Palabra: mar`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`m`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`mar mar mar mar mar mar mar mar mar mar`};r(i);export{e as cleanup,i as data,t as init,n as render};

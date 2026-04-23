@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:128,nivel:5,titulo:`Dominio: 8...`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`8`],descripcion:`Velocidad y precisión extrema.`,texto:`8 8 8 88 88 8 8 88 8`};r(i);export{e as cleanup,i as data,t as init,n as render};

@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:8,nivel:1,titulo:`Tecla Ñ`,subtitulo:`Dedo meñique derecho`,teclasPracticar:[`ñ`],descripcion:`Alcanza el extremo derecho de la fila guía.`,texto:`ññññ ñññññ ñññññññ ñññ ññññ ñññññ ññññ`};r(i);export{e as cleanup,i as data,t as init,n as render};

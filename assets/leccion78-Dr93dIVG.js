@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:78,nivel:3,titulo:`Palabra: fuerza`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`f`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`fuerza fuerza fuerza fuerza`};r(i);export{e as cleanup,i as data,t as init,n as render};

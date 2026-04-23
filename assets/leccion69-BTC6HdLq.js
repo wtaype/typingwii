@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:69,nivel:3,titulo:`Palabra: mesa`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`m`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`mesa mesa mesa mesa mesa mesa mesa mesa mesa mesa`};r(i);export{e as cleanup,i as data,t as init,n as render};

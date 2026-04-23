@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:3,nivel:1,titulo:`Tecla D`,subtitulo:`Dedo medio izquierdo`,teclasPracticar:[`d`],descripcion:`Mantén el dedo relajado.`,texto:`dddd ddddd ddddddd ddd dddd ddddd dddd`};r(i);export{e as cleanup,i as data,t as init,n as render};

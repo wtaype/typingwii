@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:60,nivel:2,titulo:`Bigrama Frecuente`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`s`],descripcion:`Practica la transición entre estas letras.`,texto:`se se se sese sese se se sese se`};r(i);export{e as cleanup,i as data,t as init,n as render};

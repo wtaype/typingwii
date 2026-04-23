@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:38,nivel:2,titulo:`Mitad Izquierda Total`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`a`],descripcion:`Practica la transición entre estas letras.`,texto:`asdfg asdfg asdfg asdfg asdfg asdfg asdfg asdfg asdfg asdfg`};r(i);export{e as cleanup,i as data,t as init,n as render};

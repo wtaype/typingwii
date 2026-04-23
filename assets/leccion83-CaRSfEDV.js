@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:83,nivel:3,titulo:`Palabra: calle`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`c`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`calle calle calle calle calle calle calle calle calle calle`};r(i);export{e as cleanup,i as data,t as init,n as render};

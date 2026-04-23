@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:24,nivel:1,titulo:`Tecla N`,subtitulo:`Dedo índice derecho (abajo)`,teclasPracticar:[`n`],descripcion:`Baja ligeramente desde la J.`,texto:`nnnn nnnnn nnnnnnn nnnnn nnnnn nnnnnnn nnnnn`};r(i);export{e as cleanup,i as data,t as init,n as render};

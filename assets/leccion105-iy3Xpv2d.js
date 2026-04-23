@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:105,nivel:4,titulo:`Uso de: ú`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`ú`],descripcion:`Concéntrate en la precisión.`,texto:`ú ú ú úú úú ú ú úú ú`};r(i);export{e as cleanup,i as data,t as init,n as render};

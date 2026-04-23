@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:29,nivel:1,titulo:`Tecla .`,subtitulo:`Dedo anular derecho (abajo)`,teclasPracticar:[`.`],descripcion:`Baja ligeramente desde la L.`,texto:`...... ....... .......... ..... ....... .......... ..........`};r(i);export{e as cleanup,i as data,t as init,n as render};

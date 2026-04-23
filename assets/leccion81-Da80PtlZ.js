@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:81,nivel:3,titulo:`Palabra: llave`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`l`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`llave llave llave llave llave llave llave llave llave llave`};r(i);export{e as cleanup,i as data,t as init,n as render};

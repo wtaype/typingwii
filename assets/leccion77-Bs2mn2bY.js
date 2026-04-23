@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-SPE228lt.js";var i={id:77,nivel:3,titulo:`Palabra: blanco`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`b`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`blanco blanco blanco blanco`};r(i);export{e as cleanup,i as data,t as init,n as render};
