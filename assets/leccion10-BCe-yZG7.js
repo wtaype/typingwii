@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:10,nivel:1,titulo:`Tecla H`,subtitulo:`Dedo índice derecho (extensión)`,teclasPracticar:[`h`],descripcion:`Estira el índice hacia la izquierda y regresa a la J.`,texto:`hhhh hhhhh hhhhhhh hhh hhhh hhhhh hhhh`};r(i);export{e as cleanup,i as data,t as init,n as render};

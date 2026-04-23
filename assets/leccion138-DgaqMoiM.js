@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:138,nivel:5,titulo:`Dominio: {...`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`{`],descripcion:`Velocidad y precisión extrema.`,texto:`{ { { {{ {{ { { {{ {`};r(i);export{e as cleanup,i as data,t as init,n as render};

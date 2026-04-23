@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:74,nivel:3,titulo:`Palabra: ciudad`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`c`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`ciudad ciudad ciudad ciudad`};r(i);export{e as cleanup,i as data,t as init,n as render};

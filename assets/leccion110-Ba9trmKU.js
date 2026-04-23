@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:110,nivel:4,titulo:`Uso de: así`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`a`],descripcion:`Concéntrate en la precisión.`,texto:`así así así así así así así así así así`};r(i);export{e as cleanup,i as data,t as init,n as render};

@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:27,nivel:1,titulo:`Tecla Z`,subtitulo:`Dedo meñique izquierdo (abajo)`,teclasPracticar:[`z`],descripcion:`Baja ligeramente desde la A.`,texto:`zzzz zzzzz zzzzzz zzzz zzzzz zzzzzz zzzzzz`};r(i);export{e as cleanup,i as data,t as init,n as render};

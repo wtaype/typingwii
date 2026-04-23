@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:90,nivel:3,titulo:`Palabra: ficcion`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`f`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`ficcion ficcion ficcion ficcion`};r(i);export{e as cleanup,i as data,t as init,n as render};

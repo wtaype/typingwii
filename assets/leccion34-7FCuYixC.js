@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:34,nivel:2,titulo:`Mix Meñiques`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`a`],descripcion:`Practica la transición entre estas letras.`,texto:`aaaaa ñññññ añañañañañ añañañañañ añaaaaañañañañañ`};r(i);export{e as cleanup,i as data,t as init,n as render};

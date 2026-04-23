@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:75,nivel:3,titulo:`Palabra: tierra`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`t`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`tierra tierra tierra tierra`};r(i);export{e as cleanup,i as data,t as init,n as render};

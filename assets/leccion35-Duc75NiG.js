@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:35,nivel:2,titulo:`Escala Izquierda`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`f`],descripcion:`Practica la transición entre estas letras.`,texto:`fdsa fdsa fdsa fdsa fdsa fdsa fdsa fdsa fdsa fdsa`};r(i);export{e as cleanup,i as data,t as init,n as render};

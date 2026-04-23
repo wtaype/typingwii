@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:20,nivel:1,titulo:`Tecla P`,subtitulo:`Dedo meñique derecho (arriba)`,teclasPracticar:[`p`],descripcion:`Sube ligeramente desde la Ñ.`,texto:`pppppp ppppppp ppppp pppppp ppppppp ppppppp`};r(i);export{e as cleanup,i as data,t as init,n as render};

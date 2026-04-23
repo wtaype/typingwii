@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:21,nivel:1,titulo:`Tecla V`,subtitulo:`Dedo índice izquierdo (abajo)`,teclasPracticar:[`v`],descripcion:`Baja y estira ligeramente desde la F.`,texto:`vvvv vvvvv vvvvvvv vvvvvvvv vvvv vvvvv vvvv`};r(i);export{e as cleanup,i as data,t as init,n as render};

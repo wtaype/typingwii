@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:76,nivel:3,titulo:`Palabra: puerta`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`p`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`puerta puerta puerta puerta`};r(i);export{e as cleanup,i as data,t as init,n as render};

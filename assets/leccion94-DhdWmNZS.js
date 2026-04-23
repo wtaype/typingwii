@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:94,nivel:4,titulo:`Uso de: O`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`O`],descripcion:`Concéntrate en la precisión.`,texto:`O O O OO OO O O OO O`};r(i);export{e as cleanup,i as data,t as init,n as render};

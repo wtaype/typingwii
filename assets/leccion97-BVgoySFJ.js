@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:97,nivel:4,titulo:`Uso de: S`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`S`],descripcion:`Concéntrate en la precisión.`,texto:`S S S SS SS S S SS S`};r(i);export{e as cleanup,i as data,t as init,n as render};

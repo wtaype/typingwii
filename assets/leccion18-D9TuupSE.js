@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:18,nivel:1,titulo:`Tecla O`,subtitulo:`Dedo anular derecho (arriba)`,teclasPracticar:[`o`],descripcion:`Sube ligeramente desde la L.`,texto:`oooo ooooo ooooooo oooo oooo ooooo oooo`};r(i);export{e as cleanup,i as data,t as init,n as render};

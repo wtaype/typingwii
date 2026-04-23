@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:65,nivel:3,titulo:`Palabra: voz`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`v`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`voz voz voz voz voz voz voz voz voz voz`};r(i);export{e as cleanup,i as data,t as init,n as render};

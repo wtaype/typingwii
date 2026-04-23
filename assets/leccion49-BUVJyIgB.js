@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:49,nivel:2,titulo:`Salto Extensión Izq`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`f`],descripcion:`Practica la transición entre estas letras.`,texto:`ft ft ft ftft ftft ft ft ftft ft`};r(i);export{e as cleanup,i as data,t as init,n as render};

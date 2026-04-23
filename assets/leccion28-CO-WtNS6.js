@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:28,nivel:1,titulo:`Tecla ,`,subtitulo:`Dedo medio derecho (abajo)`,teclasPracticar:[`,`],descripcion:`Baja ligeramente desde la K.`,texto:`,,,, ,,,,, ,,,,,, ,,,, ,,,,, ,,,,,, ,,,,,,,`};r(i);export{e as cleanup,i as data,t as init,n as render};

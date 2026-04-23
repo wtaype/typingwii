@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:70,nivel:3,titulo:`Palabra: vida`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`v`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`vida vida vida vida vida vida vida vida vida vida`};r(i);export{e as cleanup,i as data,t as init,n as render};

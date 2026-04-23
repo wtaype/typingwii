@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:62,nivel:3,titulo:`Palabra: pan`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`p`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`pan pan pan pan pan pan pan pan pan pan`};r(i);export{e as cleanup,i as data,t as init,n as render};

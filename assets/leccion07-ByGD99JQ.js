@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:7,nivel:1,titulo:`Tecla A`,subtitulo:`Dedo meñique izquierdo`,teclasPracticar:[`a`],descripcion:`Estira ligeramente el meñique.`,texto:`aaaa aaaaa aaaaaaa aaaa aaaa aaaaa aaaa`};r(i);export{e as cleanup,i as data,t as init,n as render};

@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:44,nivel:2,titulo:`Salto Vertical Medio Der`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`k`],descripcion:`Practica la transición entre estas letras.`,texto:`ki ki ki kiki kiki ki ki kiki ki`};r(i);export{e as cleanup,i as data,t as init,n as render};

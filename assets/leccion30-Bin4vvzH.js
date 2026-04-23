@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:30,nivel:1,titulo:`Barra Espaciadora`,subtitulo:`Pulgares`,teclasPracticar:[` `],descripcion:`Usa el pulgar de tu mano dominante.`,texto:`fffff jjjjj dddd kkkkk sssss lllllll aaaaaaa ññññññ`};r(i);export{e as cleanup,i as data,t as init,n as render};

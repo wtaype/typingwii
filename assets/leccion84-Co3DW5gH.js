@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:84,nivel:3,titulo:`Palabra: lleno`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`l`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`lleno lleno lleno lleno lleno lleno lleno lleno lleno lleno`};r(i);export{e as cleanup,i as data,t as init,n as render};

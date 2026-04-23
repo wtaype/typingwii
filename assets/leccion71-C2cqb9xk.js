@@ -1,0 +1,1 @@
+import{cleanup as e,init as t,render as n,setData as r}from"./leccion-CGXKf8Dh.js";var i={id:71,nivel:3,titulo:`Palabra: tiempo`,subtitulo:`Coordinación y Fluidez`,teclasPracticar:[`t`],descripcion:`Escribe la palabra completa sin pausas.`,texto:`tiempo tiempo tiempo tiempo`};r(i);export{e as cleanup,i as data,t as init,n as render};
