@@ -1,18 +1,17 @@
-// Lección 12 — Teclas N y M
+// Lección 12 — Tecla I
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 12,
-  "nivel": 3,
-  "titulo": "Teclas N y M",
-  "subtitulo": "Índices derechos fila inferior",
+  "nivel": 1,
+  "titulo": "Tecla I",
+  "subtitulo": "Dedo medio derecho (arriba)",
   "teclasPracticar": [
-    "n",
-    "m"
+    "i"
   ],
-  "descripcion": "El índice derecho cubre N y M en la fila inferior.",
-  "texto": "nm mn nm mn man name main mean mine name mind mine main man name mine mean"
+  "descripcion": "Sube ligeramente desde la K.",
+  "texto": "iiii iiiii iiiiiii iii iiii iiiii iiiiiiii"
 };
 
 setData(data);

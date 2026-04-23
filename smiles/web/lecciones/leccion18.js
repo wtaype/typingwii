@@ -1,21 +1,17 @@
-// Lección 18 — Números 6 al 0
+// Lección 18 — Tecla O
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 18,
-  "nivel": 4,
-  "titulo": "Números 6 al 0",
-  "subtitulo": "Fila numérica — mitad derecha",
+  "nivel": 1,
+  "titulo": "Tecla O",
+  "subtitulo": "Dedo anular derecho (arriba)",
   "teclasPracticar": [
-    "6",
-    "7",
-    "8",
-    "9",
-    "0"
+    "o"
   ],
-  "descripcion": "La mano derecha cubre los números del 6 al 0.",
-  "texto": "6 7 8 9 0 67 78 89 90 06 678 789 890 906 067 6789 7890 8906 9067 0678"
+  "descripcion": "Sube ligeramente desde la L.",
+  "texto": "oooo ooooo ooooooo oooo oooo ooooo oooo"
 };
 
 setData(data);

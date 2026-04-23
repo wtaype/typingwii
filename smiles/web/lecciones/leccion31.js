@@ -1,15 +1,15 @@
-// Lección 31 — Texto Técnico I
+// Lección 31 — Mix Índices
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 31,
-  "nivel": 7,
-  "titulo": "Texto Técnico I",
-  "subtitulo": "Vocabulario especializado",
-  "teclasPracticar": [],
-  "descripcion": "Textos técnicos que aparecen en documentos profesionales.",
-  "texto": "El sistema operativo gestiona los recursos del hardware y software. La memoria RAM permite ejecutar multiples procesos de forma simultanea y eficiente."
+  "nivel": 2,
+  "titulo": "Mix Índices",
+  "subtitulo": "Coordinación y Fluidez",
+  "teclasPracticar": ["f"],
+  "descripcion": "Practica la transición entre estas letras.",
+  "texto": "fffff fff ffffff fffffffff fffff fff fffff ffff"
 };
 
 setData(data);

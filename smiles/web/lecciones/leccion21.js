@@ -1,18 +1,17 @@
-// Lección 21 — Puntuación Básica
+// Lección 21 — Tecla V
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 21,
-  "nivel": 5,
-  "titulo": "Puntuación Básica",
-  "subtitulo": "Punto, coma y dos puntos",
+  "nivel": 1,
+  "titulo": "Tecla V",
+  "subtitulo": "Dedo índice izquierdo (abajo)",
   "teclasPracticar": [
-    ".",
-    ","
+    "v"
   ],
-  "descripcion": "La puntuación es parte esencial de la escritura profesional.",
-  "texto": "hola, mundo. esto es una prueba, de puntuacion. escribir bien: usar comas, puntos."
+  "descripcion": "Baja y estira ligeramente desde la F.",
+  "texto": "vvvv vvvvv vvvvvvv vvvvvvvv vvvv vvvvv vvvv"
 };
 
 setData(data);

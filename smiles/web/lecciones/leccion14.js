@@ -1,18 +1,17 @@
-// Lección 14 — Teclas Z y X
+// Lección 14 — Tecla U
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 14,
-  "nivel": 3,
-  "titulo": "Teclas Z y X",
-  "subtitulo": "Meñique y anular izquierdo",
+  "nivel": 1,
+  "titulo": "Tecla U",
+  "subtitulo": "Dedo índice derecho (arriba)",
   "teclasPracticar": [
-    "z",
-    "x"
+    "u"
   ],
-  "descripcion": "Las teclas más extremas de la fila inferior izquierda.",
-  "texto": "zone zero size extra exist next text flex exact exert dozen prize bronze extra size"
+  "descripcion": "Sube ligeramente desde la J.",
+  "texto": "uuuu uuuuu uuuuuuu uuu uuuu uuuuu uuuu"
 };
 
 setData(data);

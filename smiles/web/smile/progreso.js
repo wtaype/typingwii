@@ -24,51 +24,156 @@ const NIVELES = [
 ];
 
 const LECS = [
-  {id:1,  n:1,  t:'Teclas F y J',            s:'Índices · fila central'},
-  {id:2,  n:1,  t:'Teclas D y K',            s:'Dedos medios · fila central'},
-  {id:3,  n:1,  t:'Teclas S y L',            s:'Dedos anulares · fila central'},
-  {id:4,  n:1,  t:'Fila Central Completa',   s:'A S D F J K L Ñ'},
-  {id:5,  n:1,  t:'Primeras Palabras',       s:'Palabras con fila central'},
-  {id:6,  n:2,  t:'Teclas E e I',            s:'Dedos medios · fila superior'},
-  {id:7,  n:2,  t:'Teclas R y U',            s:'Índices · fila superior'},
-  {id:8,  n:2,  t:'Teclas T e Y',            s:'Índices al centro superior'},
-  {id:9,  n:2,  t:'Teclas W y O',            s:'Anulares · fila superior'},
-  {id:10, n:2,  t:'Fila Superior + Central', s:'Q W E R T Y U I O P'},
-  {id:11, n:3,  t:'Teclas V y B',            s:'Índices · fila inferior'},
-  {id:12, n:3,  t:'Teclas N y M',            s:'Índice derecho · fila inferior'},
-  {id:13, n:3,  t:'Teclas C y coma',         s:'Dedos medios · fila inferior'},
-  {id:14, n:3,  t:'Teclas Z y X',            s:'Meñique y anular izquierdo'},
-  {id:15, n:3,  t:'Todas las filas',         s:'Alfabeto QWERTY completo'},
-  {id:16, n:4,  t:'Frases Simples',          s:'Velocidad con precisión'},
-  {id:17, n:4,  t:'Números 1 al 5',          s:'Fila numérica · mitad izquierda'},
-  {id:18, n:4,  t:'Números 6 al 0',          s:'Fila numérica · mitad derecha'},
-  {id:19, n:4,  t:'Todos los números',       s:'Fila numérica completa'},
-  {id:20, n:4,  t:'Texto Real',              s:'Práctica con texto natural'},
-  {id:21, n:5,  t:'Puntuación Básica',       s:'Punto, coma y dos puntos'},
-  {id:22, n:5,  t:'Mayúsculas con Shift',    s:'Shift + tecla = mayúscula'},
-  {id:23, n:5,  t:'Palabras Comunes',        s:'Las 50 palabras más usadas'},
-  {id:24, n:5,  t:'Palabras Comunes II',     s:'Continuación top palabras'},
-  {id:25, n:5,  t:'Frases del Día a Día',    s:'Comunicación cotidiana'},
-  {id:26, n:6,  t:'Párrafo Corto I',         s:'Texto continuo sin pausas'},
-  {id:27, n:6,  t:'Párrafo Corto II',        s:'Ideas conectadas'},
-  {id:28, n:6,  t:'Números en Contexto',     s:'Mezcla de texto y números'},
-  {id:29, n:6,  t:'Email Profesional',       s:'Redacción de comunicados'},
-  {id:30, n:6,  t:'Velocidad Inicial',       s:'Test de velocidad real'},
-  {id:31, n:7,  t:'Texto Técnico I',         s:'Vocabulario especializado'},
-  {id:32, n:7,  t:'Texto Técnico II',        s:'Informática y tecnología'},
-  {id:33, n:7,  t:'Párrafo Largo I',         s:'Resistencia y concentración'},
-  {id:34, n:7,  t:'Acentos y Tilde',         s:'Español con tildes correctas'},
-  {id:35, n:7,  t:'Signos de Puntuación',    s:'Puntuación avanzada'},
-  {id:36, n:8,  t:'Objetivo: 40 WPM',        s:'Nivel profesional básico'},
-  {id:37, n:8,  t:'Objetivo: 50 WPM',        s:'Mecanógrafo competente'},
-  {id:38, n:8,  t:'Objetivo: 60 WPM',        s:'Nivel avanzado de escritura'},
-  {id:39, n:9,  t:'Texto Académico',         s:'Redacción universitaria'},
-  {id:40, n:9,  t:'Texto Jurídico',          s:'Redacción legal y formal'},
-  {id:41, n:9,  t:'Código de Programación',  s:'Sintaxis y símbolos técnicos'},
-  {id:42, n:9,  t:'Objetivo: 70 WPM',        s:'Experto en mecanografía'},
-  {id:43, n:10, t:'Velocidad: 80 WPM',       s:'Maestro de la mecanografía'},
-  {id:44, n:10, t:'Texto Mixto Complejo',    s:'Letras, números y símbolos'},
-  {id:45, n:10, t:'Párrafo de Maestría',     s:'El texto definitivo'},
+  {id:1, n:1, t:'Tecla F', s:'Dedo índice izquierdo'},
+  {id:2, n:1, t:'Tecla J', s:'Dedo índice derecho'},
+  {id:3, n:1, t:'Tecla D', s:'Dedo medio izquierdo'},
+  {id:4, n:1, t:'Tecla K', s:'Dedo medio derecho'},
+  {id:5, n:1, t:'Tecla S', s:'Dedo anular izquierdo'},
+  {id:6, n:1, t:'Tecla L', s:'Dedo anular derecho'},
+  {id:7, n:1, t:'Tecla A', s:'Dedo meñique izquierdo'},
+  {id:8, n:1, t:'Tecla Ñ', s:'Dedo meñique derecho'},
+  {id:9, n:1, t:'Tecla G', s:'Dedo índice izquierdo (extensión)'},
+  {id:10, n:1, t:'Tecla H', s:'Dedo índice derecho (extensión)'},
+  {id:11, n:1, t:'Tecla E', s:'Dedo medio izquierdo (arriba)'},
+  {id:12, n:1, t:'Tecla I', s:'Dedo medio derecho (arriba)'},
+  {id:13, n:1, t:'Tecla R', s:'Dedo índice izquierdo (arriba)'},
+  {id:14, n:1, t:'Tecla U', s:'Dedo índice derecho (arriba)'},
+  {id:15, n:1, t:'Tecla T', s:'Dedo índice izquierdo (arriba-ext)'},
+  {id:16, n:2, t:'Tecla Y', s:'Dedo índice derecho (arriba-ext)'},
+  {id:17, n:2, t:'Tecla W', s:'Dedo anular izquierdo (arriba)'},
+  {id:18, n:2, t:'Tecla O', s:'Dedo anular derecho (arriba)'},
+  {id:19, n:2, t:'Tecla Q', s:'Dedo meñique izquierdo (arriba)'},
+  {id:20, n:2, t:'Tecla P', s:'Dedo meñique derecho (arriba)'},
+  {id:21, n:2, t:'Tecla V', s:'Dedo índice izquierdo (abajo)'},
+  {id:22, n:2, t:'Tecla M', s:'Dedo índice derecho (abajo)'},
+  {id:23, n:2, t:'Tecla C', s:'Dedo medio izquierdo (abajo)'},
+  {id:24, n:2, t:'Tecla N', s:'Dedo índice derecho (abajo)'},
+  {id:25, n:2, t:'Tecla X', s:'Dedo anular izquierdo (abajo)'},
+  {id:26, n:2, t:'Tecla B', s:'Dedo índice izquierdo (abajo-ext)'},
+  {id:27, n:2, t:'Tecla Z', s:'Dedo meñique izquierdo (abajo)'},
+  {id:28, n:2, t:'Tecla ,', s:'Dedo medio derecho (abajo)'},
+  {id:29, n:2, t:'Tecla .', s:'Dedo anular derecho (abajo)'},
+  {id:30, n:2, t:'Barra Espaciadora', s:'Pulgares'},
+  {id:31, n:3, t:'Mix Índices', s:'Coordinación y Fluidez'},
+  {id:32, n:3, t:'Mix Medios', s:'Coordinación y Fluidez'},
+  {id:33, n:3, t:'Mix Anulares', s:'Coordinación y Fluidez'},
+  {id:34, n:3, t:'Mix Meñiques', s:'Coordinación y Fluidez'},
+  {id:35, n:3, t:'Escala Izquierda', s:'Coordinación y Fluidez'},
+  {id:36, n:3, t:'Escala Derecha', s:'Coordinación y Fluidez'},
+  {id:37, n:3, t:'Extensiones Centro', s:'Coordinación y Fluidez'},
+  {id:38, n:3, t:'Mitad Izquierda Total', s:'Coordinación y Fluidez'},
+  {id:39, n:3, t:'Mitad Derecha Total', s:'Coordinación y Fluidez'},
+  {id:40, n:3, t:'Fila Guía Completa', s:'Coordinación y Fluidez'},
+  {id:41, n:3, t:'Salto Vertical Medio Izq', s:'Coordinación y Fluidez'},
+  {id:42, n:3, t:'Salto Vertical Índice Der', s:'Coordinación y Fluidez'},
+  {id:43, n:3, t:'Salto Vertical Índice Izq', s:'Coordinación y Fluidez'},
+  {id:44, n:3, t:'Salto Vertical Medio Der', s:'Coordinación y Fluidez'},
+  {id:45, n:3, t:'Salto Vertical Anular Izq', s:'Coordinación y Fluidez'},
+  {id:46, n:4, t:'Salto Vertical Anular Der', s:'Coordinación y Fluidez'},
+  {id:47, n:4, t:'Salto Vertical Meñique Izq', s:'Coordinación y Fluidez'},
+  {id:48, n:4, t:'Salto Vertical Meñique Der', s:'Coordinación y Fluidez'},
+  {id:49, n:4, t:'Salto Extensión Izq', s:'Coordinación y Fluidez'},
+  {id:50, n:4, t:'Salto Extensión Der', s:'Coordinación y Fluidez'},
+  {id:51, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:52, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:53, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:54, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:55, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:56, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:57, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:58, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:59, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:60, n:4, t:'Bigrama Frecuente', s:'Coordinación y Fluidez'},
+  {id:61, n:5, t:'Palabra: sol', s:'Coordinación y Fluidez'},
+  {id:62, n:5, t:'Palabra: pan', s:'Coordinación y Fluidez'},
+  {id:63, n:5, t:'Palabra: mar', s:'Coordinación y Fluidez'},
+  {id:64, n:5, t:'Palabra: luz', s:'Coordinación y Fluidez'},
+  {id:65, n:5, t:'Palabra: voz', s:'Coordinación y Fluidez'},
+  {id:66, n:5, t:'Palabra: casa', s:'Coordinación y Fluidez'},
+  {id:67, n:5, t:'Palabra: flor', s:'Coordinación y Fluidez'},
+  {id:68, n:5, t:'Palabra: pelo', s:'Coordinación y Fluidez'},
+  {id:69, n:5, t:'Palabra: mesa', s:'Coordinación y Fluidez'},
+  {id:70, n:5, t:'Palabra: vida', s:'Coordinación y Fluidez'},
+  {id:71, n:5, t:'Palabra: tiempo', s:'Coordinación y Fluidez'},
+  {id:72, n:5, t:'Palabra: camino', s:'Coordinación y Fluidez'},
+  {id:73, n:5, t:'Palabra: fuerte', s:'Coordinación y Fluidez'},
+  {id:74, n:5, t:'Palabra: ciudad', s:'Coordinación y Fluidez'},
+  {id:75, n:5, t:'Palabra: tierra', s:'Coordinación y Fluidez'},
+  {id:76, n:6, t:'Palabra: puerta', s:'Coordinación y Fluidez'},
+  {id:77, n:6, t:'Palabra: blanco', s:'Coordinación y Fluidez'},
+  {id:78, n:6, t:'Palabra: fuerza', s:'Coordinación y Fluidez'},
+  {id:79, n:6, t:'Palabra: puente', s:'Coordinación y Fluidez'},
+  {id:80, n:6, t:'Palabra: viento', s:'Coordinación y Fluidez'},
+  {id:81, n:6, t:'Palabra: llave', s:'Coordinación y Fluidez'},
+  {id:82, n:6, t:'Palabra: perro', s:'Coordinación y Fluidez'},
+  {id:83, n:6, t:'Palabra: calle', s:'Coordinación y Fluidez'},
+  {id:84, n:6, t:'Palabra: lleno', s:'Coordinación y Fluidez'},
+  {id:85, n:6, t:'Palabra: valle', s:'Coordinación y Fluidez'},
+  {id:86, n:6, t:'Palabra: correr', s:'Coordinación y Fluidez'},
+  {id:87, n:6, t:'Palabra: carro', s:'Coordinación y Fluidez'},
+  {id:88, n:6, t:'Palabra: accion', s:'Coordinación y Fluidez'},
+  {id:89, n:6, t:'Palabra: leccion', s:'Coordinación y Fluidez'},
+  {id:90, n:6, t:'Palabra: ficcion', s:'Coordinación y Fluidez'},
+  {id:91, n:7, t:'Uso de: A', s:'Coordinación y Fluidez'},
+  {id:92, n:7, t:'Uso de: E', s:'Coordinación y Fluidez'},
+  {id:93, n:7, t:'Uso de: I', s:'Coordinación y Fluidez'},
+  {id:94, n:7, t:'Uso de: O', s:'Coordinación y Fluidez'},
+  {id:95, n:7, t:'Uso de: U', s:'Coordinación y Fluidez'},
+  {id:96, n:7, t:'Uso de: M', s:'Coordinación y Fluidez'},
+  {id:97, n:7, t:'Uso de: S', s:'Coordinación y Fluidez'},
+  {id:98, n:7, t:'Uso de: L', s:'Coordinación y Fluidez'},
+  {id:99, n:7, t:'Uso de: C', s:'Coordinación y Fluidez'},
+  {id:100, n:7, t:'Uso de: P', s:'Coordinación y Fluidez'},
+  {id:101, n:7, t:'Uso de: á', s:'Coordinación y Fluidez'},
+  {id:102, n:7, t:'Uso de: é', s:'Coordinación y Fluidez'},
+  {id:103, n:7, t:'Uso de: í', s:'Coordinación y Fluidez'},
+  {id:104, n:7, t:'Uso de: ó', s:'Coordinación y Fluidez'},
+  {id:105, n:7, t:'Uso de: ú', s:'Coordinación y Fluidez'},
+  {id:106, n:8, t:'Uso de: más', s:'Coordinación y Fluidez'},
+  {id:107, n:8, t:'Uso de: qué', s:'Coordinación y Fluidez'},
+  {id:108, n:8, t:'Uso de: sí', s:'Coordinación y Fluidez'},
+  {id:109, n:8, t:'Uso de: él', s:'Coordinación y Fluidez'},
+  {id:110, n:8, t:'Uso de: así', s:'Coordinación y Fluidez'},
+  {id:111, n:8, t:'Uso de: ;', s:'Coordinación y Fluidez'},
+  {id:112, n:8, t:'Uso de: :', s:'Coordinación y Fluidez'},
+  {id:113, n:8, t:'Uso de: -', s:'Coordinación y Fluidez'},
+  {id:114, n:8, t:'Uso de: _', s:'Coordinación y Fluidez'},
+  {id:115, n:8, t:"Uso de: ", s:'Coordinación y Fluidez'},
+  {id:116, n:8, t:"Uso de: '", s:'Coordinación y Fluidez'},
+  {id:117, n:8, t:'Uso de: !', s:'Coordinación y Fluidez'},
+  {id:118, n:8, t:'Uso de: ?', s:'Coordinación y Fluidez'},
+  {id:119, n:8, t:'Uso de: (', s:'Coordinación y Fluidez'},
+  {id:120, n:8, t:'Uso de: )', s:'Coordinación y Fluidez'},
+  {id:121, n:9, t:'Dominio: 1...', s:'Coordinación y Fluidez'},
+  {id:122, n:9, t:'Dominio: 2...', s:'Coordinación y Fluidez'},
+  {id:123, n:9, t:'Dominio: 3...', s:'Coordinación y Fluidez'},
+  {id:124, n:9, t:'Dominio: 4...', s:'Coordinación y Fluidez'},
+  {id:125, n:9, t:'Dominio: 5...', s:'Coordinación y Fluidez'},
+  {id:126, n:9, t:'Dominio: 6...', s:'Coordinación y Fluidez'},
+  {id:127, n:9, t:'Dominio: 7...', s:'Coordinación y Fluidez'},
+  {id:128, n:9, t:'Dominio: 8...', s:'Coordinación y Fluidez'},
+  {id:129, n:9, t:'Dominio: 9...', s:'Coordinación y Fluidez'},
+  {id:130, n:9, t:'Dominio: 0...', s:'Coordinación y Fluidez'},
+  {id:131, n:9, t:'Dominio: @...', s:'Coordinación y Fluidez'},
+  {id:132, n:9, t:'Dominio: #...', s:'Coordinación y Fluidez'},
+  {id:133, n:9, t:'Dominio: $...', s:'Coordinación y Fluidez'},
+  {id:134, n:9, t:'Dominio: %...', s:'Coordinación y Fluidez'},
+  {id:135, n:9, t:'Dominio: &...', s:'Coordinación y Fluidez'},
+  {id:136, n:10, t:'Dominio: /...', s:'Coordinación y Fluidez'},
+  {id:137, n:10, t:'Dominio: =...', s:'Coordinación y Fluidez'},
+  {id:138, n:10, t:'Dominio: {...', s:'Coordinación y Fluidez'},
+  {id:139, n:10, t:'Dominio: }...', s:'Coordinación y Fluidez'},
+  {id:140, n:10, t:'Dominio: [...', s:'Coordinación y Fluidez'},
+  {id:141, n:10, t:'Dominio: El veloz m...', s:'Coordinación y Fluidez'},
+  {id:142, n:10, t:'Dominio: La vida es...', s:'Coordinación y Fluidez'},
+  {id:143, n:10, t:'Dominio: function t...', s:'Coordinación y Fluidez'},
+  {id:144, n:10, t:'Dominio: El exito r...', s:'Coordinación y Fluidez'},
+  {id:145, n:10, t:'Dominio: console.lo...', s:'Coordinación y Fluidez'},
+  {id:146, n:10, t:'Dominio: Un mar en ...', s:'Coordinación y Fluidez'},
+  {id:147, n:10, t:'Dominio: En la ciud...', s:'Coordinación y Fluidez'},
+  {id:148, n:10, t:'Dominio: const PI =...', s:'Coordinación y Fluidez'},
+  {id:149, n:10, t:'Dominio: Nuestra ma...', s:'Coordinación y Fluidez'},
+  {id:150, n:10, t:'Dominio: EL GRAN RE...', s:'Coordinación y Fluidez'}
 ];
 
 const wi = () => getls('wiSmile');
@@ -90,7 +195,7 @@ export const render = () => {
   const wpm    = prog.wpmRecord    || 0;
   const prec   = prog.precisionPct != null ? prog.precisionPct : null;
   const racha  = prog.rachaDias   != null ? prog.rachaDias : 0;
-  const pct    = Math.round((lecsOk.length / 45) * 100);
+  const pct    = Math.round((lecsOk.length / 150) * 100);
 
   const nivelesDone = NIVELES.map(nv => {
     const ids  = LECS.filter(l => l.n === nv.n).map(l => l.id);
@@ -129,7 +234,7 @@ export const render = () => {
     <div class="pg_global_card">
       <div class="pg_gbar_info">
         <span><i class="fas fa-list-check" style="color:var(--mco)"></i> Progreso general</span>
-        <span class="pg_gbar_pct" id="pg_gbar_txt">${lecsOk.length} / 45 · <b>${pct}%</b></span>
+        <span class="pg_gbar_pct" id="pg_gbar_txt">${lecsOk.length} / 150 · <b>${pct}%</b></span>
       </div>
       <div class="pg_gbar_track">
         <div class="pg_gbar_fill" id="pg_gbar" style="width:0%"></div>
@@ -146,7 +251,7 @@ export const render = () => {
     <!-- ══ HISTORIAL ══ -->
     <div class="pg_sec_hdr">
       <div class="pg_sec_title"><i class="fas fa-book-open"></i> Historial de lecciones</div>
-      <div class="pg_sec_sub" id="pg_sub">${lecsOk.length} de 45 completadas</div>
+      <div class="pg_sec_sub" id="pg_sub">${lecsOk.length} de 150 completadas</div>
     </div>
 
     <div class="pg_hist_grid" id="pg_hist_grid">
@@ -216,7 +321,7 @@ export const init = () => {
   requestAnimationFrame(() => {
     setTimeout(() => {
       const prog = getls('wiProgreso') || {};
-      const pct  = Math.round(((prog.leccionesOk?.length || 0) / 45) * 100);
+      const pct  = Math.round(((prog.leccionesOk?.length || 0) / 150) * 100);
       $('#pg_gbar').css('width', `${pct}%`);
     }, 50);
   });
@@ -274,10 +379,10 @@ async function _syncFirestore(usuario) {
     savels('wiProgreso', newProg, 24);
 
     // Actualizar UI
-    const pct = Math.round((lecsArr.length / 45) * 100);
+    const pct = Math.round((lecsArr.length / 150) * 100);
     $('#pg_gbar').css('width', `${pct}%`);
-    $('#pg_gbar_txt').html(`${lecsArr.length} / 45 · <b>${pct}%</b>`);
-    $('#pg_sub').text(`${lecsArr.length} de 45 completadas`);
+    $('#pg_gbar_txt').html(`${lecsArr.length} / 150 · <b>${pct}%</b>`);
+    $('#pg_sub').text(`${lecsArr.length} de 150 completadas`);
     $('#pg_k_lec').text(lecsArr.length);
     $('#pg_k_wpm').text(wpmMax || '—');
     $('#pg_k_prec').text(newPrec ? `${newPrec}%` : '—');

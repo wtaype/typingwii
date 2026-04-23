@@ -121,7 +121,7 @@ export const RUTAS = [
   { path: '/sistema',  area: 'admin/', roles: ['admin'] },
 
   // LECCIONES — web/lecciones/ (públicas)
-  ...Array.from({ length: 45 }, (_, i) => {
+  ...Array.from({ length: 150 }, (_, i) => {
     const num = String(i + 1).padStart(2, '0');
     return { path: `/leccion${num}`, area: 'lecciones/' };
   }),

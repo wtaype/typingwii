@@ -508,15 +508,14 @@
 
 .lec_btn_gho {
   display: inline-flex; align-items: center; gap: .9vh;
-  background: rgba(255,255,255,.14); color: #fff;
-  border: 2px solid rgba(255,255,255,.35); border-radius: 1.2vh;
+  background: transparent; color: var(--mco);
+  border: 2px solid var(--mco); border-radius: 1.2vh;
   padding: 1.3vh 2.5vh;
   font-size: var(--fz_m2); font-weight: 700;
   text-decoration: none; cursor: pointer;
-  backdrop-filter: blur(8px);
   transition: all .25s;
 }
-.lec_btn_gho:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.7); transform: translateY(-3px); color: #fff; }
+.lec_btn_gho:hover { background: color-mix(in srgb, var(--mco) 10%, transparent); transform: translateY(-3px); color: var(--mco); }
 
 /* ════════════════════════════════════════════════════════
    RESPONSIVE

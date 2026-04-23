@@ -1,18 +1,17 @@
-// Lección 07 — Teclas R y U
+// Lección 07 — Tecla A
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 7,
-  "nivel": 2,
-  "titulo": "Teclas R y U",
-  "subtitulo": "Dedos índices — fila superior",
+  "nivel": 1,
+  "titulo": "Tecla A",
+  "subtitulo": "Dedo meñique izquierdo",
   "teclasPracticar": [
-    "r",
-    "u"
+    "a"
   ],
-  "descripcion": "Los índices suben de F y J a R y U.",
-  "texto": "r u r u ru ur ru ur fur ruf sur rus dru jur kur fru rud iru rudi ful"
+  "descripcion": "Estira ligeramente el meñique.",
+  "texto": "aaaa aaaaa aaaaaaa aaaa aaaa aaaaa aaaa"
 };
 
 setData(data);

@@ -5,62 +5,157 @@ import { app } from '../../wii.js';
 
 // ── 45 LECCIONES — datos del catálogo ─────────────────────────────
 export const LECCIONES = [
-  // ── NIVEL 1: FILA CENTRAL BÁSICA ──────────────────────────────
-  { id:1,  nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Teclas F y J',          sub:'Dedos índices · fila central',        meta:'20 WPM', dur:'5 min',  teclas:['F','J']              },
-  { id:2,  nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Teclas D y K',          sub:'Dedos medios · fila central',         meta:'22 WPM', dur:'5 min',  teclas:['D','K']              },
-  { id:3,  nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Teclas S y L',          sub:'Dedos anulares · fila central',       meta:'24 WPM', dur:'5 min',  teclas:['S','L']              },
-  { id:4,  nivel:1, color:'#16a34a', ico:'fa-keyboard', titulo:'Fila Central Completa', sub:'A S D F J K L Ñ',               meta:'26 WPM', dur:'8 min',  teclas:['A','S','D','F','J','K','L'] },
-  { id:5,  nivel:1, color:'#16a34a', ico:'fa-font',  titulo:'Primeras Palabras',    sub:'Palabras con fila central',           meta:'28 WPM', dur:'8 min',  teclas:['SAL','ALA','FAJA']   },
-  // ── NIVEL 2: FILA SUPERIOR ────────────────────────────────────
-  { id:6,  nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Teclas E e I',      sub:'Dedos medios · fila superior',        meta:'28 WPM', dur:'8 min',  teclas:['E','I']              },
-  { id:7,  nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Teclas R y U',      sub:'Índices · fila superior',             meta:'30 WPM', dur:'8 min',  teclas:['R','U']              },
-  { id:8,  nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Teclas T e Y',      sub:'Índices al centro superior',          meta:'30 WPM', dur:'8 min',  teclas:['T','Y']              },
-  { id:9,  nivel:2, color:'#0284c7', ico:'fa-arrow-up', titulo:'Teclas W y O',      sub:'Anulares · fila superior',            meta:'32 WPM', dur:'8 min',  teclas:['W','O']              },
-  { id:10, nivel:2, color:'#0284c7', ico:'fa-keyboard', titulo:'Fila Superior + Central', sub:'Q W E R T Y U I O P',          meta:'34 WPM', dur:'12 min', teclas:['Q','W','E','R','T','Y','U'] },
-  // ── NIVEL 3: FILA INFERIOR ────────────────────────────────────
-  { id:11, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Teclas V y B',    sub:'Índices · fila inferior',             meta:'30 WPM', dur:'8 min',  teclas:['V','B']              },
-  { id:12, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Teclas N y M',    sub:'Índice derecho · fila inferior',      meta:'32 WPM', dur:'8 min',  teclas:['N','M']              },
-  { id:13, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Teclas C y coma', sub:'Dedos medios · fila inferior',        meta:'32 WPM', dur:'8 min',  teclas:['C',',']              },
-  { id:14, nivel:3, color:'#ea580c', ico:'fa-arrow-down', titulo:'Teclas Z y X',    sub:'Meñique y anular izquierdo',          meta:'30 WPM', dur:'8 min',  teclas:['Z','X']              },
-  { id:15, nivel:3, color:'#ea580c', ico:'fa-keyboard',   titulo:'Todas las filas', sub:'Alfabeto QWERTY completo',            meta:'35 WPM', dur:'12 min', teclas:['A–Z']                },
-  // ── NIVEL 4: FRASES Y NÚMEROS ─────────────────────────────────
-  { id:16, nivel:4, color:'#a855f7', ico:'fa-align-left',  titulo:'Frases Simples', sub:'Velocidad con precisión',             meta:'36 WPM', dur:'10 min', teclas:['Frases']             },
-  { id:17, nivel:4, color:'#a855f7', ico:'fa-hashtag',     titulo:'Números 1 al 5', sub:'Fila numérica · mitad izquierda',     meta:'34 WPM', dur:'10 min', teclas:['1','2','3','4','5']  },
-  { id:18, nivel:4, color:'#a855f7', ico:'fa-hashtag',     titulo:'Números 6 al 0', sub:'Fila numérica · mitad derecha',       meta:'34 WPM', dur:'10 min', teclas:['6','7','8','9','0']  },
-  { id:19, nivel:4, color:'#9333ea', ico:'fa-hashtag',     titulo:'Todos los números', sub:'Fila numérica completa',           meta:'36 WPM', dur:'10 min', teclas:['0–9']                },
-  { id:20, nivel:4, color:'#9333ea', ico:'fa-align-left',  titulo:'Texto Real',     sub:'Práctica con texto natural',          meta:'38 WPM', dur:'12 min', teclas:['Texto']              },
-  // ── NIVEL 5: INTERMEDIO ───────────────────────────────────────
-  { id:21, nivel:5, color:'#06b6d4', ico:'fa-exclamation', titulo:'Puntuación Básica',   sub:'Punto, coma y dos puntos',       meta:'36 WPM', dur:'10 min', teclas:['.',',',':']          },
-  { id:22, nivel:5, color:'#06b6d4', ico:'fa-font',        titulo:'Mayúsculas con Shift', sub:'Shift + tecla = mayúscula',     meta:'36 WPM', dur:'10 min', teclas:['⇧']                  },
-  { id:23, nivel:5, color:'#06b6d4', ico:'fa-list',        titulo:'Palabras Comunes',     sub:'Las 50 palabras más usadas',    meta:'38 WPM', dur:'12 min', teclas:['Top 50']             },
-  { id:24, nivel:5, color:'#0891b2', ico:'fa-list',        titulo:'Palabras Comunes II',  sub:'Continuación top palabras',     meta:'40 WPM', dur:'12 min', teclas:['Top 100']            },
-  { id:25, nivel:5, color:'#0891b2', ico:'fa-comments',    titulo:'Frases del Día a Día', sub:'Comunicación cotidiana',        meta:'40 WPM', dur:'12 min', teclas:['Frases']             },
-  // ── NIVEL 6: PÁRRAFOS ─────────────────────────────────────────
-  { id:26, nivel:6, color:'#ec4899', ico:'fa-align-left',  titulo:'Párrafo Corto I',    sub:'Texto continuo sin pausas',       meta:'42 WPM', dur:'12 min', teclas:['Párrafo']            },
-  { id:27, nivel:6, color:'#ec4899', ico:'fa-align-left',  titulo:'Párrafo Corto II',   sub:'Ideas conectadas',                meta:'42 WPM', dur:'12 min', teclas:['Fluidez']            },
-  { id:28, nivel:6, color:'#ec4899', ico:'fa-hashtag',     titulo:'Números en Contexto', sub:'Mezcla de texto y números',     meta:'40 WPM', dur:'12 min', teclas:['Mix']                },
-  { id:29, nivel:6, color:'#db2777', ico:'fa-envelope',    titulo:'Email Profesional',  sub:'Redacción de comunicados',        meta:'42 WPM', dur:'15 min', teclas:['Email']              },
-  { id:30, nivel:6, color:'#db2777', ico:'fa-bolt',        titulo:'Velocidad Inicial',  sub:'Test de velocidad real',          meta:'45 WPM', dur:'15 min', teclas:['Sprint']             },
-  // ── NIVEL 7: AVANZADO ─────────────────────────────────────────
-  { id:31, nivel:7, color:'#f59e0b', ico:'fa-microchip',   titulo:'Texto Técnico I',    sub:'Vocabulario especializado',       meta:'45 WPM', dur:'15 min', teclas:['Técnico']            },
-  { id:32, nivel:7, color:'#f59e0b', ico:'fa-microchip',   titulo:'Texto Técnico II',   sub:'Informática y tecnología',        meta:'47 WPM', dur:'15 min', teclas:['IT']                 },
-  { id:33, nivel:7, color:'#d97706', ico:'fa-align-justify',titulo:'Párrafo Largo I',   sub:'Resistencia y concentración',     meta:'47 WPM', dur:'15 min', teclas:['Largo']              },
-  { id:34, nivel:7, color:'#d97706', ico:'fa-a',           titulo:'Acentos y Tilde',    sub:'Español con tildes correctas',    meta:'44 WPM', dur:'15 min', teclas:['á','é','í','ó','ú']  },
-  { id:35, nivel:7, color:'#b45309', ico:'fa-exclamation', titulo:'Signos de Puntuación', sub:'Puntuación avanzada',           meta:'44 WPM', dur:'15 min', teclas:['.','(',')','–','"']  },
-  // ── NIVEL 8: VELOCIDAD ────────────────────────────────────────
-  { id:36, nivel:8, color:'#10b981', ico:'fa-gauge',       titulo:'Objetivo: 40 WPM',   sub:'Nivel profesional básico',        meta:'40 WPM', dur:'15 min', teclas:['40 WPM']             },
-  { id:37, nivel:8, color:'#10b981', ico:'fa-gauge',       titulo:'Objetivo: 50 WPM',   sub:'Mecanógrafo competente',          meta:'50 WPM', dur:'15 min', teclas:['50 WPM']             },
-  { id:38, nivel:8, color:'#059669', ico:'fa-gauge-high',  titulo:'Objetivo: 60 WPM',   sub:'Nivel avanzado de escritura',     meta:'60 WPM', dur:'15 min', teclas:['60 WPM']             },
-  // ── NIVEL 9: EXPERTO ──────────────────────────────────────────
-  { id:39, nivel:9, color:'#ef4444', ico:'fa-book-open',   titulo:'Texto Académico',    sub:'Redacción universitaria',         meta:'50 WPM', dur:'18 min', teclas:['Académico']          },
-  { id:40, nivel:9, color:'#ef4444', ico:'fa-scale-balanced', titulo:'Texto Jurídico',  sub:'Redacción legal y formal',        meta:'50 WPM', dur:'18 min', teclas:['Legal']              },
-  { id:41, nivel:9, color:'#dc2626', ico:'fa-code',        titulo:'Código de Programación', sub:'Sintaxis y símbolos técnicos', meta:'45 WPM', dur:'18 min', teclas:['{}','()','[]']     },
-  { id:42, nivel:9, color:'#dc2626', ico:'fa-gauge-high',  titulo:'Objetivo: 70 WPM',   sub:'Experto en mecanografía',         meta:'70 WPM', dur:'18 min', teclas:['70 WPM']             },
-  // ── NIVEL 10: MAESTRO ─────────────────────────────────────────
-  { id:43, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Velocidad: 80 WPM',      sub:'Maestro de la mecanografía',      meta:'80 WPM', dur:'20 min', teclas:['80 WPM']             },
-  { id:44, nivel:10, color:'#7c3aed', ico:'fa-star',   titulo:'Texto Mixto Complejo',   sub:'Letras, números y símbolos',      meta:'70 WPM', dur:'20 min', teclas:['Mix total']          },
-  { id:45, nivel:10, color:'#6d28d9', ico:'fa-crown',  titulo:'Párrafo de Maestría',    sub:'El texto definitivo',             meta:'80 WPM', dur:'20 min', teclas:['Maestría']           },
-];
+  { id:1, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla F', sub:'Dedo índice izquierdo', meta:'25 WPM', dur:'3 min', teclas:["f"] },
+  { id:2, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla J', sub:'Dedo índice derecho', meta:'25 WPM', dur:'3 min', teclas:["j"] },
+  { id:3, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla D', sub:'Dedo medio izquierdo', meta:'25 WPM', dur:'3 min', teclas:["d"] },
+  { id:4, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla K', sub:'Dedo medio derecho', meta:'25 WPM', dur:'3 min', teclas:["k"] },
+  { id:5, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla S', sub:'Dedo anular izquierdo', meta:'25 WPM', dur:'3 min', teclas:["s"] },
+  { id:6, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla L', sub:'Dedo anular derecho', meta:'25 WPM', dur:'3 min', teclas:["l"] },
+  { id:7, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla A', sub:'Dedo meñique izquierdo', meta:'25 WPM', dur:'3 min', teclas:["a"] },
+  { id:8, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla Ñ', sub:'Dedo meñique derecho', meta:'25 WPM', dur:'3 min', teclas:["ñ"] },
+  { id:9, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla G', sub:'Dedo índice izquierdo (extensión)', meta:'25 WPM', dur:'3 min', teclas:["g"] },
+  { id:10, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla H', sub:'Dedo índice derecho (extensión)', meta:'25 WPM', dur:'4 min', teclas:["h"] },
+  { id:11, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla E', sub:'Dedo medio izquierdo (arriba)', meta:'25 WPM', dur:'4 min', teclas:["e"] },
+  { id:12, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla I', sub:'Dedo medio derecho (arriba)', meta:'25 WPM', dur:'4 min', teclas:["i"] },
+  { id:13, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla R', sub:'Dedo índice izquierdo (arriba)', meta:'25 WPM', dur:'4 min', teclas:["r"] },
+  { id:14, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla U', sub:'Dedo índice derecho (arriba)', meta:'25 WPM', dur:'4 min', teclas:["u"] },
+  { id:15, nivel:1, color:'#22c55e', ico:'fa-hand', titulo:'Tecla T', sub:'Dedo índice izquierdo (arriba-ext)', meta:'25 WPM', dur:'4 min', teclas:["t"] },
+  { id:16, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla Y', sub:'Dedo índice derecho (arriba-ext)', meta:'30 WPM', dur:'4 min', teclas:["y"] },
+  { id:17, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla W', sub:'Dedo anular izquierdo (arriba)', meta:'30 WPM', dur:'4 min', teclas:["w"] },
+  { id:18, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla O', sub:'Dedo anular derecho (arriba)', meta:'30 WPM', dur:'4 min', teclas:["o"] },
+  { id:19, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla Q', sub:'Dedo meñique izquierdo (arriba)', meta:'30 WPM', dur:'4 min', teclas:["q"] },
+  { id:20, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla P', sub:'Dedo meñique derecho (arriba)', meta:'30 WPM', dur:'5 min', teclas:["p"] },
+  { id:21, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla V', sub:'Dedo índice izquierdo (abajo)', meta:'30 WPM', dur:'5 min', teclas:["v"] },
+  { id:22, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla M', sub:'Dedo índice derecho (abajo)', meta:'30 WPM', dur:'5 min', teclas:["m"] },
+  { id:23, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla C', sub:'Dedo medio izquierdo (abajo)', meta:'30 WPM', dur:'5 min', teclas:["c"] },
+  { id:24, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla N', sub:'Dedo índice derecho (abajo)', meta:'30 WPM', dur:'5 min', teclas:["n"] },
+  { id:25, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla X', sub:'Dedo anular izquierdo (abajo)', meta:'30 WPM', dur:'5 min', teclas:["x"] },
+  { id:26, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla B', sub:'Dedo índice izquierdo (abajo-ext)', meta:'30 WPM', dur:'5 min', teclas:["b"] },
+  { id:27, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla Z', sub:'Dedo meñique izquierdo (abajo)', meta:'30 WPM', dur:'5 min', teclas:["z"] },
+  { id:28, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla ,', sub:'Dedo medio derecho (abajo)', meta:'30 WPM', dur:'5 min', teclas:[","] },
+  { id:29, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Tecla .', sub:'Dedo anular derecho (abajo)', meta:'30 WPM', dur:'5 min', teclas:["."] },
+  { id:30, nivel:2, color:'#0ea5e9', ico:'fa-arrow-up', titulo:'Barra Espaciadora', sub:'Pulgares', meta:'30 WPM', dur:'6 min', teclas:[" "] },
+  { id:31, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Mix Índices', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'6 min', teclas:["f"] },
+  { id:32, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Mix Medios', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'6 min', teclas:["d"] },
+  { id:33, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Mix Anulares', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'6 min', teclas:["s"] },
+  { id:34, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Mix Meñiques', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'6 min', teclas:["a"] },
+  { id:35, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Escala Izquierda', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'6 min', teclas:["f"] },
+  { id:36, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Escala Derecha', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'6 min', teclas:["j"] },
+  { id:37, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Extensiones Centro', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'6 min', teclas:["g"] },
+  { id:38, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Mitad Izquierda Total', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'6 min', teclas:["a"] },
+  { id:39, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Mitad Derecha Total', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'6 min', teclas:["h"] },
+  { id:40, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Fila Guía Completa', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'7 min', teclas:["a"] },
+  { id:41, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Salto Vertical Medio Izq', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'7 min', teclas:["d"] },
+  { id:42, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Salto Vertical Índice Der', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'7 min', teclas:["j"] },
+  { id:43, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Salto Vertical Índice Izq', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'7 min', teclas:["f"] },
+  { id:44, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Salto Vertical Medio Der', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'7 min', teclas:["k"] },
+  { id:45, nivel:3, color:'#f97316', ico:'fa-arrow-down', titulo:'Salto Vertical Anular Izq', sub:'Coordinación y Fluidez', meta:'35 WPM', dur:'7 min', teclas:["s"] },
+  { id:46, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Salto Vertical Anular Der', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'7 min', teclas:["l"] },
+  { id:47, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Salto Vertical Meñique Izq', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'7 min', teclas:["a"] },
+  { id:48, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Salto Vertical Meñique Der', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'7 min', teclas:["ñ"] },
+  { id:49, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Salto Extensión Izq', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'7 min', teclas:["f"] },
+  { id:50, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Salto Extensión Der', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["j"] },
+  { id:51, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["e"] },
+  { id:52, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["e"] },
+  { id:53, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["d"] },
+  { id:54, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["l"] },
+  { id:55, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["o"] },
+  { id:56, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["e"] },
+  { id:57, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["u"] },
+  { id:58, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["a"] },
+  { id:59, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'8 min', teclas:["l"] },
+  { id:60, nivel:4, color:'#a855f7', ico:'fa-hashtag', titulo:'Bigrama Frecuente', sub:'Coordinación y Fluidez', meta:'40 WPM', dur:'9 min', teclas:["s"] },
+  { id:61, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: sol', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'9 min', teclas:["s"] },
+  { id:62, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: pan', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'9 min', teclas:["p"] },
+  { id:63, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: mar', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'9 min', teclas:["m"] },
+  { id:64, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: luz', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'9 min', teclas:["l"] },
+  { id:65, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: voz', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'9 min', teclas:["v"] },
+  { id:66, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: casa', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'9 min', teclas:["c"] },
+  { id:67, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: flor', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'9 min', teclas:["f"] },
+  { id:68, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: pelo', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'9 min', teclas:["p"] },
+  { id:69, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: mesa', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'9 min', teclas:["m"] },
+  { id:70, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: vida', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'10 min', teclas:["v"] },
+  { id:71, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: tiempo', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'10 min', teclas:["t"] },
+  { id:72, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: camino', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'10 min', teclas:["c"] },
+  { id:73, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: fuerte', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'10 min', teclas:["f"] },
+  { id:74, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: ciudad', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'10 min', teclas:["c"] },
+  { id:75, nivel:5, color:'#06b6d4', ico:'fa-align-left', titulo:'Palabra: tierra', sub:'Coordinación y Fluidez', meta:'45 WPM', dur:'10 min', teclas:["t"] },
+  { id:76, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: puerta', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'10 min', teclas:["p"] },
+  { id:77, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: blanco', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'10 min', teclas:["b"] },
+  { id:78, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: fuerza', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'10 min', teclas:["f"] },
+  { id:79, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: puente', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'10 min', teclas:["p"] },
+  { id:80, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: viento', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["v"] },
+  { id:81, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: llave', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["l"] },
+  { id:82, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: perro', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["p"] },
+  { id:83, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: calle', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["c"] },
+  { id:84, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: lleno', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["l"] },
+  { id:85, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: valle', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["v"] },
+  { id:86, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: correr', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["c"] },
+  { id:87, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: carro', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["c"] },
+  { id:88, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: accion', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["a"] },
+  { id:89, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: leccion', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'11 min', teclas:["l"] },
+  { id:90, nivel:6, color:'#ec4899', ico:'fa-align-justify', titulo:'Palabra: ficcion', sub:'Coordinación y Fluidez', meta:'50 WPM', dur:'12 min', teclas:["f"] },
+  { id:91, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: A', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'12 min', teclas:["A"] },
+  { id:92, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: E', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'12 min', teclas:["E"] },
+  { id:93, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: I', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'12 min', teclas:["I"] },
+  { id:94, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: O', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'12 min', teclas:["O"] },
+  { id:95, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: U', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'12 min', teclas:["U"] },
+  { id:96, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: M', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'12 min', teclas:["M"] },
+  { id:97, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: S', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'12 min', teclas:["S"] },
+  { id:98, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: L', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'12 min', teclas:["L"] },
+  { id:99, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: C', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'12 min', teclas:["C"] },
+  { id:100, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: P', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'13 min', teclas:["P"] },
+  { id:101, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: á', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'13 min', teclas:["á"] },
+  { id:102, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: é', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'13 min', teclas:["é"] },
+  { id:103, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: í', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'13 min', teclas:["í"] },
+  { id:104, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: ó', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'13 min', teclas:["ó"] },
+  { id:105, nivel:7, color:'#f59e0b', ico:'fa-microchip', titulo:'Uso de: ú', sub:'Coordinación y Fluidez', meta:'55 WPM', dur:'13 min', teclas:["ú"] },
+  { id:106, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: más', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'13 min', teclas:["m"] },
+  { id:107, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: qué', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'13 min', teclas:["q"] },
+  { id:108, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: sí', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'13 min', teclas:["s"] },
+  { id:109, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: él', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'13 min', teclas:["é"] },
+  { id:110, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: así', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["a"] },
+  { id:111, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: ;', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:[";"] },
+  { id:112, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: :', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:[":"] },
+  { id:113, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: -', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["-"] },
+  { id:114, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: _', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["_"] },
+  { id:115, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:"Uso de: \"", sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["\\\""] },
+  { id:116, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:"Uso de: '", sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["'"] },
+  { id:117, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: !', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["!"] },
+  { id:118, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: ?', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["?"] },
+  { id:119, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: (', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["("] },
+  { id:120, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: )', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'15 min', teclas:[")"] },
+  { id:121, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 1...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'15 min', teclas:["1"] },
+  { id:122, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 2...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'15 min', teclas:["2"] },
+  { id:123, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 3...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'15 min', teclas:["3"] },
+  { id:124, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 4...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'15 min', teclas:["4"] },
+  { id:125, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 5...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'15 min', teclas:["5"] },
+  { id:126, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 6...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'15 min', teclas:["6"] },
+  { id:127, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 7...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'15 min', teclas:["7"] },
+  { id:128, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 8...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'15 min', teclas:["8"] },
+  { id:129, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 9...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'15 min', teclas:["9"] },
+  { id:130, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: 0...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'16 min', teclas:["0"] },
+  { id:131, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: @...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'16 min', teclas:["@"] },
+  { id:132, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: #...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'16 min', teclas:["#"] },
+  { id:133, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: $...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'16 min', teclas:["$"] },
+  { id:134, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: %...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'16 min', teclas:["%"] },
+  { id:135, nivel:9, color:'#ef4444', ico:'fa-book-open', titulo:'Dominio: &...', sub:'Coordinación y Fluidez', meta:'65 WPM', dur:'16 min', teclas:["&"] },
+  { id:136, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: /...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'16 min', teclas:["/"] },
+  { id:137, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: =...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'16 min', teclas:["="] },
+  { id:138, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: {...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'16 min', teclas:["{"] },
+  { id:139, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: }...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'16 min', teclas:["}"] },
+  { id:140, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: [...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["["] },
+  { id:141, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: El veloz m...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["E"] },
+  { id:142, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: La vida es...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["L"] },
+  { id:143, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: function t...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["f"] },
+  { id:144, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: El exito r...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["E"] },
+  { id:145, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: console.lo...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["c"] },
+  { id:146, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: Un mar en ...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["U"] },
+  { id:147, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: En la ciud...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["E"] },
+  { id:148, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: const PI =...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["c"] },
+  { id:149, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: Nuestra ma...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'17 min', teclas:["N"] },
+  { id:150, nivel:10, color:'#7c3aed', ico:'fa-trophy', titulo:'Dominio: EL GRAN RE...', sub:'Coordinación y Fluidez', meta:'70 WPM', dur:'18 min', teclas:["E"] }
+];;
 
 // Niveles agrupados para filtro y hero
 const NIVELES_INFO = [
@@ -92,7 +187,7 @@ export const render = () => `
         <span class="lec_badge_dot"></span>
       </div>
       <h1 class="lec_hero_h1">
-        45 lecciones para<br>
+        150 lecciones para<br>
         <span class="lec_grad">dominar el teclado</span>
       </h1>
       <p class="lec_hero_sub">
@@ -102,7 +197,7 @@ export const render = () => `
       <div class="lec_hero_prog">
         <div class="lec_hp_info">
           <span><i class="fas fa-check-circle" style="color:var(--success)"></i> 0 completadas</span>
-          <span id="lec_global_pct">0 / 45</span>
+          <span id="lec_global_pct">0 / 150</span>
         </div>
         <div class="lec_hp_track">
           <div class="lec_hp_fill" id="lec_hp_fill" style="width:0%"></div>
@@ -112,7 +207,7 @@ export const render = () => `
     <!-- Stats rápidos -->
     <div class="lec_hero_stats">
       <div class="lec_hs">
-        <div class="lec_hs_n">45</div>
+        <div class="lec_hs_n">150</div>
         <div class="lec_hs_l"><i class="fas fa-book-open"></i> Lecciones</div>
       </div>
       <div class="lec_hs_sep"></div>
@@ -147,30 +242,15 @@ export const render = () => `
 
   <!-- ══ GRID DE LECCIONES ══ -->
   <div class="lec_grid" id="lec_grid">
-    ${LECCIONES.map(l => _cardHTML(l, [], false)).join('')}
+    <!-- Se llena con js (paginado) -->
+  </div>
+  <div id="lec_more_wrap" style="text-align:center; margin: 3rem 0; display:none;">
+    <button id="btn_show_more" class="lec_btn_gho" style="padding: 1rem 3rem; font-size: 1.1em; border-radius: 50px;">
+      <i class="fas fa-chevron-down"></i> Mostrar más
+    </button>
   </div>
 
-  <!-- ══ CTA ══ -->
-  <div class="lec_cta_wrap wi_fadeUp">
-    <div class="lec_cta_card">
-      <div class="lec_cta_orb"></div>
-      <div class="lec_cta_body">
-        <i class="fas fa-rocket lec_cta_ico"></i>
-        <div>
-          <h2 class="lec_cta_h2">¿Ya practicaste hoy?</h2>
-          <p class="lec_cta_p">Empieza desde la lección 01 o prueba tu velocidad actual en el modo libre.</p>
-        </div>
-        <div class="lec_cta_btns">
-          <a href="/leccion01" class="lec_btn_main nv_item" data-page="leccion01">
-            <i class="fas fa-play"></i> Empezar desde el inicio
-          </a>
-          <a href="/comenzar" class="lec_btn_gho nv_item" data-page="comenzar">
-            <i class="fas fa-bolt"></i> Modo libre
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
 </div>`;
 
@@ -254,39 +334,64 @@ function _cardHTML(l, lecsOk = [], isAuth = false) {
 // ── INIT ──────────────────────────────────────────────────────────
 let _obs = null;
 
+
+let currentCount = 15;
+let filteredLecciones = [];
+
 export const init = () => {
-  // ── Auth check (cache only) ─────────────────────────────────────
   const wi     = getls('wiSmile');
   const isAuth = !!wi?.usuario;
   const prog   = isAuth ? (getls('wiProgreso') || {}) : {};
   const lecsOk = prog.leccionesOk || [];
-  const pct    = Math.round((lecsOk.length / 45) * 100);
+  const pct    = Math.round((lecsOk.length / 150) * 100);
 
-  // Renderizar grid con estado correcto
-  $('#lec_grid').html(LECCIONES.map(l => _cardHTML(l, lecsOk, isAuth)).join(''));
+  filteredLecciones = [...LECCIONES];
 
-  // Actualizar hero solo si hay sesion con avances
+  const renderGrid = () => {
+    const toShow = filteredLecciones.slice(0, currentCount);
+    $('#lec_grid').html(toShow.map(l => _cardHTML(l, lecsOk, isAuth)).join(''));
+    
+    if (currentCount >= filteredLecciones.length) {
+      $('#lec_more_wrap').hide();
+    } else {
+      $('#lec_more_wrap').show();
+    }
+  };
+
+  renderGrid();
+
   if (isAuth && lecsOk.length > 0) {
     $('#lec_hp_fill').css('width', `${pct}%`);
-    $('#lec_global_pct').text(`${lecsOk.length} / 45`);
+    $('#lec_global_pct').text(`${lecsOk.length} / 150`);
     $('.lec_hp_info span:first').html(`<i class="fas fa-check-circle" style="color:var(--success)"></i> ${lecsOk.length} completadas`);
   }
 
-  // Animaciones scroll
   _obs = wiVista('.lec_card', null, { anim: 'wi_fadeUp', stagger: 45 });
-  wiVista('.lec_cta_wrap', null, { anim: 'wi_fadeUp' });
 
   $(document).off('.lec');
 
-  // Filtro de nivel
+  $(document).on('click.lec', '#btn_show_more', function() {
+    currentCount += 15;
+    renderGrid();
+    // Re-apply observation to new cards
+    _obs?.disconnect?.();
+    _obs = wiVista('.lec_card:not(.wi_fadeUp_done)', null, { anim: 'wi_fadeUp', stagger: 45 });
+  });
+
   $(document).on('click.lec', '.lec_filtro', function () {
     const nv = +$(this).data('nv');
     $('.lec_filtro').removeClass('active');
     $(this).addClass('active');
-    _filtrar(nv);
+    
+    if(nv === 0) {
+      filteredLecciones = [...LECCIONES];
+    } else {
+      filteredLecciones = LECCIONES.filter(l => l.nivel === nv);
+    }
+    currentCount = 15;
+    renderGrid();
   });
 
-  // Click en card — bloquear si no desbloqueada, navegar si ok
   $(document).on('click.lec', '.lec_card', function (e) {
     e.preventDefault();
     if ($(this).hasClass('lec_bloqueada')) return;
@@ -294,7 +399,7 @@ export const init = () => {
     import('../../rutas/ruta.js').then(({ rutas }) => rutas.navigate(`/${page}`));
   });
 
-  console.log(`📚 ${app} — ${LECCIONES.length} lecciones · ${lecsOk.length} completadas (cache)`);
+  console.log(`📚 ${app} — ${LECCIONES.length} lecciones · ${lecsOk.length} completadas`);
 };
 
 export const cleanup = () => {
@@ -302,11 +407,3 @@ export const cleanup = () => {
   $(document).off('.lec');
 };
 
-// ── FILTRAR ───────────────────────────────────────────────────────
-function _filtrar(nv) {
-  $('.lec_card').each(function () {
-    const cardNv = +$(this).data('nv');
-    $(this).toggleClass('lec_hidden', nv !== 0 && cardNv !== nv)
-           .toggleClass('lec_show',   nv === 0 || cardNv === nv);
-  });
-}

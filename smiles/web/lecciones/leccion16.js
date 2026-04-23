@@ -1,15 +1,17 @@
-// Lección 16 — Frases Simples
+// Lección 16 — Tecla Y
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 16,
-  "nivel": 4,
-  "titulo": "Frases Simples",
-  "subtitulo": "Velocidad con precisión",
-  "teclasPracticar": [],
-  "descripcion": "Escribe frases completas con buena postura y sin prisa.",
-  "texto": "el sol sale cada dia la vida es bella el trabajo es digno sigue adelante con fe"
+  "nivel": 1,
+  "titulo": "Tecla Y",
+  "subtitulo": "Dedo índice derecho (arriba-ext)",
+  "teclasPracticar": [
+    "y"
+  ],
+  "descripcion": "Sube y estira hacia la izquierda desde la J.",
+  "texto": "yyyyyyyy yyyyyyyyyy yyyyyy yyyy yyyyyyyyyy yyyyyyyyy"
 };
 
 setData(data);

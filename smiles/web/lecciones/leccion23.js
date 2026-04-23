@@ -1,15 +1,17 @@
-// Lección 23 — Palabras Comunes
+// Lección 23 — Tecla C
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 23,
-  "nivel": 5,
-  "titulo": "Palabras Comunes",
-  "subtitulo": "Las 50 palabras más usadas",
-  "teclasPracticar": [],
-  "descripcion": "Domina estas palabras y tendrás el 50% del español cubierto.",
-  "texto": "de la que el en y a los se del las un por con no una su para es al lo como mas"
+  "nivel": 1,
+  "titulo": "Tecla C",
+  "subtitulo": "Dedo medio izquierdo (abajo)",
+  "teclasPracticar": [
+    "c"
+  ],
+  "descripcion": "Baja ligeramente desde la D.",
+  "texto": "cccc ccccc ccccccc ccccc ccccc ccccccc ccccc"
 };
 
 setData(data);

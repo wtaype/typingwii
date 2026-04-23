@@ -9,7 +9,7 @@ import { getls } from '../../widev.js';
 import { app } from '../../wii.js';
 
 // ── CONDICIONES ───────────────────────────────────────────────────────────────
-const TOTAL_LECS = 45;
+const TOTAL_LECS = 150;
 const WPM_MIN    = 80;
 
 const wi = () => getls('wiSmile');
@@ -65,7 +65,7 @@ export const render = () => {
             <i class="fas ${lecsOk100 ? 'fa-check' : 'fa-graduation-cap'}"></i>
           </div>
           <div class="cert_req_body">
-            <div class="cert_req_lbl">Completar las 45 lecciones</div>
+            <div class="cert_req_lbl">Completar las 150 lecciones</div>
             <div class="cert_req_sub">${lecsOk100
               ? '¡Todas las lecciones completadas!'
               : `Te faltan ${TOTAL_LECS - lecsOkN} lección${TOTAL_LECS - lecsOkN !== 1 ? 'es' : ''} por completar.`}</div>
@@ -282,7 +282,7 @@ function _dibujarCertificado(nombre, wpm, fecha) {
 
   ctx.fillStyle = '#f59e0b';
   ctx.font      = 'bold 22px "Segoe UI", Arial, sans-serif';
-  ctx.fillText(`${app} — 45 Lecciones Progresivas`, W / 2, 462);
+  ctx.fillText(`${app} — ${TOTAL_LECS} Lecciones Progresivas`, W / 2, 462);
 
   // ── Estadísticas en 3 columnas ────────────────────────
   const statsY  = 545;
@@ -291,7 +291,7 @@ function _dibujarCertificado(nombre, wpm, fecha) {
   const col3 = W / 2 + 200;
 
   _stat(ctx, col1, statsY, `${wpm}`, 'WPM Alcanzados');
-  _stat(ctx, col2, statsY, '45', 'Lecciones');
+  _stat(ctx, col2, statsY, `${TOTAL_LECS}`, 'Lecciones');
   _stat(ctx, col3, statsY, '10', 'Niveles');
 
   // ── Separador ─────────────────────────────────────────

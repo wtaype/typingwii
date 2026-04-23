@@ -1,21 +1,17 @@
-// Lección 17 — Números 1 al 5
+// Lección 17 — Tecla W
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 17,
-  "nivel": 4,
-  "titulo": "Números 1 al 5",
-  "subtitulo": "Fila numérica — mitad izquierda",
+  "nivel": 1,
+  "titulo": "Tecla W",
+  "subtitulo": "Dedo anular izquierdo (arriba)",
   "teclasPracticar": [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5"
+    "w"
   ],
-  "descripcion": "Los números se escriben con la misma mano que las letras debajo.",
-  "texto": "1 2 3 4 5 12 23 34 45 51 123 234 345 451 512 1234 2345 3451 12345 54321"
+  "descripcion": "Sube ligeramente desde la S.",
+  "texto": "wwww wwwww wwwwwww wwwww wwwwww wwwww wwwww"
 };
 
 setData(data);

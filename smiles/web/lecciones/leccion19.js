@@ -1,26 +1,17 @@
-// Lección 19 — Todos los números
+// Lección 19 — Tecla Q
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 19,
-  "nivel": 4,
-  "titulo": "Todos los números",
-  "subtitulo": "Fila numérica completa",
+  "nivel": 1,
+  "titulo": "Tecla Q",
+  "subtitulo": "Dedo meñique izquierdo (arriba)",
   "teclasPracticar": [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "0"
+    "q"
   ],
-  "descripcion": "Números completos con palabras mezcladas.",
-  "texto": "hay 12 meses en 1 año son 365 dias o 8760 horas en 2025 hubo 100 lecciones"
+  "descripcion": "Sube ligeramente desde la A.",
+  "texto": "qqqq qqqqq qqqqqqq qqq qqqq qqqqq qqqq"
 };
 
 setData(data);

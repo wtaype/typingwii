@@ -1,15 +1,17 @@
-// Lección 20 — Texto Real
+// Lección 20 — Tecla P
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 20,
-  "nivel": 4,
-  "titulo": "Texto Real",
-  "subtitulo": "Práctica con texto natural",
-  "teclasPracticar": [],
-  "descripcion": "Texto real para medir tu velocidad y precisión actuales.",
-  "texto": "La mecanografia es una habilidad esencial hoy en dia. Practicar cada dia mejora la velocidad y la precision. Con dedicacion puedes alcanzar 60 palabras por minuto o mas."
+  "nivel": 1,
+  "titulo": "Tecla P",
+  "subtitulo": "Dedo meñique derecho (arriba)",
+  "teclasPracticar": [
+    "p"
+  ],
+  "descripcion": "Sube ligeramente desde la Ñ.",
+  "texto": "pppppp ppppppp ppppp pppppp ppppppp ppppppp"
 };
 
 setData(data);

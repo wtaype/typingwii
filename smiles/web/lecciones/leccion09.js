@@ -1,18 +1,17 @@
-// Lección 09 — Teclas W y O
+// Lección 09 — Tecla G
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 9,
-  "nivel": 2,
-  "titulo": "Teclas W y O",
-  "subtitulo": "Dedos anulares — fila superior",
+  "nivel": 1,
+  "titulo": "Tecla G",
+  "subtitulo": "Dedo índice izquierdo (extensión)",
   "teclasPracticar": [
-    "w",
-    "o"
+    "g"
   ],
-  "descripcion": "Dedos anulares suben de S y L a W y O.",
-  "texto": "wo ow wo ow slow flow word work wire wore soft wolf wolf word slow low row"
+  "descripcion": "Estira el índice hacia la derecha y regresa a la F.",
+  "texto": "gggg ggggg ggggggg ggg gggg ggggg gggg"
 };
 
 setData(data);

@@ -1,15 +1,15 @@
-// Lección 34 — Acentos y Tilde
+// Lección 34 — Mix Meñiques
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 34,
-  "nivel": 7,
-  "titulo": "Acentos y Tilde",
-  "subtitulo": "Español con tildes correctas",
-  "teclasPracticar": [],
-  "descripcion": "La tilde es parte del español. Practica ubicarla correctamente.",
-  "texto": "el café estaba caliente. la música sonaba fuerte. él llegó tarde a la reunión. ¿cómo estás? ¡muy bien, gracias! la dirección es correcta según el mapa."
+  "nivel": 2,
+  "titulo": "Mix Meñiques",
+  "subtitulo": "Coordinación y Fluidez",
+  "teclasPracticar": ["a"],
+  "descripcion": "Practica la transición entre estas letras.",
+  "texto": "aaaaa ñññññ añañañañañ añañañañañ añaaaaañañañañañ"
 };
 
 setData(data);

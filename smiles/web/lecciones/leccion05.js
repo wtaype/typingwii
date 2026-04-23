@@ -1,23 +1,17 @@
-// Lección 05 — Primeras Palabras
+// Lección 05 — Tecla S
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 5,
   "nivel": 1,
-  "titulo": "Primeras Palabras",
-  "subtitulo": "Palabras con fila central",
+  "titulo": "Tecla S",
+  "subtitulo": "Dedo anular izquierdo",
   "teclasPracticar": [
-    "a",
-    "s",
-    "d",
-    "f",
-    "j",
-    "k",
-    "l"
+    "s"
   ],
-  "descripcion": "Las primeras palabras reales usando solo la fila central.",
-  "texto": "sal sal ala faja jala deja laja falda salsa flask flask salsa deja faja ala sal"
+  "descripcion": "Un dedo más débil, requiere paciencia.",
+  "texto": "ssss sssss sssssss sss ssss sssss ssss"
 };
 
 setData(data);

@@ -1,18 +1,17 @@
-// Lección 06 — Teclas E e I
+// Lección 06 — Tecla L
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 6,
-  "nivel": 2,
-  "titulo": "Teclas E e I",
-  "subtitulo": "Dedos medios — fila superior",
+  "nivel": 1,
+  "titulo": "Tecla L",
+  "subtitulo": "Dedo anular derecho",
   "teclasPracticar": [
-    "e",
-    "i"
+    "l"
   ],
-  "descripcion": "Dedos medios suben de D y K a E e I.",
-  "texto": "e i e i ei ie ei ie dei kei sei lei dei sei lei fei eid idk ide ike"
+  "descripcion": "Un dedo más débil, concéntrate.",
+  "texto": "llllll llllllllll lllllllll llll lllll llllllll llllll"
 };
 
 setData(data);

@@ -1,15 +1,15 @@
-// Lección 32 — Texto Técnico II
+// Lección 32 — Mix Medios
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 32,
-  "nivel": 7,
-  "titulo": "Texto Técnico II",
-  "subtitulo": "Informática y tecnología",
-  "teclasPracticar": [],
-  "descripcion": "Términos de tecnología que todo profesional moderno debe conocer.",
-  "texto": "La inteligencia artificial y el aprendizaje automatico son tecnologias que estan redefiniendo industrias como la medicina, finanzas, educacion y manufactura."
+  "nivel": 2,
+  "titulo": "Mix Medios",
+  "subtitulo": "Coordinación y Fluidez",
+  "teclasPracticar": ["d"],
+  "descripcion": "Practica la transición entre estas letras.",
+  "texto": "dddkkkk dddkkkkkk kkkkdddd dddddddk ddkkdddkkdkd kkd"
 };
 
 setData(data);

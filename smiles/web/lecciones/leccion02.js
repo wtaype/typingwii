@@ -1,18 +1,17 @@
-// Lección 02 — Teclas D y K
+// Lección 02 — Tecla J
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 2,
   "nivel": 1,
-  "titulo": "Teclas D y K",
-  "subtitulo": "Dedos medios — fila central",
+  "titulo": "Tecla J",
+  "subtitulo": "Dedo índice derecho",
   "teclasPracticar": [
-    "d",
-    "k"
+    "j"
   ],
-  "descripcion": "Dedos medios sobre D y K, índices en F y J.",
-  "texto": "d k d k d k k d k d dk kd dk kd ddk kkd dkdk kdkd fdjk kjdf dfkj"
+  "descripcion": "Siente el relieve en la tecla.",
+  "texto": "jjjj jjjjjj jjjjjjj jjj jjjj jjjjj jjjj"
 };
 
 setData(data);

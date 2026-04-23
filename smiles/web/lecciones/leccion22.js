@@ -1,15 +1,17 @@
-// Lección 22 — Mayúsculas con Shift
+// Lección 22 — Tecla M
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 22,
-  "nivel": 5,
-  "titulo": "Mayúsculas con Shift",
-  "subtitulo": "Shift + tecla = mayúscula",
-  "teclasPracticar": [],
-  "descripcion": "Usa el Shift opuesto: mayúscula derecha con Shift izquierdo y viceversa.",
-  "texto": "Peru Lima Arequipa Cusco Trujillo Piura Iquitos Tacna Lima Peru America Latina"
+  "nivel": 1,
+  "titulo": "Tecla M",
+  "subtitulo": "Dedo índice derecho (abajo)",
+  "teclasPracticar": [
+    "m"
+  ],
+  "descripcion": "Baja y estira ligeramente desde la J.",
+  "texto": "mmmm mmmmm mmmmmm mmmmmm mmmmm mmmm mmmmmm"
 };
 
 setData(data);

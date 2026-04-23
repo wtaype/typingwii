@@ -1,25 +1,17 @@
-// Lección 10 — Fila Superior + Central
+// Lección 10 — Tecla H
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 10,
-  "nivel": 2,
-  "titulo": "Fila Superior + Central",
-  "subtitulo": "Q W E R T Y U I O P",
+  "nivel": 1,
+  "titulo": "Tecla H",
+  "subtitulo": "Dedo índice derecho (extensión)",
   "teclasPracticar": [
-    "q",
-    "p",
-    "e",
-    "r",
-    "t",
-    "y",
-    "u",
-    "i",
-    "o"
+    "h"
   ],
-  "descripcion": "Combinando las dos filas superiores. Practica el movimiento.",
-  "texto": "quite price write types yours fruit sport story quiet proud tired first water"
+  "descripcion": "Estira el índice hacia la izquierda y regresa a la J.",
+  "texto": "hhhh hhhhh hhhhhhh hhh hhhh hhhhh hhhh"
 };
 
 setData(data);

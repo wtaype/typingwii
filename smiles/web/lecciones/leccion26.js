@@ -1,15 +1,17 @@
-// Lección 26 — Párrafo Corto I
+// Lección 26 — Tecla B
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 26,
-  "nivel": 6,
-  "titulo": "Párrafo Corto I",
-  "subtitulo": "Texto continuo sin pausas",
-  "teclasPracticar": [],
-  "descripcion": "Escribe el párrafo completo sin detenerte. Fluidez es la clave.",
-  "texto": "El aprendizaje de la mecanografia requiere practica diaria. Comienza despacio y gana velocidad con el tiempo. La paciencia es tu mejor aliada en este proceso."
+  "nivel": 1,
+  "titulo": "Tecla B",
+  "subtitulo": "Dedo índice izquierdo (abajo-ext)",
+  "teclasPracticar": [
+    "b"
+  ],
+  "descripcion": "Estira hacia abajo y al centro.",
+  "texto": "bbbbbb bbbb bbbbbb bbbbbbb bbbbbbbbbbb"
 };
 
 setData(data);

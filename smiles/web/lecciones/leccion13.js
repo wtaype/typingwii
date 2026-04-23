@@ -1,18 +1,17 @@
-// Lección 13 — Teclas C y coma
+// Lección 13 — Tecla R
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 13,
-  "nivel": 3,
-  "titulo": "Teclas C y coma",
-  "subtitulo": "Dedos medios fila inferior",
+  "nivel": 1,
+  "titulo": "Tecla R",
+  "subtitulo": "Dedo índice izquierdo (arriba)",
   "teclasPracticar": [
-    "c",
-    ","
+    "r"
   ],
-  "descripcion": "Dedos medios bajan de D y K a C y coma.",
-  "texto": "nice case once price place since dance face dice mice lace face nice grace since"
+  "descripcion": "Sube ligeramente desde la F.",
+  "texto": "rrrr rrrrr rrrrrrr rrrr rrrr rrrrr rrrr"
 };
 
 setData(data);

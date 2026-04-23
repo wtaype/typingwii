@@ -1,18 +1,17 @@
-// Lección 03 — Teclas S y L
+// Lección 03 — Tecla D
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 3,
   "nivel": 1,
-  "titulo": "Teclas S y L",
-  "subtitulo": "Dedos anulares — fila central",
+  "titulo": "Tecla D",
+  "subtitulo": "Dedo medio izquierdo",
   "teclasPracticar": [
-    "s",
-    "l"
+    "d"
   ],
-  "descripcion": "Dedos anulares sobre S y L. Mantén los demás en posición.",
-  "texto": "s l s l s l l s l s sl ls sl ls ssl lls slsl lsls fjdk slsl fdkj"
+  "descripcion": "Mantén el dedo relajado.",
+  "texto": "dddd ddddd ddddddd ddd dddd ddddd dddd"
 };
 
 setData(data);

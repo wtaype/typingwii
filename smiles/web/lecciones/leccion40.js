@@ -1,15 +1,15 @@
-// Lección 40 — Texto Jurídico
+// Lección 40 — Fila Guía Completa
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 40,
-  "nivel": 9,
-  "titulo": "Texto Jurídico",
-  "subtitulo": "Redacción legal y formal",
-  "teclasPracticar": [],
-  "descripcion": "El lenguaje formal y preciso de documentos legales y contractuales.",
-  "texto": "Por medio del presente documento, las partes acuerdan los terminos y condiciones establecidos. Cualquier modificacion debera realizarse por escrito con la firma de ambas partes contratantes."
+  "nivel": 2,
+  "titulo": "Fila Guía Completa",
+  "subtitulo": "Coordinación y Fluidez",
+  "teclasPracticar": ["a"],
+  "descripcion": "Practica la transición entre estas letras.",
+  "texto": "asdf jklñ asdf jklñ asdf jklñ asdf jklñ"
 };
 
 setData(data);

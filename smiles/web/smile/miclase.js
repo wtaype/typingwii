@@ -169,100 +169,110 @@ function _renderConClase(clase, lecsOk) {
         </div>`).join('')}
     </div>
 
-    <!-- GESTOR -->
-    <div class="mc_sec_hdr"><i class="fas fa-chalkboard-teacher"></i> Instructor</div>
-    <div class="mc_gestor_card">
-      <div class="mc_gestor_av">${gestorIni}</div>
-      <div class="mc_gestor_info">
-        <div class="mc_gestor_nombre">${gestorNombre}</div>
-        <div class="mc_gestor_sub"><i class="fas fa-envelope"></i> ${clase.gestorEmail || 'Instructor registrado'}</div>
-      </div>
-      <div class="mc_gestor_badge"><i class="fas fa-star"></i> Instructor</div>
-    </div>
+    <!-- MAIN LAYOUT (COLUMNAS) -->
+    <div class="mc_main_layout">
+      
+      <!-- COLUMNA IZQUIERDA (Sidebar) -->
+      <div class="mc_layout_sidebar">
+        <!-- GESTOR -->
+        <div class="mc_sec_hdr"><i class="fas fa-chalkboard-teacher"></i> Instructor</div>
+        <div class="mc_gestor_card">
+          <div class="mc_gestor_av">${gestorIni}</div>
+          <div class="mc_gestor_info">
+            <div class="mc_gestor_nombre">${gestorNombre}</div>
+            <div class="mc_gestor_sub"><i class="fas fa-envelope"></i> ${clase.gestorEmail || 'Instructor registrado'}</div>
+          </div>
+          <div class="mc_gestor_badge"><i class="fas fa-star"></i> Instructor</div>
+        </div>
 
-    <!-- AVISOS -->
-    <div class="mc_sec_hdr">
-      <i class="fas fa-bell"></i> Avisos de clase
-      <span class="mc_sec_count">${avisos.length}</span>
-    </div>
-    ${avisos.length > 0 ? `
-      <div class="mc_avisos_list">
-        ${avisos.slice().reverse().map(av => `
-          <div class="mc_aviso_card ${av.tipo || 'info'}">
-            <div class="mc_aviso_ico">
-              <i class="fas ${av.tipo === 'urgente' ? 'fa-exclamation-triangle' : av.tipo === 'tarea' ? 'fa-tasks' : 'fa-info-circle'}"></i>
-            </div>
-            <div class="mc_aviso_body">
-              <div class="mc_aviso_tit">${av.titulo || 'Aviso'}</div>
-              <div class="mc_aviso_txt">${av.mensaje || ''}</div>
-              ${av.fecha ? `<div class="mc_aviso_fecha"><i class="fas fa-clock"></i> ${_fmtFecha(av.fecha)}</div>` : ''}
-            </div>
-          </div>`).join('')}
+        <!-- AVISOS -->
+        <div class="mc_sec_hdr">
+          <i class="fas fa-bell"></i> Avisos de clase
+          <span class="mc_sec_count">${avisos.length}</span>
+        </div>
+        ${avisos.length > 0 ? `
+          <div class="mc_avisos_list">
+            ${avisos.slice().reverse().map(av => `
+              <div class="mc_aviso_card ${av.tipo || 'info'}">
+                <div class="mc_aviso_ico">
+                  <i class="fas ${av.tipo === 'urgente' ? 'fa-exclamation-triangle' : av.tipo === 'tarea' ? 'fa-tasks' : 'fa-info-circle'}"></i>
+                </div>
+                <div class="mc_aviso_body">
+                  <div class="mc_aviso_tit">${av.titulo || 'Aviso'}</div>
+                  <div class="mc_aviso_txt">${av.mensaje || ''}</div>
+                  ${av.fecha ? `<div class="mc_aviso_fecha"><i class="fas fa-clock"></i> ${_fmtFecha(av.fecha)}</div>` : ''}
+                </div>
+              </div>`).join('')}
+          </div>
+        ` : `
+          <div class="mc_avisos_empty">
+            <i class="fas fa-bell-slash"></i>
+            <p>Sin avisos por ahora. Tu instructor publicará novedades aquí.</p>
+          </div>
+        `}
       </div>
-    ` : `
-      <div class="mc_avisos_empty">
-        <i class="fas fa-bell-slash"></i>
-        <p>Sin avisos por ahora. Tu instructor publicará novedades aquí.</p>
-      </div>
-    `}
 
-    <!-- LECCIONES ASIGNADAS -->
-    <div class="mc_sec_hdr">
-      <i class="fas fa-graduation-cap"></i> Lecciones asignadas
-      <span class="mc_sec_count">${okCount}/${totalAsig}</span>
-    </div>
-    ${lecsAsig.length > 0 ? `
-      <div class="mc_lecs_grid">
-        ${lecsAsig.map(id => {
-          const num  = String(id).padStart(2,'0');
-          const ok   = lecsOk.includes(id);
-          const prac = getls(`wiPrac_${id}`) || {};
-          const col  = NIVEL_COLORS[id] || 'var(--mco)';
-          return `
-            <a class="mc_lec_card nv_item" data-page="leccion${num}" href="/leccion${num}"
-              style="--lc:${col}">
-              <div class="mc_lec_top">
-                <span class="mc_lec_num">Lección ${num}</span>
-                ${ok ? `<span class="mc_lec_ok"><i class="fas fa-check"></i> Hecha</span>` : ''}
-              </div>
-              <div class="mc_lec_name">${LEC_NOMBRES[id] || `Lección ${num}`}</div>
-              ${ok && prac.wpm ? `<div class="mc_lec_wpm"><i class="fas fa-bolt"></i> ${prac.wpm} WPM</div>` : ''}
-            </a>`;
-        }).join('')}
-      </div>
-    ` : `
-      <div class="mc_avisos_empty">
-        <i class="fas fa-list"></i>
-        <p>Tu instructor aún no ha asignado lecciones.</p>
-      </div>
-    `}
+      <!-- COLUMNA DERECHA (Content) -->
+      <div class="mc_layout_content">
+        <!-- LECCIONES ASIGNADAS -->
+        <div class="mc_sec_hdr">
+          <i class="fas fa-graduation-cap"></i> Lecciones asignadas
+          <span class="mc_sec_count">${okCount}/${totalAsig}</span>
+        </div>
+        ${lecsAsig.length > 0 ? `
+          <div class="mc_lecs_grid">
+            ${lecsAsig.map(id => {
+              const num  = String(id).padStart(2,'0');
+              const ok   = lecsOk.includes(id);
+              const prac = getls(`wiPrac_${id}`) || {};
+              const col  = NIVEL_COLORS[id] || 'var(--mco)';
+              return `
+                <a class="mc_lec_card nv_item" data-page="leccion${num}" href="/leccion${num}"
+                  style="--lc:${col}">
+                  <div class="mc_lec_top">
+                    <span class="mc_lec_num">Lección ${num}</span>
+                    ${ok ? `<span class="mc_lec_ok"><i class="fas fa-check"></i> Hecha</span>` : ''}
+                  </div>
+                  <div class="mc_lec_name">${LEC_NOMBRES[id] || `Lección ${num}`}</div>
+                  ${ok && prac.wpm ? `<div class="mc_lec_wpm"><i class="fas fa-bolt"></i> ${prac.wpm} WPM</div>` : ''}
+                </a>`;
+            }).join('')}
+          </div>
+        ` : `
+          <div class="mc_avisos_empty">
+            <i class="fas fa-list"></i>
+            <p>Tu instructor aún no ha asignado lecciones.</p>
+          </div>
+        `}
 
-    <!-- COMPAÑEROS -->
-    ${miembros.length > 1 ? `
-      <div class="mc_sec_hdr">
-        <i class="fas fa-user-friends"></i> Compañeros
-        <span class="mc_sec_count">${miembros.length}</span>
-      </div>
-      <div class="mc_members_grid">
-        ${miembros.slice(0, 20).map((m, i) => {
-          const ini  = (m.nombre || m).charAt(0).toUpperCase();
-          const cols = ['#22c55e','#0ea5e9','#f97316','#a855f7','#ec4899','#f59e0b','#06b6d4'];
-          const col  = cols[i % cols.length];
-          return `
-            <div class="mc_member_chip">
-              <div class="mc_member_av" style="background:${col}">${ini}</div>
-              ${m.nombre || m}
-            </div>`;
-        }).join('')}
-        ${miembros.length > 20 ? `<div class="mc_member_chip" style="color:var(--tx3)">+${miembros.length - 20} más</div>` : ''}
-      </div>
-    ` : ''}
+        <!-- COMPAÑEROS -->
+        ${miembros.length > 1 ? `
+          <div class="mc_sec_hdr">
+            <i class="fas fa-user-friends"></i> Compañeros
+            <span class="mc_sec_count">${miembros.length}</span>
+          </div>
+          <div class="mc_members_grid">
+            ${miembros.slice(0, 20).map((m, i) => {
+              const ini  = (m.nombre || m).charAt(0).toUpperCase();
+              const cols = ['#22c55e','#0ea5e9','#f97316','#a855f7','#ec4899','#f59e0b','#06b6d4'];
+              const col  = cols[i % cols.length];
+              return `
+                <div class="mc_member_chip">
+                  <div class="mc_member_av" style="background:${col}">${ini}</div>
+                  ${m.nombre || m}
+                </div>`;
+            }).join('')}
+            ${miembros.length > 20 ? `<div class="mc_member_chip" style="color:var(--tx3)">+${miembros.length - 20} más</div>` : ''}
+          </div>
+        ` : ''}
 
-    <!-- SALIR CLASE -->
-    <div style="display:flex;justify-content:flex-end;padding-top:1vh">
-      <button id="mc_btn_salir" class="mc_code_btn" style="background:var(--bg4);color:var(--tx3);padding:1.1vh 2vw;font-size:var(--fz_m1)">
-        <i class="fas fa-sign-out-alt"></i> Salir de esta clase
-      </button>
+        <!-- SALIR CLASE -->
+        <div style="display:flex;justify-content:flex-end;padding-top:1vh">
+          <button id="mc_btn_salir" class="mc_code_btn" style="background:var(--bg4);color:var(--tx3);padding:1.1vh 2vw;font-size:var(--fz_m1)">
+            <i class="fas fa-sign-out-alt"></i> Salir de esta clase
+          </button>
+        </div>
+      </div>
     </div>
 
   </div>`;

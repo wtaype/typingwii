@@ -1,18 +1,17 @@
-// Lección 01 — Teclas F y J
+// Lección 01 — Tecla F
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 1,
   "nivel": 1,
-  "titulo": "Teclas F y J",
-  "subtitulo": "Dedos índices — fila central",
+  "titulo": "Tecla F",
+  "subtitulo": "Dedo índice izquierdo",
   "teclasPracticar": [
-    "f",
-    "j"
+    "f"
   ],
-  "descripcion": "Los dedos índices descansan sobre F y J. Siente el punto táctil.",
-  "texto": "fff jjjjj fffjj"
+  "descripcion": "Siente el relieve en la tecla.",
+  "texto": "ffff ffff fffffff fff ffff fffff ffff"
 };
 
 setData(data);

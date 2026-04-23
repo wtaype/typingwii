@@ -1,18 +1,17 @@
-// Lección 08 — Teclas T e Y
+// Lección 08 — Tecla Ñ
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 8,
-  "nivel": 2,
-  "titulo": "Teclas T e Y",
-  "subtitulo": "Índices al centro superior",
+  "nivel": 1,
+  "titulo": "Tecla Ñ",
+  "subtitulo": "Dedo meñique derecho",
   "teclasPracticar": [
-    "t",
-    "y"
+    "ñ"
   ],
-  "descripcion": "T e Y son teclas de índice que se extienden al centro.",
-  "texto": "ty yt ty yt fat data tidy style fruit dirty thirty sixty dusty try yet"
+  "descripcion": "Alcanza el extremo derecho de la fila guía.",
+  "texto": "ññññ ñññññ ñññññññ ñññ ññññ ñññññ ññññ"
 };
 
 setData(data);

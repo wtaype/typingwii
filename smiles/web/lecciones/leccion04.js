@@ -1,23 +1,17 @@
-// Lección 04 — Fila Central Completa
+// Lección 04 — Tecla K
 // TypingWii · Jesús es mi Señor 🙏
 import { setData, render, init, cleanup } from './leccion.js';
 
 export const data = {
   "id": 4,
   "nivel": 1,
-  "titulo": "Fila Central Completa",
-  "subtitulo": "A S D F J K L Ñ",
+  "titulo": "Tecla K",
+  "subtitulo": "Dedo medio derecho",
   "teclasPracticar": [
-    "a",
-    "s",
-    "d",
-    "f",
-    "j",
-    "k",
-    "l"
+    "k"
   ],
-  "descripcion": "La posición base completa. Cada dedo en su tecla.",
-  "texto": "asdf jkl asdf jkl fdsa lkj asdfjkl jklasdf fj dk sl aj sk dl fk"
+  "descripcion": "Mantén el dedo relajado.",
+  "texto": "kkkk kkkkk kkkkkkk kkk kkkk kkkkk kkkk"
 };
 
 setData(data);
