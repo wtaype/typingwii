@@ -7,7 +7,7 @@ export const data = {
   "nivel": 4,
   "titulo": "Uso de: \"",
   "subtitulo": "Coordinación y Fluidez",
-  "teclasPracticar": ["""],
+  "teclasPracticar": ["\""],
   "descripcion": "Concéntrate en la precisión.",
   "texto": "\" \" \" \"\" \"\" \" \" \"\" \""
 };

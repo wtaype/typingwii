@@ -119,7 +119,7 @@ export const LECCIONES = [
   { id:112, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: :', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:[":"] },
   { id:113, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: -', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["-"] },
   { id:114, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: _', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["_"] },
-  { id:115, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:"Uso de: \"", sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["\\\""] },
+  { id:115, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:"Uso de: \"", sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["\""] },
   { id:116, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:"Uso de: '", sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["'"] },
   { id:117, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: !', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["!"] },
   { id:118, nivel:8, color:'#10b981', ico:'fa-gauge', titulo:'Uso de: ?', sub:'Coordinación y Fluidez', meta:'60 WPM', dur:'14 min', teclas:["?"] },
